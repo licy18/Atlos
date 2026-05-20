@@ -1,4 +1,4 @@
-import { getAuthBase } from '@/component/login/authFlow';
+import { getAuthBase, getAuthHeaders, getAuthToken } from '@/component/login/authFlow';
 import { MARKER_TYPE_DICT, type IMarkerData } from '@/data/marker';
 import { buildPointShareToken } from '@/utils/urlState';
 
@@ -19,11 +19,7 @@ export type UGCSubmissionStatus =
 export type UGCImage = {
     id: string;
     markerId: string;
-    poiHash: string;
-    poiType: string;
-    snapshotId: string;
     url: string;
-    filePath?: string;
     content: string | null;
     author?: {
         nickname: string;
@@ -47,6 +43,11 @@ export type UGCUploadSubmission = {
 };
 
 export type UGCSubmissionImage = UGCImage & {
+    poiHash: string;
+    poiType: string;
+    snapshotId: string;
+    filePath: string;
+    flagCount?: number;
     status: UGCSubmissionStatus;
 };
 
@@ -247,6 +248,7 @@ async function updateUGCImageAction(imageId: string, action: string): Promise<UG
     const response = await fetch(`${UGC_API_BASE}/images/${encodeURIComponent(imageId)}/${action}`, {
         method: 'POST',
         credentials: 'include',
+        headers: getAuthHeaders(),
     });
 
     if (!response.ok) {
@@ -437,6 +439,7 @@ async function flushUGCImageBatch(requests: PendingImageRequest[]): Promise<void
             `${UGC_API_BASE}/images?markerIds=${encodeURIComponent(markerIds.join(','))}&limit=6&scope=${scope}`,
             {
                 credentials: 'include',
+                headers: getAuthHeaders(),
             },
         );
 
@@ -494,6 +497,7 @@ async function flushUGCSubmissionBatch(requests: PendingSubmissionRequest[]): Pr
             `${UGC_API_BASE}/images/mine?markerIds=${encodeURIComponent(markerIds.join(','))}&limit=6&scope=${scope}`,
             {
                 credentials: 'include',
+                headers: getAuthHeaders(),
             },
         );
 
@@ -537,14 +541,13 @@ function normalizeUGCImage(image: UGCImage): UGCImage {
         return image;
     }
 
-    const filePath = image.filePath ?? extractObjectPathFromUrl(image.url);
+    const filePath = extractObjectPathFromUrl(image.url);
     if (!filePath) {
         return image;
     }
 
     return {
         ...image,
-        filePath,
         url: `${UGC_API_BASE}/public-file/${encodeObjectPath(filePath)}`,
     };
 }
@@ -611,6 +614,10 @@ function uploadFormData<T>(
         const xhr = new XMLHttpRequest();
         xhr.open('POST', url);
         xhr.withCredentials = true;
+        const token = getAuthToken();
+        if (token) {
+            xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+        }
 
         xhr.upload.onprogress = (event) => {
             if (!event.lengthComputable || !onProgress) return;

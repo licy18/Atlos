@@ -16,6 +16,7 @@ export class AuthFlowError extends Error {
 
 const LOCAL_AUTH_PORT = '8787';
 const PROD_AUTH_BASE = 'https://api.opendfieldmap.org';
+const AUTH_TOKEN_KEY = 'talos:authToken';
 
 const getLocalAuthBase = (): string => {
   if (typeof window === 'undefined') {
@@ -39,6 +40,35 @@ export const getAuthBase = (): string => {
 };
 
 const authBase = getAuthBase();
+
+export const getAuthToken = (): string | null => {
+  if (typeof window === 'undefined' || !('localStorage' in window)) {
+    return null;
+  }
+
+  const token = window.localStorage.getItem(AUTH_TOKEN_KEY)?.trim();
+  return token || null;
+};
+
+export const setAuthToken = (token: string | null): void => {
+  if (typeof window === 'undefined' || !('localStorage' in window)) {
+    return;
+  }
+
+  if (!token) {
+    window.localStorage.removeItem(AUTH_TOKEN_KEY);
+    return;
+  }
+
+  window.localStorage.setItem(AUTH_TOKEN_KEY, token);
+};
+
+export const clearAuthToken = (): void => setAuthToken(null);
+
+export const getAuthHeaders = (): Record<string, string> => {
+  const token = getAuthToken();
+  return token ? { Authorization: `Bearer ${token}` } : {};
+};
 
 export const authClient = createAuthClient({
   baseURL: `${authBase}/auth/v1`,
@@ -175,25 +205,24 @@ const pickSessionUser = (payload: unknown): SessionUser | null => {
   };
 };
 
-const pickSdkSessionFallback = (payload: unknown): Partial<SessionUser> => {
-  if (!payload || typeof payload !== 'object') return {};
-
+const pickSessionToken = (payload: unknown): string | null => {
+  if (!payload || typeof payload !== 'object') return null;
   const root = payload as Record<string, unknown>;
-  const data =
-    root.data && typeof root.data === 'object'
-      ? (root.data as Record<string, unknown>)
-      : root;
 
-  const sdkUser =
-    data.user && typeof data.user === 'object'
-      ? (data.user as Record<string, unknown>)
-      : null;
-  const registeredAt = normalizeTimestampMs(sdkUser?.createdAt);
+  const direct = root.token;
+  if (typeof direct === 'string' && direct.trim()) {
+    return direct.trim();
+  }
 
-  return {
-    registeredAt,
-    email: typeof sdkUser?.email === 'string' ? sdkUser.email : undefined,
-  };
+  const data = root.data;
+  if (data && typeof data === 'object') {
+    const nested = (data as Record<string, unknown>).token;
+    if (typeof nested === 'string' && nested.trim()) {
+      return nested.trim();
+    }
+  }
+
+  return null;
 };
 
 const pickApiErrorMessage = (payload: unknown, fallback: string): string => {
@@ -254,6 +283,7 @@ async function postAuthJson<TResponse>(
       accept: 'application/json',
       'content-type': 'application/json',
       'x-oem-locale': locale,
+      ...getAuthHeaders(),
     },
     body: JSON.stringify(requestBody),
   });
@@ -278,46 +308,72 @@ async function postAuthJson<TResponse>(
     );
   }
 
+  const token = pickSessionToken(payload);
+  if (token) {
+    setAuthToken(token);
+  }
+
   return payload as TResponse;
 }
 
 export const fetchSessionUser = async (): Promise<SessionUser | null> => {
-  const [sessionResult, sdkSession] = await Promise.all([
-    authClient.$fetch('/session', {
-      method: 'GET',
-      headers: { accept: 'application/json' },
-    }),
-    authClient.getSession(),
-  ]);
+  const response = await fetch(`${authBase}/auth/v1/session`, {
+    method: 'GET',
+    credentials: 'include',
+    headers: {
+      accept: 'application/json',
+      ...getAuthHeaders(),
+    },
+  });
 
-  const { data, error } = sessionResult;
+  let payload: unknown = null;
+  try {
+    payload = await response.json();
+  } catch {
+    payload = null;
+  }
 
-  if (error) {
-    if ((error as { status?: number }).status === 401) {
+  if (!response.ok) {
+    if (response.status === 401) {
+      clearAuthToken();
       return null;
     }
-    throw new Error(
+    throw new AuthFlowError(
       pickApiErrorMessage(
-        error,
-        `Session request failed (${(error as { status?: number }).status ?? 'unknown'})`
-      )
+        payload,
+        `Session request failed (${response.status ?? 'unknown'})`
+      ),
+      {
+        status: response.status,
+        code: pickApiErrorCode(payload),
+      },
     );
   }
 
-  const user = pickSessionUser(data);
+  const user = pickSessionUser(payload);
   if (!user) {
     throw new Error('Session payload does not contain user info.');
   }
 
-  const sdkFallback = sdkSession.data
-    ? pickSdkSessionFallback(sdkSession.data)
-    : {};
+  return user;
+};
 
-  return {
-    ...user,
-    registeredAt: user.registeredAt ?? sdkFallback.registeredAt,
-    email: user.email ?? sdkFallback.email,
-  };
+export const exchangeAuthCode = async (code: string): Promise<SessionUser> => {
+  const payload = await postAuthJson<unknown>('/session/exchange', {
+    code: code.trim(),
+  });
+
+  const token = pickSessionToken(payload);
+  if (token) {
+    setAuthToken(token);
+  }
+
+  const user = pickSessionUser(payload);
+  if (!user) {
+    throw new Error('Session exchange payload does not contain user info.');
+  }
+
+  return user;
 };
 
 export const startDiscordAuth = async (
@@ -497,6 +553,7 @@ const patchProfile = async (payloadBody: Record<string, unknown>): Promise<Sessi
     headers: {
       'content-type': 'application/json',
       accept: 'application/json',
+      ...getAuthHeaders(),
     },
     body: JSON.stringify(payloadBody),
   });
@@ -552,12 +609,30 @@ export const updateProfileNickname = async (
 };
 
 export const logoutUser = async (): Promise<void> => {
-  const response = await authClient.signOut();
-  if (response.error) {
+  const response = await fetch(`${authBase}/auth/v1/sign-out`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      accept: 'application/json',
+      'content-type': 'application/json',
+      ...getAuthHeaders(),
+    },
+    body: '{}',
+  });
+
+  clearAuthToken();
+
+  if (!response.ok) {
+    let payload: unknown = null;
+    try {
+      payload = await response.json();
+    } catch {
+      payload = null;
+    }
     throw new Error(
       pickApiErrorMessage(
-        response.error,
-        `Logout failed (${response.error.status ?? 'unknown'})`
+        payload,
+        `Logout failed (${response.status ?? 'unknown'})`
       )
     );
   }

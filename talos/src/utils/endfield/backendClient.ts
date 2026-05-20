@@ -1,4 +1,4 @@
-import { getAuthBase } from '@/component/login/authFlow';
+import { getAuthBase, getAuthHeaders, getAuthToken } from '@/component/login/authFlow';
 import type { PositionResponse } from './types';
 
 export type EFProvider = 'skland' | 'skport';
@@ -107,6 +107,7 @@ async function requestJson<T>(baseUrl: string, path: string, init?: RequestInit)
     const hasBody = init?.body !== undefined && init.body !== null;
     const headers = {
         ...(hasBody ? { 'content-type': 'application/json' } : {}),
+        ...getAuthHeaders(),
         ...(init?.headers ?? {}),
     };
     const response = await fetch(`${baseUrl}${path}`, {
@@ -170,6 +171,10 @@ export const getEFPosition = (options: { includeBinding?: boolean } = {}): Promi
 export const openEFPositionSocket = (options: { includeBinding?: boolean } = {}): WebSocket => {
     const path = options.includeBinding ? '/position-stream?binding=1' : '/position-stream';
     const url = new URL(`${LOCATOR_API_BASE}${path}`);
+    const token = getAuthToken();
+    if (token) {
+        url.searchParams.set('access_token', token);
+    }
     url.protocol = url.protocol === 'https:' ? 'wss:' : 'ws:';
     return new WebSocket(url.toString());
 };

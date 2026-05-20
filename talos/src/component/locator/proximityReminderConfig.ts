@@ -38,6 +38,7 @@ export const LOCATOR_REMINDER_STRATEGIES = {
             'collection.protocol_dl',
             'collection.protocol_dl_ii',
             'collection.gear_template',
+            'exploration.wooden_box',
             ...COMMON_MOB_RULES,
         ],
     },

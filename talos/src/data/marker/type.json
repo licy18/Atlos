@@ -405,6 +405,14 @@
             "sub": "exploration"
         }
     },
+    "wooden_box": {
+        "key": "wooden_box",
+        "name": "Wooden Box",
+        "category": {
+            "main": "poi",
+            "sub": "exploration"
+        }
+    },
     "temporary_energy_alluvium": {
         "key": "temporary_energy_alluvium",
         "name": "Temporary Energy Alluvium",

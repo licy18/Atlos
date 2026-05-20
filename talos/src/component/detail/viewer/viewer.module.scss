@@ -48,7 +48,7 @@
 
 .viewerPanel {
     width: min(70dvw, 90rem);
-    max-height: 85dvh;
+    max-height: 90dvh;
     display: grid;
     grid-template-rows: minmax(0, 1fr) auto;
     padding: 1rem;
@@ -74,7 +74,7 @@
 
 .viewerContent {
     position: relative;
-    max-height: calc(85dvh - 7rem);
+    max-height: calc(90dvh - 7rem);
     display: flex;
     align-items: center;
     justify-content: center;
