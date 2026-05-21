@@ -51,7 +51,7 @@
       "unrecall": "取消撤回"
     },
     "errors": {
-      "unsupportedType": "仅支持 JPEG/PNG/WebP/AVIF 图片",
+      "unsupportedType": "仅支持 JPEG/PNG/WebP/AVIF/HEIC 图片",
       "fileTooLarge": "图片文件过大",
       "imageDecodeFailed": "浏览器无法读取此图片",
       "imageProcessingUnavailable": "本地图片处理不可用",
@@ -59,6 +59,7 @@
       "uploadInvalidResponse": "上传接口返回异常",
       "uploadNetwork": "上传时发生网络错误",
       "uploadAborted": "上传已取消",
+      "RATE_LIMITED": "上传过于频繁，请稍后再试",
       "uploadFailed": "上传失败，请稍后再试",
       "backendUnknown": "上传服务返回错误"
     }
@@ -286,7 +287,10 @@
   "scale": {
     "pip": {
       "activeTitle": "画中画模式已开启",
-      "returnHint": "点击 Logo 以返回当前标签页。"
+      "returnHint": "点击 Logo 以返回当前标签页。",
+      "enterMode": "开启画中画模式",
+      "exitMode": "退出画中画模式",
+      "unsupported": "当前浏览器不支持文档画中画"
     }
   },
   "locator": {

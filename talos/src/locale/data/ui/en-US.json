@@ -51,7 +51,7 @@
       "unrecall": "Cancel recall"
     },
     "errors": {
-      "unsupportedType": "Only JPEG/PNG/WebP/AVIF images are supported.",
+      "unsupportedType": "Only JPEG/PNG/WebP/AVIF/HEIC images are supported.",
       "fileTooLarge": "The image is too large.",
       "imageDecodeFailed": "This image could not be opened by the browser.",
       "imageProcessingUnavailable": "Local image processing is unavailable.",
@@ -59,6 +59,7 @@
       "uploadInvalidResponse": "The upload response was invalid.",
       "uploadNetwork": "Network error while uploading.",
       "uploadAborted": "Upload was cancelled.",
+      "RATE_LIMITED": "Upload rate limit reached, retry later.",
       "uploadFailed": "Upload failed, please try again.",
       "backendUnknown": "Upload service returned an error."
     }
@@ -286,7 +287,10 @@
   "scale": {
     "pip": {
       "activeTitle": "Picture-in-picture is active",
-      "returnHint": "Click the Logo to return to this tab"
+      "returnHint": "Click the Logo to return to this tab",
+      "enterMode": "Enter PiP mode",
+      "exitMode": "Exit PiP mode",
+      "unsupported": "Document Picture-in-Picture is not supported"
     }
   },
   "locator": {

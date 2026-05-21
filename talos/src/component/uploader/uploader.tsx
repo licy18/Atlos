@@ -8,6 +8,7 @@ import { useAuthStore } from '@/store/auth';
 import { useLocale, useTranslateUI } from '@/locale';
 import type { IMarkerData } from '@/data/marker';
 import { usePointShareLink } from '@/utils/shareLink';
+import { getAppDocument, subscribePictureInPictureState } from '@/component/scale/pip';
 import {
     listUGCImages,
     listUGCMyImages,
@@ -26,9 +27,12 @@ import {
 type Props = {
     point: IMarkerData;
     pointName: string;
+    active?: boolean;
 };
 
 type ImageState = 'noImage' | 'pending' | 'hasImage';
+
+const UPLOAD_ACCEPT = 'image/jpeg,image/png,image/webp,image/avif,image/heic,image/heif,.heic,.heif';
 
 const isPending = (image: UGCSubmissionImage): boolean => (
     image.status === 'pending_openai' || image.status === 'pending_audit'
@@ -179,9 +183,7 @@ const useUpload = (point: IMarkerData) => {
         inputRef.current?.click();
     }, [canUpload, user]);
 
-    const upload = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        event.target.value = '';
+    const uploadFile = useCallback(async (file: File) => {
         if (!file || !target) return;
 
         setUploading(true);
@@ -210,10 +212,18 @@ const useUpload = (point: IMarkerData) => {
         }
     }, [errText, point.id, target]);
 
+    const upload = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        event.target.value = '';
+        if (!file) return;
+        await uploadFile(file);
+    }, [uploadFile]);
+
     return {
         active,
         authorNickname: active?.author?.nickname ?? '',
         authorPublicUid: active?.author?.publicUid ?? '',
+        canUpload,
         canPreview,
         error,
         inputRef,
@@ -228,6 +238,7 @@ const useUpload = (point: IMarkerData) => {
         showRules,
         state,
         upload,
+        uploadFile,
         uploading,
         viewerOpen,
         actionPending,
@@ -240,12 +251,13 @@ const useUpload = (point: IMarkerData) => {
     };
 };
 
-const Uploader = memo(({ point, pointName }: Props) => {
+const Uploader = memo(({ point, pointName, active: activeDetail = true }: Props) => {
     const tUI = useTranslateUI();
     const {
         active,
         authorNickname,
         authorPublicUid,
+        canUpload,
         canPreview,
         createdAt,
         error,
@@ -264,6 +276,7 @@ const Uploader = memo(({ point, pointName }: Props) => {
         showRules,
         state,
         upload,
+        uploadFile,
         uploading,
         viewerOpen,
         setActionPending,
@@ -271,6 +284,8 @@ const Uploader = memo(({ point, pointName }: Props) => {
         setMyImages,
     } = useUpload(point);
     const { copiedPopupVisible, copyPointShareUrl } = usePointShareLink(point);
+    const pendingClipboardFileRef = useRef<File | null>(null);
+    const [appDocumentVersion, setAppDocumentVersion] = useState(0);
     const progressStyle = useMemo(
         () => ({ '--uploader-progress': `${Math.round(progress * 100)}%` }) as CSSProperties,
         [progress],
@@ -289,6 +304,52 @@ const Uploader = memo(({ point, pointName }: Props) => {
         event.preventDefault();
         handleClick();
     }, [handleClick, interactive]);
+
+    useEffect(() => subscribePictureInPictureState(() => {
+        setAppDocumentVersion((version) => version + 1);
+    }), []);
+
+    useEffect(() => {
+        pendingClipboardFileRef.current = null;
+    }, [point.id]);
+
+    const handleClipboardUpload = useCallback(async (file: File) => {
+        if (!file) return;
+        if (!isAuthenticated) {
+            pendingClipboardFileRef.current = file;
+            openOemAuthModal('login');
+            return;
+        }
+        await uploadFile(file);
+    }, [isAuthenticated, uploadFile]);
+
+    useEffect(() => {
+        if (!activeDetail || !canUpload || !isAuthenticated || uploading) return;
+        const file = pendingClipboardFileRef.current;
+        if (!file) return;
+        pendingClipboardFileRef.current = null;
+        void uploadFile(file);
+    }, [activeDetail, canUpload, isAuthenticated, uploadFile, uploading]);
+
+    useEffect(() => {
+        if (!activeDetail || !canUpload || uploading || viewerOpen) return undefined;
+        const activeDocument = getAppDocument();
+
+        const handlePaste = (event: ClipboardEvent) => {
+            const items = Array.from(event.clipboardData?.items ?? []);
+            const file = items
+                .filter((item) => item.kind === 'file')
+                .map((item) => item.getAsFile())
+                .find((item): item is File => Boolean(item));
+
+            if (!file) return;
+            event.preventDefault();
+            void handleClipboardUpload(file);
+        };
+
+        activeDocument.addEventListener('paste', handlePaste);
+        return () => activeDocument.removeEventListener('paste', handlePaste);
+    }, [activeDetail, appDocumentVersion, canUpload, handleClipboardUpload, uploading, viewerOpen]);
 
     const patchActiveImage = useCallback((patch: (image: UGCImage) => UGCImage) => {
         if (!active) return;
@@ -447,7 +508,7 @@ const Uploader = memo(({ point, pointName }: Props) => {
                 ref={inputRef}
                 className={styles.imageInput}
                 type="file"
-                accept="image/jpeg,image/png,image/webp,image/avif"
+                accept={UPLOAD_ACCEPT}
                 onChange={(event) => void upload(event)}
             />
             {error && (
