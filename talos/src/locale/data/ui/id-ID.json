@@ -32,7 +32,7 @@
       "main": "Utama",
       "sub": "Sub"
     },
-    "noInfo": "Belum ada informasi. Klik untuk mengunggah tangkapan layar titik.",
+    "noInfo": "Tidak ada gambar. Gunakan {paste} / {click} untuk mengunggah.",
     "communityRule1": "Sebelum mengunggah, pastikan Anda telah membaca dan mengikuti",
     "communityRule2": "Panduan Komunitas",
     "uploading": "Mengunggah...",

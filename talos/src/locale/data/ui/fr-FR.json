@@ -32,7 +32,7 @@
       "main": "Principal",
       "sub": "Sous"
     },
-    "noInfo": "Aucune information. Cliquez pour téléverser une capture d’écran du point.",
+    "noInfo": "Aucune image. Utilisez {paste} / {click} pour importer.",
     "communityRule1": "Avant de téléverser, assurez-vous d’avoir lu et de respecter les",
     "communityRule2": "Règles de la communauté",
     "uploading": "Téléversement...",

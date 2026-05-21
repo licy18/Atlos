@@ -32,7 +32,7 @@
       "main": "Główny",
       "sub": "Podreg"
     },
-    "noInfo": "Brak informacji. Kliknij, aby przesłać zrzut ekranu punktu.",
+    "noInfo": "Brak obrazu. Użyj {paste} / {click}, aby przesłać.",
     "communityRule1": "Przed przesłaniem upewnij się, że przeczytałeś i przestrzegasz",
     "communityRule2": "Wytycznych społeczności",
     "uploading": "Przesyłanie...",

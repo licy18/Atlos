@@ -32,7 +32,7 @@
       "main": "Område",
       "sub": "Zon"
     },
-    "noInfo": "Ingen information. Klicka för att ladda upp en skärmbild av platsen.",
+    "noInfo": "Ingen bild. Använd {paste} / {click} för att ladda upp.",
     "communityRule1": "Innan du laddar upp, se till att du har läst och följer",
     "communityRule2": "Community-riktlinjer",
     "uploading": "Laddar upp...",

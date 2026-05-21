@@ -32,7 +32,7 @@
       "main": "지역",
       "sub": "서브"
     },
-    "noInfo": "정보가 없습니다. 클릭하여 위치 스크린샷을 업로드하세요.",
+    "noInfo": "이미지 없음. {paste} / {click}하여 업로드하세요.",
     "communityRule1": "업로드하기 전에 아래 내용을 읽고 준수해 주세요",
     "communityRule2": "커뮤니티 가이드라인",
     "uploading": "업로드 중…",

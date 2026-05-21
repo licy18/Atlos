@@ -32,7 +32,7 @@
       "main": "Utama",
       "sub": "Sub"
     },
-    "noInfo": "Tiada maklumat. Klik untuk memuat naik tangkapan skrin lokasi.",
+    "noInfo": "Tiada gambar. Guna {paste} / {click} untuk muat naik.",
     "communityRule1": "Sebelum memuat naik, pastikan anda telah membaca dan mematuhi",
     "communityRule2": "Garis Panduan Komuniti",
     "uploading": "Memuat naik...",

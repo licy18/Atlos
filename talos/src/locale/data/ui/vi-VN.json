@@ -32,7 +32,7 @@
       "main": "Khu vực",
       "sub": "Phụ"
     },
-    "noInfo": "Chưa có thông tin. Nhấn để tải lên ảnh chụp điểm.",
+    "noInfo": "Không có hình ảnh. Sử dụng {paste} / {click} để tải lên.",
     "communityRule1": "Trước khi tải lên, hãy đảm bảo bạn đã đọc và tuân thủ",
     "communityRule2": "Nguyên tắc cộng đồng",
     "uploading": "Đang tải lên...",

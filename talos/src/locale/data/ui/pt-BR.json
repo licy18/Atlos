@@ -32,7 +32,7 @@
       "main": "Principal",
       "sub": "Sub"
     },
-    "noInfo": "Sem informações. Clique para enviar uma captura de tela do ponto.",
+    "noInfo": "Sem imagem. Use {paste} / {click} para fazer upload.",
     "communityRule1": "Antes de enviar, confirme que você leu e segue as",
     "communityRule2": "Diretrizes da Comunidade",
     "uploading": "Enviando...",

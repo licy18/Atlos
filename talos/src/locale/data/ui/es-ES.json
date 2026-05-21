@@ -32,7 +32,7 @@
       "main": "Región",
       "sub": "Sub"
     },
-    "noInfo": "No hay información. Haz clic para subir una captura de pantalla del punto.",
+    "noInfo": "Sin imagen. Usa {paste} / {click} para subir.",
     "communityRule1": "Antes de subir contenido, asegúrate de haber leído y seguir las",
     "communityRule2": "Normas de la comunidad",
     "uploading": "Subiendo...",

@@ -32,7 +32,7 @@
       "main": "主区域",
       "sub": "子区域"
     },
-    "noInfo": "暂无信息，使用 {paste} / {click} 以上传点位截图",
+    "noInfo": "暂无信息，使用 {paste} / {click} 上传点位截图",
     "communityRule1": "上传前，请您详阅并遵循",
     "communityRule2": "OEM 社区守则",
     "uploading": "正在上传…",

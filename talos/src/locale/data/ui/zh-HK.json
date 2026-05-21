@@ -32,7 +32,7 @@
       "main": "主區域",
       "sub": "子區域"
     },
-    "noInfo": "暫無資訊，點擊上載點位截圖",
+    "noInfo": "暫無資訊，使用 {paste} / {click} 上載點位截圖",
     "communityRule1": "上載前，請詳閱並遵循",
     "communityRule2": "OEM 社群守則",
     "uploading": "上載中…",

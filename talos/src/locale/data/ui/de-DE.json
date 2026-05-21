@@ -32,7 +32,7 @@
       "main": "Haupt",
       "sub": "Unter"
     },
-    "noInfo": "Keine Informationen. Klicken, um Punktdetails hochzuladen.",
+    "noInfo": "Kein Bild. Nutze {paste} / {click} zum Hochladen.",
     "communityRule1": "Bitte lesen und befolgen Sie vor dem Hochladen die folgenden",
     "communityRule2": "Community-Richtlinien",
     "uploading": "Wird hochgeladen...",

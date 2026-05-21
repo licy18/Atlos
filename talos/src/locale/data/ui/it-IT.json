@@ -32,7 +32,7 @@
       "main": "Principale",
       "sub": "Sotto"
     },
-    "noInfo": "Nessuna informazione. Clicca per caricare uno screenshot del punto.",
+    "noInfo": "Nessuna immagine. Usa {paste} / {click} per caricare.",
     "communityRule1": "Prima di caricare, assicurati di aver letto e rispettare le",
     "communityRule2": "Linee guida della community",
     "uploading": "Caricamento...",
