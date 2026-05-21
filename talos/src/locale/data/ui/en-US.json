@@ -32,7 +32,7 @@
       "main": "Main",
       "sub": "Sub"
     },
-    "noInfo": "No info. Click to upload snapshot.",
+    "noInfo": "No image. Use {paste} / {click} to upload.",
     "communityRule1": "By uploading, make sure you have read and follow the",
     "communityRule2": "Community Guidelines",
     "uploading": "Uploading...",

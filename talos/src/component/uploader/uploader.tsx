@@ -9,6 +9,8 @@ import { useLocale, useTranslateUI } from '@/locale';
 import type { IMarkerData } from '@/data/marker';
 import { usePointShareLink } from '@/utils/shareLink';
 import { getAppDocument, subscribePictureInPictureState } from '@/component/scale/pip';
+import { Shortcut, type KeyChip } from '@/component/shortcut';
+import { modKey } from '@/component/settings/shortcuts';
 import {
     listUGCImages,
     listUGCMyImages,
@@ -33,6 +35,8 @@ type Props = {
 type ImageState = 'noImage' | 'pending' | 'hasImage';
 
 const UPLOAD_ACCEPT = 'image/jpeg,image/png,image/webp,image/avif,image/heic,image/heif,.heic,.heif';
+const UPLOAD_KEY_SCALE = 0.75;
+const UPLOAD_CLICK_KEYS: KeyChip[] = [{ label: '', type: 'left-click', size: '1u' }];
 
 const isPending = (image: UGCSubmissionImage): boolean => (
     image.status === 'pending_openai' || image.status === 'pending_audit'
@@ -290,6 +294,24 @@ const Uploader = memo(({ point, pointName, active: activeDetail = true }: Props)
         () => ({ '--uploader-progress': `${Math.round(progress * 100)}%` }) as CSSProperties,
         [progress],
     );
+    const uploadPasteKeys = useMemo<KeyChip[]>(
+        () => [{ label: modKey(), variant: 'mod' }, { label: 'V' }],
+        [],
+    );
+    const uploadShortcutHint = useMemo(() => {
+        const text = String(tUI('detail.noInfo'));
+        const parts = text.split(/(\{paste\}|\{click\})/g).filter(Boolean);
+
+        return parts.map((part, index) => {
+            if (part === '{paste}') {
+                return <Shortcut key={`${part}:${index}`} keys={uploadPasteKeys} scale={UPLOAD_KEY_SCALE} />;
+            }
+            if (part === '{click}') {
+                return <Shortcut key={`${part}:${index}`} keys={UPLOAD_CLICK_KEYS} scale={UPLOAD_KEY_SCALE} />;
+            }
+            return <span key={`${part}:${index}`}>{part}</span>;
+        });
+    }, [tUI, uploadPasteKeys]);
 
     const handleClick = useCallback(() => {
         if (canPreview) {
@@ -486,7 +508,11 @@ const Uploader = memo(({ point, pointName, active: activeDetail = true }: Props)
                                 ? ''
                                 : state === 'pending'
                                     ? tUI('detail.uploadPending')
-                                    : tUI('detail.noInfo')}
+                                    : (
+                                        <span className={styles.uploadShortcutHint}>
+                                            {uploadShortcutHint}
+                                        </span>
+                                    )}
                         {showRules && !uploading && !loading && (
                             <div className={styles.communityRule}>
                                 <span>{tUI('detail.communityRule1')}</span>

@@ -1,0 +1,126 @@
+@use '../../styles/palette.scss' as *;
+
+.shortcut {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: calc(32px * var(--key-scale) - 24px);
+}
+
+$keyCap-unit: 1.25rem;
+
+.keyCap {
+    transform: scale(var(--key-scale));
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1px;
+    background-color: $grey-1;
+    box-shadow: 0 0 2px 1px rgba($black-0, 0.4);
+    text-align: center;
+    font-family: 'Novecento Medium', system-ui, -apple-system, sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: $white-1;
+    user-select: none;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background-color: $primary-accent-4;
+        color: $grey-1;
+    }
+
+    &[data-ch='1u'],
+    &:not([data-ch]) {
+        height: calc(#{$keyCap-unit} + 1px);
+        width: calc(#{$keyCap-unit} + 1px);
+    }
+
+    &[data-ch='2u'] {
+        height: calc(#{$keyCap-unit} + 1px);
+        width: calc(2 * #{$keyCap-unit} + 5px);
+        letter-spacing: -.5px;
+    }
+
+    &[data-ch='3u'] {
+        height: calc(#{$keyCap-unit} + 1px);
+        width: calc(3 * #{$keyCap-unit} + 9px);
+        letter-spacing: -.5px;
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1.5px solid $white-1;
+        border-radius: 4px;
+        box-shadow:
+            0 0 2px 1px rgba($black-0, 0.4),
+            inset 0 0 2px rgba($black-0, 0.2);
+        z-index: -1;
+    }
+
+    &[data-ch='1u']::before,
+    &:not([data-ch])::before {
+        width: calc($keyCap-unit + 4px);
+        height: calc($keyCap-unit + 4px);
+    }
+
+    &[data-ch='2u']::before {
+        width: calc(2 * #{$keyCap-unit} + 8px);
+        height: calc($keyCap-unit + 4px);
+    }
+
+    &[data-ch='3u']::before {
+        width: calc(3 * #{$keyCap-unit} + 12px);
+        height: calc($keyCap-unit + 4px);
+    }
+
+    &[data-type='left-click'] {
+        height: calc(#{$keyCap-unit} + 1px);
+        width: calc(0.66 * #{$keyCap-unit} + 1px);
+        border-radius: 6px;
+        @supports (corner-shape: superellipse(1.5)) {
+            border-radius: 12px;
+            corner-shape: superellipse(1.5);
+        }
+        &:hover {
+            background-color: $grey-1;
+            &::after {
+                background-color: $primary-accent-4;
+            }
+        }
+        &::before {
+            border: 1.5px solid $white-1;
+            width: calc(0.66 * #{$keyCap-unit} + 4px);
+            height: calc(#{$keyCap-unit} + 4px);
+            border-radius: 6px;
+            @supports (corner-shape: superellipse(1.5)) {
+                border-radius: 12px;
+                corner-shape: superellipse(1.5);
+            }
+        }
+        &::after {
+            z-index: 1;
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50%;
+            height: 40%;
+            background-color: $white-1;
+            transition: all 0.2s ease;
+            border-top-left-radius: 6px;
+            @supports (corner-shape: superellipse(1.5)) {
+                border-top-left-radius: 12px;
+                corner-shape: superellipse(1.5);
+            }
+        }
+    }
+}

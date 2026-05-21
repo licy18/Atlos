@@ -15,8 +15,8 @@ import {
     useSetPerformanceMode,
 } from '@/store/uiPrefs';
 import { applyTheme, startSystemFollow } from '@/utils/theme';
-import { isMac } from '@/utils/platform';
-import { getShortcutConfig, type ShortcutEntry, type KeyChip } from './shortcuts';
+import { Shortcut } from '@/component/shortcut';
+import { getShortcutConfig, type ShortcutEntry } from './shortcuts';
 
 export interface SettingsProps {
     open: boolean;
@@ -47,17 +47,6 @@ const SettingsSection: React.FC<SectionProps> = ({ titleKey, hintKey, children }
     );
 };
 
-const KeyCap: React.FC<{ chip: KeyChip }> = ({ chip }) => {
-    const size = chip.variant === 'mod'
-        ? (isMac() ? '1u' : '2u')
-        : (chip.size ?? '1u');
-    return (
-        <span className={styles.keyCap} data-ch={size}>
-            {chip.label}
-        </span>
-    );
-};
-
 const ShortcutRow: React.FC<{ entry: ShortcutEntry }> = ({ entry }) => {
     const t = useTranslateUI();
     return (
@@ -65,11 +54,7 @@ const ShortcutRow: React.FC<{ entry: ShortcutEntry }> = ({ entry }) => {
             <span className={styles.shortcutLabel}>
                 {t(`settings.shortcuts.${entry.id}`)}
             </span>
-            <span className={styles.shortcutKeys}>
-                {entry.keys.map((chip, i) => (
-                    <KeyCap key={i} chip={chip} />
-                ))}
-            </span>
+            <Shortcut keys={entry.keys} />
         </div>
     );
 };
