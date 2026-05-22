@@ -6,6 +6,7 @@ import { useTranslateGame } from '@/locale';
 import PopoverTooltip from '@/component/popover/popover';
 import {
     listUGCImages,
+    type UGCImage,
 } from '@/utils/ugcClient';
 import {
     MARKER_PREVIEW_ENTER_EVENT,
@@ -27,6 +28,29 @@ interface UsePreviewResult {
 }
 
 const PREVIEW_HIDE_DELAY_MS = 160;
+
+const getPreviewUpvoteCount = (image: UGCImage): number => (
+    Number.isFinite(image.upvotes)
+        ? Math.max(0, image.upvotes as number)
+        : Number.isFinite(image.upvoteCount)
+            ? Math.max(0, image.upvoteCount as number)
+            : 0
+);
+
+const getPreviewCreatedAtTime = (image: UGCImage): number => {
+    const time = Date.parse(image.createdAt);
+    return Number.isNaN(time) ? Number.MAX_SAFE_INTEGER : time;
+};
+
+const selectPreviewImage = (images: UGCImage[]): UGCImage | null => (
+    images
+        .slice()
+        .sort((a, b) => {
+            const upvoteDelta = getPreviewUpvoteCount(b) - getPreviewUpvoteCount(a);
+            if (upvoteDelta !== 0) return upvoteDelta;
+            return getPreviewCreatedAtTime(a) - getPreviewCreatedAtTime(b);
+        })[0] ?? null
+);
 
 export const UsePreview = (
     map: L.Map | null,
@@ -105,7 +129,7 @@ export const UsePreview = (
                 .then((images) => {
                     if (requestTokenRef.current !== requestToken) return;
                     if (hoveredMarkerRef.current?.id !== marker.id) return;
-                    const activeImage = images[0];
+                    const activeImage = selectPreviewImage(images);
                     if (!activeImage) {
                         clearHover();
                         return;
