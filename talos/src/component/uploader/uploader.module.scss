@@ -152,6 +152,11 @@
             right: var(--carousel-control-offset);
             transform: translateY(-50%) scaleX(-1);
         }
+
+        &[data-hover='previous']::before,
+        &[data-hover='next']::after {
+            background-color: $primary-accent-4;
+        }
     }
 
     &:hover .carouselLayer {

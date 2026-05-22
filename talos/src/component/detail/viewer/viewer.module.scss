@@ -141,7 +141,7 @@
         mask-repeat: no-repeat;
         mask-position: center;
         mask-size: contain;
-        transition: background-color 0.2s ease, filter 0.2s ease;
+        transition: background-color 0.2s ease;
     }
 
     &::before {
@@ -152,6 +152,11 @@
     &::after {
         right: var(--carousel-control-offset);
         transform: translateY(-50%) scaleX(-1);
+    }
+
+    &[data-hover='previous']::before,
+    &[data-hover='next']::after {
+        background-color: $primary-accent-4;
     }
 }
 
