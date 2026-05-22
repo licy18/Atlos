@@ -51,7 +51,7 @@
       "unrecall": "철회 요청 취소"
     },
     "errors": {
-      "unsupportedType": "JPEG/PNG/WebP/AVIF 이미지만 지원됩니다.",
+      "unsupportedType": "JPEG/PNG/WebP/AVIF/HEIC 이미지만 지원됩니다.",
       "fileTooLarge": "이미지 파일이 너무 큽니다.",
       "imageDecodeFailed": "브라우저에서 이 이미지를 읽을 수 없습니다.",
       "imageProcessingUnavailable": "로컬 이미지 처리를 사용할 수 없습니다.",

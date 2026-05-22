@@ -51,7 +51,7 @@
       "unrecall": "取消撤回申請"
     },
     "errors": {
-      "unsupportedType": "僅接收 JPEG/PNG/WebP/AVIF 檔案",
+      "unsupportedType": "僅接收 JPEG/PNG/WebP/AVIF/HEIC 檔案",
       "fileTooLarge": "圖片檔案過大",
       "imageDecodeFailed": "瀏覽器無法讀取此圖片",
       "imageProcessingUnavailable": "無法於裝置上處理圖片",

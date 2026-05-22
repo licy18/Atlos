@@ -51,7 +51,7 @@
       "unrecall": "Hủy yêu cầu gỡ"
     },
     "errors": {
-      "unsupportedType": "Chỉ hỗ trợ ảnh JPEG/PNG/WebP/AVIF.",
+      "unsupportedType": "Chỉ hỗ trợ ảnh JPEG/PNG/WebP/AVIF/HEIC.",
       "fileTooLarge": "Tệp ảnh quá lớn.",
       "imageDecodeFailed": "Trình duyệt không thể mở ảnh này.",
       "imageProcessingUnavailable": "Không thể xử lý ảnh cục bộ.",

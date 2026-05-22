@@ -51,7 +51,7 @@
       "unrecall": "Avbryt borttagning"
     },
     "errors": {
-      "unsupportedType": "Endast JPEG/PNG/WebP/AVIF-bilder stöds.",
+      "unsupportedType": "Endast JPEG/PNG/WebP/AVIF/HEIC-bilder stöds.",
       "fileTooLarge": "Bildfilen är för stor.",
       "imageDecodeFailed": "Webbläsaren kunde inte öppna bilden.",
       "imageProcessingUnavailable": "Lokal bildbehandling är inte tillgänglig.",

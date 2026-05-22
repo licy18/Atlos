@@ -51,7 +51,7 @@
       "unrecall": "Batalkan penghapusan"
     },
     "errors": {
-      "unsupportedType": "Hanya gambar JPEG/PNG/WebP/AVIF yang didukung.",
+      "unsupportedType": "Hanya gambar JPEG/PNG/WebP/AVIF/HEIC yang didukung.",
       "fileTooLarge": "File gambar terlalu besar.",
       "imageDecodeFailed": "Browser tidak dapat membuka gambar ini.",
       "imageProcessingUnavailable": "Pemrosesan gambar lokal tidak tersedia.",

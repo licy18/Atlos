@@ -625,7 +625,7 @@ async function readUGCError(response: Response): Promise<UGCClientError> {
 }
 
 function normalizeUGCErrorCode(code: string, status?: number): string {
-    if (status === 429 || code === 'RATE_LIMITED') return 'RATE_LIMITED';
+    if (status === 429 || code === 'RATE_LIMITED') return 'rateLimited';
     if (code === 'MIME_NOT_ALLOWED') return 'unsupportedType';
     if (code === 'UPLOAD_SIZE_INVALID') return 'fileTooLarge';
     if (code === 'IMAGE_PROCESSING_FAILED') return 'imageDecodeFailed';

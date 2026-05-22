@@ -51,7 +51,7 @@
       "unrecall": "Anuluj usunięcie"
     },
     "errors": {
-      "unsupportedType": "Obsługiwane są tylko obrazy JPEG/PNG/WebP/AVIF.",
+      "unsupportedType": "Obsługiwane są tylko obrazy JPEG/PNG/WebP/AVIF/HEIC.",
       "fileTooLarge": "Plik obrazu jest zbyt duży.",
       "imageDecodeFailed": "Przeglądarka nie mogła otworzyć tego obrazu.",
       "imageProcessingUnavailable": "Lokalne przetwarzanie obrazu jest niedostępne.",

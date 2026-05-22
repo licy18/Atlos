@@ -59,7 +59,7 @@
       "uploadInvalidResponse": "The upload response was invalid.",
       "uploadNetwork": "Network error while uploading.",
       "uploadAborted": "Upload was cancelled.",
-      "RATE_LIMITED": "Upload rate limit reached, retry later.",
+      "rateLimited": "Upload rate limit reached, retry later.",
       "uploadFailed": "Upload failed, please try again.",
       "backendUnknown": "Upload service returned an error."
     }

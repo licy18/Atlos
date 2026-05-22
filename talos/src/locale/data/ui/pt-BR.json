@@ -51,7 +51,7 @@
       "unrecall": "Cancelar remoção"
     },
     "errors": {
-      "unsupportedType": "Apenas imagens JPEG/PNG/WebP/AVIF são suportadas.",
+      "unsupportedType": "Apenas imagens JPEG/PNG/WebP/AVIF/HEIC são suportadas.",
       "fileTooLarge": "O arquivo de imagem é grande demais.",
       "imageDecodeFailed": "O navegador não conseguiu abrir esta imagem.",
       "imageProcessingUnavailable": "O processamento local de imagem não está disponível.",

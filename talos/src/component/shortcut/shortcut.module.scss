@@ -82,7 +82,7 @@ $keyCap-unit: 1.25rem;
         height: calc($keyCap-unit + 4px);
     }
 
-    &[data-type='left-click'] {
+    &[data-type='left-click'], &[data-type='right-click'], &[data-type='wheel'] {
         height: calc(#{$keyCap-unit} + 1px);
         width: calc(0.66 * #{$keyCap-unit} + 1px);
         border-radius: 6px;
@@ -121,6 +121,26 @@ $keyCap-unit: 1.25rem;
                 border-top-left-radius: 12px;
                 corner-shape: superellipse(1.5);
             }
+        }
+    }
+
+    &[data-type='right-click']::after {
+        left: 50%;
+        border-top-left-radius: 0;
+        border-top-right-radius: 6px;
+        @supports (corner-shape: superellipse(1.5)) {
+            border-top-right-radius: 12px;
+        }
+    }
+    &[data-type='wheel']::after {
+        top: 20%;
+        left: 35%;
+        width: 30%;
+        height: 40%;
+        border-radius: 4px;
+        @supports (corner-shape: superellipse(2)) {
+            border-radius: 8px;
+            corner-shape: superellipse(2);
         }
     }
 }

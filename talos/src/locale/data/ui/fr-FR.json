@@ -51,7 +51,7 @@
       "unrecall": "Annuler le retrait"
     },
     "errors": {
-      "unsupportedType": "Seules les images JPEG/PNG/WebP/AVIF sont prises en charge.",
+      "unsupportedType": "Seules les images JPEG/PNG/WebP/AVIF/HEIC sont prises en charge.",
       "fileTooLarge": "Le fichier image est trop volumineux.",
       "imageDecodeFailed": "Le navigateur n’a pas pu ouvrir cette image.",
       "imageProcessingUnavailable": "Le traitement local de l’image est indisponible.",

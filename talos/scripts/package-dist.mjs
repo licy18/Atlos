@@ -64,21 +64,35 @@ const formatTimestamp = () => {
   )}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
 };
 
+const excludedClipDirNames = new Set(['jinlong']);
+
+const isExcludedClipDir = (name) => excludedClipDirNames.has(name.toLowerCase());
+
 const pruneClips = async (distDir) => {
   const clipsDir = path.resolve(distDir, 'clips');
   const removed = {
-    jinlongRemoved: false,
+    removedClipDirs: [],
+    removedLooseFiles: [],
     removedScripts: [],
   };
 
-  const jinlongDir = path.resolve(clipsDir, 'Jinlong');
-  if (await fs.pathExists(jinlongDir)) {
-    await fs.remove(jinlongDir);
-    removed.jinlongRemoved = true;
-  }
-
   if (!(await fs.pathExists(clipsDir))) {
     return removed;
+  }
+
+  const clipEntries = await fs.readdir(clipsDir, { withFileTypes: true });
+  for (const entry of clipEntries) {
+    const fullPath = path.resolve(clipsDir, entry.name);
+    if (entry.isDirectory()) {
+      if (!isExcludedClipDir(entry.name)) continue;
+
+      await fs.remove(fullPath);
+      removed.removedClipDirs.push(path.relative(distDir, fullPath).replace(/\\/g, '/'));
+      continue;
+    }
+
+    await fs.remove(fullPath);
+    removed.removedLooseFiles.push(path.relative(distDir, fullPath).replace(/\\/g, '/'));
   }
 
   const scriptExts = new Set(['.py', '.sh', '.js', '.mjs', '.ts', '.bash', '.zsh']);
@@ -170,7 +184,10 @@ const packageDist = async () => {
     artifact: path.basename(zipPath),
     checksum: digest,
     prune: {
-      jinlongRemoved: pruneReport.jinlongRemoved,
+      removedClipDirCount: pruneReport.removedClipDirs.length,
+      removedClipDirs: pruneReport.removedClipDirs,
+      removedLooseFileCount: pruneReport.removedLooseFiles.length,
+      removedLooseFiles: pruneReport.removedLooseFiles,
       removedScriptCount: pruneReport.removedScripts.length,
       removedScripts: pruneReport.removedScripts,
     },

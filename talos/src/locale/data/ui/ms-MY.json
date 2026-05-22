@@ -51,7 +51,7 @@
       "unrecall": "Batalkan pemadaman"
     },
     "errors": {
-      "unsupportedType": "Hanya imej JPEG/PNG/WebP/AVIF disokong.",
+      "unsupportedType": "Hanya imej JPEG/PNG/WebP/AVIF/HEIC disokong.",
       "fileTooLarge": "Fail imej terlalu besar.",
       "imageDecodeFailed": "Pelayar tidak dapat membuka imej ini.",
       "imageProcessingUnavailable": "Pemprosesan imej setempat tidak tersedia.",

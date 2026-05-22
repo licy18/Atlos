@@ -51,7 +51,7 @@
       "unrecall": "Отменить удаление"
     },
     "errors": {
-      "unsupportedType": "Поддерживаются только изображения JPEG/PNG/WebP/AVIF.",
+      "unsupportedType": "Поддерживаются только изображения JPEG/PNG/WebP/AVIF/HEIC.",
       "fileTooLarge": "Файл изображения слишком большой.",
       "imageDecodeFailed": "Браузер не смог открыть это изображение.",
       "imageProcessingUnavailable": "Локальная обработка изображений недоступна.",

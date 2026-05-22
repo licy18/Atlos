@@ -51,7 +51,7 @@
       "unrecall": "削除申請を取り消す"
     },
     "errors": {
-      "unsupportedType": "JPEG/PNG/WebP/AVIF 画像のみ対応しています。",
+      "unsupportedType": "JPEG/PNG/WebP/AVIF/HEIC 画像のみ対応しています。",
       "fileTooLarge": "画像ファイルが大きすぎます。",
       "imageDecodeFailed": "ブラウザでこの画像を読み込めませんでした。",
       "imageProcessingUnavailable": "ローカルでの画像処理を利用できません。",

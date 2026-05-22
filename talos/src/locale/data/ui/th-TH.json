@@ -51,7 +51,7 @@
       "unrecall": "ยกเลิกคำขอถอน"
     },
     "errors": {
-      "unsupportedType": "รองรับเฉพาะรูปภาพ JPEG/PNG/WebP/AVIF",
+      "unsupportedType": "รองรับเฉพาะรูปภาพ JPEG/PNG/WebP/AVIF/HEIC",
       "fileTooLarge": "ไฟล์รูปภาพมีขนาดใหญ่เกินไป",
       "imageDecodeFailed": "เบราว์เซอร์ไม่สามารถเปิดรูปภาพนี้ได้",
       "imageProcessingUnavailable": "ไม่สามารถประมวลผลรูปภาพภายในเครื่องได้",

@@ -59,7 +59,7 @@
       "uploadInvalidResponse": "上传接口返回异常",
       "uploadNetwork": "上传时发生网络错误",
       "uploadAborted": "上传已取消",
-      "RATE_LIMITED": "上传过于频繁，请稍后再试",
+      "rateLimited": "上传过于频繁，请稍后再试",
       "uploadFailed": "上传失败，请稍后再试",
       "backendUnknown": "上传服务返回错误"
     }
