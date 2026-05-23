@@ -352,6 +352,20 @@
       "authorizationFailed": "권한 요청에 실패했습니다."
     }
   },
+  "sync": {
+    "conflict": {
+      "title": "진행도 충돌",
+      "local": "로컬",
+      "remote": "원격",
+      "official": "공식 지도",
+      "updatedAt": "최종 수정일",
+      "total": "기록된 지점",
+      "region": "지역",
+      "keepA": "{label} 데이터 유지",
+      "keepB": "{label} 데이터 사용",
+      "merge": "양쪽 데이터 병합 ({count})"
+    }
+  },
   "links": {
     "enka": {
       "name": "Factory Planner",

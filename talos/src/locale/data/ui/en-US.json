@@ -278,8 +278,8 @@
       "note": "Note",
       "noteNickname": "You can use no more than 15 letters, numbers, hyphens and underscores in your username.",
       "noteUID": "UID is assigned on first setup and cannot be changed. You can update your username any time. Click the avatar area to switch avatar.",
-      "auditLabel": "Audit",
-      "importOfficialMarks": "Import from Official Map",
+      "auditLabel": "Action",
+      "importOfficial": "Import from Official Map",
       "save": "Save Changes",
       "saving": "Saving...",
       "logout": "Sign Out"
@@ -364,13 +364,12 @@
       "title": "Progress Conflict",
       "local": "Local",
       "remote": "Remote",
-      "official": "Official Map",
+      "official": "Official",
       "updatedAt": "Last modified",
-      "unknownTime": "Unknown",
-      "total": "Total points",
+      "total": "Marked Points",
       "region": "Region",
-      "keepA": "Keep {label}",
-      "keepB": "Use {label}",
+      "keepA": "Keep {label} Data",
+      "keepB": "Use {label} Data",
       "merge": "Merge both sources ({count})"
     }
   },

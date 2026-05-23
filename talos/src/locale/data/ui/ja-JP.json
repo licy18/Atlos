@@ -352,6 +352,20 @@
       "authorizationFailed": "許可に失敗しました。"
     }
   },
+  "sync": {
+    "conflict": {
+      "title": "進捗の競合",
+      "local": "ローカル",
+      "remote": "リモート",
+      "official": "公式側",
+      "updatedAt": "最終更新",
+      "total": "記録済みポイント",
+      "region": "エリア",
+      "keepA": "{label}のデータを残す",
+      "keepB": "{label}のデータを使用",
+      "merge": "両方のデータを結合 ({count})"
+    }
+  },
   "links": {
     "enka": {
       "name": "Factory Planner",

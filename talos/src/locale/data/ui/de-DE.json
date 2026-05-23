@@ -352,6 +352,20 @@
       "authorizationFailed": "Autorisierung fehlgeschlagen."
     }
   },
+  "sync": {
+    "conflict": {
+      "title": "Fortschrittskonflikt",
+      "local": "Lokal",
+      "remote": "Remote",
+      "official": "Offiziell",
+      "updatedAt": "Zuletzt geändert",
+      "total": "Markierungen",
+      "region": "Region",
+      "keepA": "{label}-Daten behalten",
+      "keepB": "{label}-Daten nutzen",
+      "merge": "Beide Daten zusammenführen ({count})"
+    }
+  },
   "links": {
     "enka": {
       "name": "Factory Planner",

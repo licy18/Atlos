@@ -54,7 +54,7 @@
       "unsupportedType": "僅接收 JPEG/PNG/WebP/AVIF/HEIC 檔案",
       "fileTooLarge": "圖片檔案過大",
       "imageDecodeFailed": "瀏覽器無法讀取此圖片",
-      "imageProcessingUnavailable": "無法於裝置上處理圖片",
+      "imageProcessingUnavailable": "無法於此裝置上處理圖片",
       "processedTooLarge": "處理後的圖片仍然過大",
       "uploadInvalidResponse": "上載服務回應異常",
       "uploadNetwork": "上載時發生網絡錯誤",
@@ -350,6 +350,20 @@
       "roleRequired": "請選擇角色。",
       "unlinkFailed": "解除綁定失敗。",
       "authorizationFailed": "授權失敗。"
+    }
+  },
+  "sync": {
+    "conflict": {
+      "title": "數據衝突",
+      "local": "本機",
+      "remote": "遠端",
+      "official": "官方地圖",
+      "updatedAt": "最後更新時間",
+      "total": "總收集點位數量",
+      "region": "區域",
+      "keepA": "保留{label}數據",
+      "keepB": "採用{label}數據",
+      "merge": "合併兩方數據 ({count})"
     }
   },
   "links": {

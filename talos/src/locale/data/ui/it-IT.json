@@ -352,6 +352,20 @@
       "authorizationFailed": "Autorizzazione fallita."
     }
   },
+  "sync": {
+    "conflict": {
+      "title": "Conflitto di avanzamento",
+      "local": "Locale",
+      "remote": "Remoto",
+      "official": "Ufficiale",
+      "updatedAt": "Ultima modifica",
+      "total": "Punti segnati",
+      "region": "Regione",
+      "keepA": "Mantieni dati {label}",
+      "keepB": "Usa dati {label}",
+      "merge": "Unisci entrambi i dati ({count})"
+    }
+  },
   "links": {
     "enka": {
       "name": "Factory Planner",

@@ -352,6 +352,20 @@
       "authorizationFailed": "Godkännande misslyckades."
     }
   },
+  "sync": {
+    "conflict": {
+      "title": "Synkroniseringskonflikt",
+      "local": "Lokal",
+      "remote": "Fjärr",
+      "official": "Officiell",
+      "updatedAt": "Senast ändrad",
+      "total": "Markerade punkter",
+      "region": "Region",
+      "keepA": "Behåll {label}-data",
+      "keepB": "Använd {label}-data",
+      "merge": "Slå ihop båda datakällorna ({count})"
+    }
+  },
   "links": {
     "enka": {
       "name": "Enka Network",

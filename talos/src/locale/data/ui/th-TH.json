@@ -352,6 +352,20 @@
       "authorizationFailed": "อนุญาตล้มเหลว"
     }
   },
+  "sync": {
+    "conflict": {
+      "title": "ความคืบหน้าขัดแย้ง",
+      "local": "ในเครื่อง",
+      "remote": "คลาวด์",
+      "official": "แผนที่ทางการ",
+      "updatedAt": "แก้ไขล่าสุด",
+      "total": "จุดที่บันทึกไว้",
+      "region": "ภูมิภาค",
+      "keepA": "เก็บข้อมูล {label}",
+      "keepB": "ใช้ข้อมูล {label}",
+      "merge": "ผสานข้อมูลทั้งสองแหล่ง ({count})"
+    }
+  },
   "links": {
     "enka": {
       "name": "Factory Planner",

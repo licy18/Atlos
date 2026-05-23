@@ -56,7 +56,7 @@ export const applyOfficialMarks = (
     };
 };
 
-export const importOfficialMarks = async (): Promise<OfficialMarksImportResult> => {
+export const importOfficial = async (): Promise<OfficialMarksImportResult> => {
     const snapshot = await loadOfficialMarksSnapshot();
     return applyOfficialMarks(snapshot.officialPointIds, snapshot.unresolved);
 };

@@ -351,6 +351,20 @@
       "authorizationFailed": "Cho phép thất bại."
     }
   },
+  "sync": {
+    "conflict": {
+      "title": "Xung đột tiến độ",
+      "local": "Cục bộ",
+      "remote": "Đám mây",
+      "official": "Bản đồ chính thức",
+      "updatedAt": "Sửa đổi lần cuối",
+      "total": "Điểm đã đánh dấu",
+      "region": "Khu vực",
+      "keepA": "Giữ lại dữ liệu {label}",
+      "keepB": "Sử dụng dữ liệu {label}",
+      "merge": "Hợp nhất cả hai nguồn dữ liệu ({count})"
+    }
+  },
   "links": {
     "enka": {
       "name": "Factory Planner",

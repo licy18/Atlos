@@ -352,6 +352,20 @@
       "authorizationFailed": "अनुमति विफल।"
     }
   },
+  "sync": {
+    "conflict": {
+      "title": "प्रगति विरोध",
+      "local": "लोकल",
+      "remote": "रिमोट",
+      "official": "आधिकारिक",
+      "updatedAt": "अंतिम संशोधन",
+      "total": "चिह्नित बिंदु",
+      "region": "क्षेत्र",
+      "keepA": "{label} डेटा रखें",
+      "keepB": "{label} डेटा का उपयोग करें",
+      "merge": "दोनों डेटा मर्ज करें ({count})"
+    }
+  },
   "links": {
     "enka": {
       "name": "Factory Planner",

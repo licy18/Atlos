@@ -279,7 +279,7 @@
       "noteNickname": "您可以使用至多十五个字母、数字、连字符或下划线作为您的用户名。",
       "noteUID": "UID 仅在首次设置用户名时分配且不可更改，但您可以随时更新自己的用户名。点击头像区域可以切换其他头像。",
       "auditLabel": "操作",
-      "importOfficialMarks": "从官方地图导入数据",
+      "importOfficial": "从官方地图导入点位数据",
       "save": "保存更改",
       "saving": "保存中…",
       "logout": "登出"
@@ -365,13 +365,12 @@
       "local": "本地",
       "remote": "远端",
       "official": "官方地图",
-      "updatedAt": "上次修改",
-      "unknownTime": "未知",
-      "total": "点位数量",
+      "updatedAt": "最后更新时间",
+      "total": "总收集点位数量",
       "region": "区域",
       "keepA": "保留{label}数据",
       "keepB": "使用{label}数据",
-      "merge": "合并两个来源的数据 ({count})"
+      "merge": "合并以上来源的数据 ({count})"
     }
   },
   "links": {

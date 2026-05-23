@@ -352,6 +352,20 @@
       "authorizationFailed": "Kebenaran gagal."
     }
   },
+  "sync": {
+    "conflict": {
+      "title": "Konflik Kemajuan",
+      "local": "Tempatan",
+      "remote": "Jauh",
+      "official": "Rasmi",
+      "updatedAt": "Terakhir diubah",
+      "total": "Titik Ditanda",
+      "region": "Rantau",
+      "keepA": "Kekalkan Data {label}",
+      "keepB": "Guna Data {label}",
+      "merge": "Gabungkan Kedua-dua Data ({count})"
+    }
+  },
   "links": {
     "enka": {
       "name": "Factory Planner",

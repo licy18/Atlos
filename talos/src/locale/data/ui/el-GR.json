@@ -352,6 +352,20 @@
       "authorizationFailed": "Η εξουσιοδότηση απέτυχε."
     }
   },
+  "sync": {
+    "conflict": {
+      "title": "Σύγκρουση προόδου",
+      "local": "Τοπικό",
+      "remote": "Απομακρυσμένο",
+      "official": "Επίσημο",
+      "updatedAt": "Τελευταία τροποποίηση",
+      "total": "Σημειωμένα σημεία",
+      "region": "Περιοχή",
+      "keepA": "Διατήρηση δεδομένων {label}",
+      "keepB": "Χρήση δεδομένων {label}",
+      "merge": "Συγχώνευση και των δύο ({count})"
+    }
+  },
   "links": {
     "enka": {
       "name": "Factory Planner",

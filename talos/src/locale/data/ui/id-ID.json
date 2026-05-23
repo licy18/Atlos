@@ -352,6 +352,20 @@
       "authorizationFailed": "Otorisasi gagal."
     }
   },
+  "sync": {
+    "conflict": {
+      "title": "Konflik Progres",
+      "local": "Lokal",
+      "remote": "Remote",
+      "official": "Resmi",
+      "updatedAt": "Terakhir diubah",
+      "total": "Titik Ditandai",
+      "region": "Wilayah",
+      "keepA": "Simpan Data {label}",
+      "keepB": "Gunakan Data {label}",
+      "merge": "Gabungkan Kedua Data ({count})"
+    }
+  },
   "links": {
     "enka": {
       "name": "Factory Planner",

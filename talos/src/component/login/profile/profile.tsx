@@ -218,7 +218,7 @@ const ProfileModal = ({
                 disabled={isSavingProfile || isImportingOfficialMarks}
                 label={isImportingOfficialMarks
                   ? t('common.loading') || 'Loading...'
-                  : t('idcard.profile.importOfficialMarks') || 'Import from Official Map'}
+                  : t('idcard.profile.importOfficial')}
               />
             </div>
             <AccessButton

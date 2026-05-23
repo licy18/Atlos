@@ -352,6 +352,20 @@
       "authorizationFailed": "Autoryzacja nie powiodła się."
     }
   },
+  "sync": {
+    "conflict": {
+      "title": "Konflikt postępów",
+      "local": "Lokalne",
+      "remote": "Zdalne",
+      "official": "Oficjalne",
+      "updatedAt": "Ostatnia modyfikacja",
+      "total": "Oznaczone punkty",
+      "region": "Region",
+      "keepA": "Zachowaj dane {label}",
+      "keepB": "Użyj danych {label}",
+      "merge": "Scal oba źródła danych ({count})"
+    }
+  },
   "links": {
     "enka": {
       "name": "Factory Planner",

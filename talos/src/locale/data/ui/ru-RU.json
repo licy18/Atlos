@@ -352,6 +352,20 @@
       "authorizationFailed": "Авторизация не удалась."
     }
   },
+  "sync": {
+    "conflict": {
+      "title": "Конфликт прогресса",
+      "local": "Локально",
+      "remote": "Облако",
+      "official": "Официальная карта",
+      "updatedAt": "Последнее изменение",
+      "total": "Отмеченные точки",
+      "region": "Регион",
+      "keepA": "Оставить данные {label}",
+      "keepB": "Использовать данные {label}",
+      "merge": "Объединить данные ({count})"
+    }
+  },
   "links": {
     "enka": {
       "name": "Factory Planner",
