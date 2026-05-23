@@ -59,6 +59,7 @@
       "uploadInvalidResponse": "업로드 서비스에서 잘못된 응답을 반환했습니다.",
       "uploadNetwork": "업로드 중 네트워크 오류가 발생했습니다.",
       "uploadAborted": "업로드가 취소되었습니다.",
+      "rateLimited": "업로드 제한에 도달했습니다. 나중에 다시 시도하세요.",
       "uploadFailed": "업로드에 실패했습니다. 잠시 후 다시 시도해 주세요.",
       "backendUnknown": "업로드 서비스에서 오류가 발생했습니다."
     }
@@ -278,6 +279,7 @@
       "noteNickname": "사용자 이름에는 문자, 숫자, 하이픈, 밑줄을 15자 이하로 사용할 수 있습니다.",
       "noteUID": "UID는 최초 설정 시 할당되며 변경할 수 없습니다. 언제든지 사용자 이름을 업데이트할 수 있습니다. 아바타 영역을 클릭하면 아바타가 전환됩니다.",
       "auditLabel": "심사",
+      "importOfficial": "공식 지도에서 가져오기",
       "save": "변경 사항 저장",
       "saving": "절약…",
       "logout": "로그아웃"
@@ -286,7 +288,10 @@
   "scale": {
     "pip": {
       "activeTitle": "PIP 모드가 활성화되었습니다",
-      "returnHint": "이 탭으로 돌아가려면 로고를 클릭하세요"
+      "returnHint": "이 탭으로 돌아가려면 로고를 클릭하세요",
+      "enterMode": "PiP 모드 시작",
+      "exitMode": "PiP 모드 종료",
+      "unsupported": "PiP 가 지원되지 않습니다"
     }
   },
   "locator": {
@@ -309,6 +314,8 @@
       "unlink": "연동 해제",
       "bindWithCountdown": "연동 후 위치 동기화 활성화 ({sec})",
       "bind": "연동 후 위치 동기화 활성화",
+      "bindOnlyWithCountdown": "계정 연결 ({sec})",
+      "bindOnly": "계정 연결",
       "locateAuth": "권한 요청",
       "locateAuthBody": "위치 동기화를 활성화하면 게임 내 위치 정보에 접근합니다. 활성화하시겠습니까?",
       "authAndSync": "권한 허용 후 동기화 시작"

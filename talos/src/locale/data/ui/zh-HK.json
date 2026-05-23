@@ -59,6 +59,7 @@
       "uploadInvalidResponse": "上載服務回應異常",
       "uploadNetwork": "上載時發生網絡錯誤",
       "uploadAborted": "上載已取消",
+      "rateLimited": "上傳過於頻繁，請稍後再試",
       "uploadFailed": "上載失敗，請稍後再試",
       "backendUnknown": "上載服務返回錯誤"
     }
@@ -278,6 +279,7 @@
       "noteNickname": "使用至多 15 位字母、數字、連字符或底線作為您的暱稱。",
       "noteUID": "UID 只會在首次設定暱稱時分配且不可更改，但您可隨時更新自己的暱稱。點擊頭像區域可更換其他頭像。",
       "auditLabel": "操作",
+      "importOfficial": "從官方地圖匯入點位資料",
       "save": "儲存變更",
       "saving": "儲存中...",
       "logout": "登出"
@@ -286,7 +288,10 @@
   "scale": {
     "pip": {
       "activeTitle": "畫中畫模式已開啟",
-      "returnHint": "點擊 Logo 以返回目前分頁"
+      "returnHint": "點擊 Logo 以返回目前分頁",
+      "enterMode": "開啟畫中畫模式",
+      "exitMode": "退出畫中畫模式",
+      "unsupported": "目前瀏覽器不支援文件畫中畫"
     }
   },
   "locator": {
@@ -309,6 +314,8 @@
       "unlink": "解除綁定",
       "bindWithCountdown": "綁定並啟用位置同步（{sec}）",
       "bind": "綁定並啟用位置同步",
+      "bindOnlyWithCountdown": "綁定帳號（{sec}）",
+      "bindOnly": "綁定帳號",
       "locateAuth": "位置同步授權",
       "locateAuthBody": "啟用位置同步後將允許存取你的遊戲內位置資訊。是否啟用？",
       "authAndSync": "授權並開始同步"

@@ -59,6 +59,7 @@
       "uploadInvalidResponse": "Il servizio di caricamento ha restituito una risposta non valida.",
       "uploadNetwork": "Si è verificato un errore di rete durante il caricamento.",
       "uploadAborted": "Il caricamento è stato annullato.",
+      "rateLimited": "Limite di caricamento raggiunto, riprova più tardi.",
       "uploadFailed": "Caricamento non riuscito. Riprova più tardi.",
       "backendUnknown": "Il servizio di caricamento ha restituito un errore."
     }
@@ -278,6 +279,7 @@
       "noteNickname": "Non puoi utilizzare più di 15 lettere, numeri, trattini e trattini bassi nel tuo nome utente.",
       "noteUID": "L'UID viene assegnato alla prima configurazione e non può essere modificato. Puoi aggiornare il tuo nome utente in qualsiasi momento. Fare clic sull'area avatar per cambiare avatar.",
       "auditLabel": "Controllo",
+      "importOfficial": "Importa dalla mappa ufficiale",
       "save": "Salva modifiche",
       "saving": "Risparmio...",
       "logout": "Disconnessione"
@@ -286,7 +288,10 @@
   "scale": {
     "pip": {
       "activeTitle": "Picture-in-picture attivo",
-      "returnHint": "Fai clic sul logo per tornare a questa scheda"
+      "returnHint": "Fai clic sul logo per tornare a questa scheda",
+      "enterMode": "Entra in modalità PiP",
+      "exitMode": "Esci dalla modalità PiP",
+      "unsupported": "PiP non è supportato"
     }
   },
   "locator": {
@@ -309,6 +314,8 @@
       "unlink": "Scollega",
       "bindWithCountdown": "Collega e attiva sync ({sec})",
       "bind": "Collega e attiva sync",
+      "bindOnlyWithCountdown": "Collega account ({sec})",
+      "bindOnly": "Collega account",
       "locateAuth": "Autorizza",
       "locateAuthBody": "Attivare la sincronizzazione posizione consente l'accesso alla tua posizione in gioco. Vuoi abilitarla?",
       "authAndSync": "Autorizza e avvia sync"

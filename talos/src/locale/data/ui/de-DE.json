@@ -59,6 +59,7 @@
       "uploadInvalidResponse": "Der Upload-Dienst hat eine ungültige Antwort zurückgegeben.",
       "uploadNetwork": "Beim Hochladen ist ein Netzwerkfehler aufgetreten.",
       "uploadAborted": "Der Upload wurde abgebrochen.",
+      "rateLimited": "Upload-Limit erreicht, bitte später erneut versuchen.",
       "uploadFailed": "Upload fehlgeschlagen. Bitte versuchen Sie es später erneut.",
       "backendUnknown": "Der Upload-Dienst hat einen Fehler zurückgegeben."
     }
@@ -278,6 +279,7 @@
       "noteNickname": "Sie können maximal 15 Buchstaben, Zahlen, Bindestriche und Unterstriche in Ihrem Benutzernamen verwenden.",
       "noteUID": "Die UID wird bei der ersten Einrichtung zugewiesen und kann nicht geändert werden. Sie können Ihren Benutzernamen jederzeit aktualisieren. Klicken Sie auf den Avatar-Bereich, um den Avatar zu wechseln.",
       "auditLabel": "Prüfung",
+      "importOfficial": "Von der offiziellen Karte importieren",
       "save": "Speichern",
       "saving": "Speichern...",
       "logout": "Abmelden"
@@ -286,7 +288,10 @@
   "scale": {
     "pip": {
       "activeTitle": "Bild-in-Bild ist aktiv",
-      "returnHint": "Klicke auf das Logo, um zu diesem Tab zurückzukehren"
+      "returnHint": "Klicke auf das Logo, um zu diesem Tab zurückzukehren",
+      "enterMode": "PiP-Modus starten",
+      "exitMode": "PiP-Modus beenden",
+      "unsupported": "PiP wird nicht unterstützt"
     }
   },
   "locator": {
@@ -309,6 +314,8 @@
       "unlink": "Entkoppeln",
       "bindWithCountdown": "Binden & Standortsync aktivieren ({sec})",
       "bind": "Binden & Standortsync aktivieren",
+      "bindOnlyWithCountdown": "Konto verknüpfen ({sec})",
+      "bindOnly": "Konto verknüpfen",
       "locateAuth": "Autorisieren",
       "locateAuthBody": "Das Aktivieren der Standortsync erlaubt den Zugriff auf Ihre In-Game-Position. Möchten Sie aktivieren?",
       "authAndSync": "Autorisieren & Sync starten"

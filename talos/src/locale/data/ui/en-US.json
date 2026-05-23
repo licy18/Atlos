@@ -291,7 +291,7 @@
       "returnHint": "Click the Logo to return to this tab",
       "enterMode": "Enter PiP mode",
       "exitMode": "Exit PiP mode",
-      "unsupported": "Document Picture-in-Picture is not supported"
+      "unsupported": "Document PiP is not supported"
     }
   },
   "locator": {

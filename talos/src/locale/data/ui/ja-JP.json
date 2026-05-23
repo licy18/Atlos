@@ -59,6 +59,7 @@
       "uploadInvalidResponse": "アップロードサービスから異常な応答が返されました。",
       "uploadNetwork": "アップロード中にネットワークエラーが発生しました。",
       "uploadAborted": "アップロードはキャンセルされました。",
+      "rateLimited": "アップロードの上限に達しました。後でもう一度お試しください。",
       "uploadFailed": "アップロードに失敗しました。しばらくしてからもう一度お試しください。",
       "backendUnknown": "アップロードサービスでエラーが発生しました。"
     }
@@ -278,6 +279,7 @@
       "noteNickname": "ユーザー名には、最大15文字の英字、数字、ハイフン、またはアンダースコアを使用できます。",
       "noteUID": "UIDはユーザー名を初めて設定した際にのみ割り当てられ、変更することはできませんが、ユーザー名はいつでも更新できます。アバターエリアをクリックすると、他のアバターに切り替えることができます。",
       "auditLabel": "操作",
+      "importOfficial": "公式マップからインポート",
       "save": "変更を保存",
       "saving": "保存中…",
       "logout": "ログアウト"
@@ -286,7 +288,10 @@
   "scale": {
     "pip": {
       "activeTitle": "ピクチャーインピクチャーが有効です",
-      "returnHint": "ロゴをクリックして現在のタブに戻ります"
+      "returnHint": "ロゴをクリックして現在のタブに戻ります",
+      "enterMode": "PiPモードに入る",
+      "exitMode": "PiPモードを終了",
+      "unsupported": "PiP はサポートされていません"
     }
   },
   "locator": {
@@ -309,6 +314,8 @@
       "unlink": "連携解除",
       "bindWithCountdown": "連携して位置同期を有効化（{sec}）",
       "bind": "連携して位置同期を有効化",
+      "bindOnlyWithCountdown": "アカウントを連携（{sec}）",
+      "bindOnly": "アカウントを連携",
       "locateAuth": "許可",
       "locateAuthBody": "位置同期を有効にすると、ゲーム内の位置情報へのアクセスが許可されます。有効にしますか？",
       "authAndSync": "許可して同期開始"

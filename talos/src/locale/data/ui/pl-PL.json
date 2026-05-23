@@ -59,6 +59,7 @@
       "uploadInvalidResponse": "Odpowiedź API przesyłania jest nieprawidłowa.",
       "uploadNetwork": "Błąd sieci podczas przesyłania.",
       "uploadAborted": "Przesyłanie anulowane.",
+      "rateLimited": "Osiągnięto limit przesyłania, spróbuj ponownie później.",
       "uploadFailed": "Przesyłanie nie powiodło się. Spróbuj ponownie.",
       "backendUnknown": "Usługa przesyłania zwróciła błąd."
     }
@@ -278,6 +279,7 @@
       "noteNickname": "Nazwa użytkownika może składać się z maksymalnie 15 znaków (litery, cyfry, myślniki i podkreślenia).",
       "noteUID": "UID jest nadawany przy rejestracji i nie można go zmienić. Nazwę użytkownika możesz zaktualizować w dowolnej chwili. Kliknij awatar, aby go zmienić.",
       "auditLabel": "Akcje",
+      "importOfficial": "Importuj z oficjalnej mapy",
       "save": "Zapisz zmiany",
       "saving": "Zapisywanie...",
       "logout": "Wyloguj się"
@@ -286,7 +288,10 @@
   "scale": {
     "pip": {
       "activeTitle": "Tryb obraz w obrazie jest aktywny",
-      "returnHint": "Kliknij logo, aby wrócić do tej karty"
+      "returnHint": "Kliknij logo, aby wrócić do tej karty",
+      "enterMode": "Włącz tryb PiP",
+      "exitMode": "Wyłącz tryb PiP",
+      "unsupported": "PiP nie jest obsługiwane"
     }
   },
   "locator": {
@@ -309,6 +314,8 @@
       "unlink": "Odłącz",
       "bindWithCountdown": "Powiąż i włącz synchronizację ({sec})",
       "bind": "Powiąż i włącz synchronizację",
+      "bindOnlyWithCountdown": "Połącz konto ({sec})",
+      "bindOnly": "Połącz konto",
       "locateAuth": "Autoryzuj",
       "locateAuthBody": "Włączenie synchronizacji lokalizacji umożliwi dostęp do Twojej pozycji w grze. Włączyć?",
       "authAndSync": "Autoryzuj i uruchom sync"

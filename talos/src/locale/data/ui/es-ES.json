@@ -59,6 +59,7 @@
       "uploadInvalidResponse": "El servicio de subida devolvió una respuesta no válida.",
       "uploadNetwork": "Se produjo un error de red durante la subida.",
       "uploadAborted": "La subida fue cancelada.",
+      "rateLimited": "Límite de subida alcanzado, inténtalo de nuevo más tarde.",
       "uploadFailed": "Error al subir la imagen. Inténtalo de nuevo más tarde.",
       "backendUnknown": "El servicio de subida devolvió un error."
     }
@@ -278,6 +279,7 @@
       "noteNickname": "No puede utilizar más de 15 letras, números, guiones y guiones bajos en su nombre de usuario.",
       "noteUID": "El UID se asigna en la configuración inicial y no se puede cambiar. Puedes actualizar tu nombre de usuario en cualquier momento. Haz clic en el avatar para cambiarlo.",
       "auditLabel": "Auditoría",
+      "importOfficial": "Importar desde el mapa oficial",
       "save": "Guardar cambios",
       "saving": "Ahorro...",
       "logout": "Desconectar"
@@ -286,7 +288,10 @@
   "scale": {
     "pip": {
       "activeTitle": "Picture-in-picture está activo",
-      "returnHint": "Haz clic en el logo para volver a esta pestaña"
+      "returnHint": "Haz clic en el logo para volver a esta pestaña",
+      "enterMode": "Entrar en modo PiP",
+      "exitMode": "Salir del modo PiP",
+      "unsupported": "PiP no es compatible"
     }
   },
   "locator": {
@@ -309,6 +314,8 @@
       "unlink": "Desvincular",
       "bindWithCountdown": "Vincular y activar sincronización ({sec})",
       "bind": "Vincular y activar sincronización",
+      "bindOnlyWithCountdown": "Vincular cuenta ({sec})",
+      "bindOnly": "Vincular cuenta",
       "locateAuth": "Autorizar",
       "locateAuthBody": "Activar la sincronización de ubicación permitirá acceder a tu posición en el juego. ¿Deseas habilitarla?",
       "authAndSync": "Autorizar e iniciar sincronización"

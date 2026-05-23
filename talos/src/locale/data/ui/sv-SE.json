@@ -59,6 +59,7 @@
       "uploadInvalidResponse": "Uppladdnings-API:ets svar var ogiltigt.",
       "uploadNetwork": "Nätverksfel vid uppladdning.",
       "uploadAborted": "Uppladdningen avbröts.",
+      "rateLimited": "Uppladdningsgränsen har nåtts, försök igen senare.",
       "uploadFailed": "Uppladdningen misslyckades. Försök igen senare.",
       "backendUnknown": "Uppladdningstjänsten returnerade ett fel."
     }
@@ -278,6 +279,7 @@
       "noteNickname": "Du kan använda max 15 tecken (endast bokstäver, siffror, bindestreck och understreck) i ditt användarnamn.",
       "noteUID": "UID tilldelas vid registrering och kan inte ändras. Du kan uppdatera ditt användarnamn när som helst. Klicka på avataren för att byta bild.",
       "auditLabel": "Åtgärder",
+      "importOfficial": "Importera från den officiella kartan",
       "save": "Spara ändringar",
       "saving": "Sparar...",
       "logout": "Logga ut"
@@ -286,7 +288,10 @@
   "scale": {
     "pip": {
       "activeTitle": "Bild-i-bild är aktivt",
-      "returnHint": "Klicka på logotypen för att återgå till den här fliken"
+      "returnHint": "Klicka på logotypen för att återgå till den här fliken",
+      "enterMode": "Gå in i PiP-läge",
+      "exitMode": "Lämna PiP-läge",
+      "unsupported": "PiP stöds inte"
     }
   },
   "locator": {
@@ -309,6 +314,8 @@
       "unlink": "Koppla bort",
       "bindWithCountdown": "Koppla och aktivera sync ({sec})",
       "bind": "Koppla och aktivera sync",
+      "bindOnlyWithCountdown": "Länka konto ({sec})",
+      "bindOnly": "Länka konto",
       "locateAuth": "Godkänn",
       "locateAuthBody": "Aktivering av plats-synk ger åtkomst till din position i spelet. Vill du aktivera?",
       "authAndSync": "Godkänn och starta synk"

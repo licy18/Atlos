@@ -59,6 +59,7 @@
       "uploadInvalidResponse": "Layanan unggahan mengembalikan respons yang tidak valid.",
       "uploadNetwork": "Terjadi kesalahan jaringan saat mengunggah.",
       "uploadAborted": "Unggahan dibatalkan.",
+      "rateLimited": "Batas unggah tercapai, coba lagi nanti.",
       "uploadFailed": "Unggahan gagal. Silakan coba lagi nanti.",
       "backendUnknown": "Layanan unggahan mengembalikan kesalahan."
     }
@@ -278,6 +279,7 @@
       "noteNickname": "Username maksimal 15 karakter (huruf, angka, tanda hubung, garis bawah).",
       "noteUID": "UID ditetapkan saat pendaftaran dan tidak dapat diubah. Username dapat diperbarui kapan saja. Klik avatar untuk mengganti gambar.",
       "auditLabel": "Audit",
+      "importOfficial": "Impor dari Peta Resmi",
       "save": "Simpan",
       "saving": "Menyimpan...",
       "logout": "Keluar"
@@ -286,7 +288,10 @@
   "scale": {
     "pip": {
       "activeTitle": "Mode Gambar-dalam-gambar aktif",
-      "returnHint": "Klik logo untuk kembali ke tab ini"
+      "returnHint": "Klik logo untuk kembali ke tab ini",
+      "enterMode": "Masuk mode PiP",
+      "exitMode": "Keluar dari mode PiP",
+      "unsupported": "PiP tidak didukung"
     }
   },
   "locator": {
@@ -309,6 +314,8 @@
       "unlink": "Lepas tautan",
       "bindWithCountdown": "Tautkan & aktifkan sinkronisasi ({sec})",
       "bind": "Tautkan & aktifkan sinkronisasi",
+      "bindOnlyWithCountdown": "Tautkan akun ({sec})",
+      "bindOnly": "Tautkan akun",
       "locateAuth": "Otorisasi",
       "locateAuthBody": "Mengaktifkan sinkronisasi lokasi akan memberi akses ke posisi in-game Anda. Aktifkan?",
       "authAndSync": "Otorisasi & mulai sync"
