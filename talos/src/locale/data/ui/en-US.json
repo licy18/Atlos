@@ -279,6 +279,7 @@
       "noteNickname": "You can use no more than 15 letters, numbers, hyphens and underscores in your username.",
       "noteUID": "UID is assigned on first setup and cannot be changed. You can update your username any time. Click the avatar area to switch avatar.",
       "auditLabel": "Audit",
+      "importOfficialMarks": "Import from Official Map",
       "save": "Save Changes",
       "saving": "Saving...",
       "logout": "Sign Out"
@@ -313,6 +314,8 @@
       "unlink": "Unlink",
       "bindWithCountdown": "Bind and enable location sync ({sec})",
       "bind": "Bind and enable location sync",
+      "bindOnlyWithCountdown": "Bind account ({sec})",
+      "bindOnly": "Bind account",
       "locateAuth": "Authorize",
       "locateAuthBody": "Enabling Location Sync will allow access to your in-game location information. Do you want to enable it.",
       "authAndSync": "Authorize and start sync"
@@ -354,6 +357,21 @@
       "roleRequired": "Please select a role.",
       "unlinkFailed": "Failed to unlink binding.",
       "authorizationFailed": "Authorization failed."
+    }
+  },
+  "sync": {
+    "conflict": {
+      "title": "Progress Conflict",
+      "local": "Local",
+      "remote": "Remote",
+      "official": "Official Map",
+      "updatedAt": "Last modified",
+      "unknownTime": "Unknown",
+      "total": "Total points",
+      "region": "Region",
+      "keepA": "Keep {label}",
+      "keepB": "Use {label}",
+      "merge": "Merge both sources ({count})"
     }
   },
   "links": {

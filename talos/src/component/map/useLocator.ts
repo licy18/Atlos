@@ -9,7 +9,6 @@ import {
     EFBackendError,
     getEFPosition,
     openEFPositionSocket,
-    unlinkEFBinding,
     type EFPositionSocketMessage,
 } from '@/utils/endfield/backendClient';
 import type { PositionResponse } from '@/utils/endfield/types';
@@ -122,6 +121,7 @@ const LOCATOR_TARGET_ZOOM = 3;
 const LOCATOR_FOLLOW_CENTER_RATIO = 0.25;
 const LOCATOR_MOVE_ANIMATION_MS = 900;
 const POSITION_UNAVAILABLE_RETRY_MS = 5000;
+const EXPIRED_CREDENTIAL_RETRY_MS = 1000;
 
 type UpKind = 'expired' | 'notInGame' | 'policy';
 
@@ -244,18 +244,6 @@ export function useLocator(map: L.Map | undefined): void {
             useLocatorStore.getState().setViewMode('tracking');
         };
 
-        const onExpired = (error: EFBackendError) => {
-            showErr(error);
-            cleanupPolling();
-            void unlinkEFBinding()
-                .catch(() => undefined)
-                .finally(() => {
-                    if (disposed) return;
-                    disableLocatorSync();
-                    useLocatorStore.getState().reqBind();
-                });
-        };
-
         const onPolicy = (error: EFBackendError) => {
             pauseForErr(error);
             useLocatorStore.getState().openAuth();
@@ -267,10 +255,10 @@ export function useLocator(map: L.Map | undefined): void {
             disableLocatorSync();
         };
 
-        const onUpstream = (error: EFBackendError): boolean => {
+        const onUpstream = (error: EFBackendError, onExpired?: (error: EFBackendError) => void): boolean => {
             const kind = errKind(error);
             if (kind === 'expired') {
-                onExpired(error);
+                onExpired?.(error);
                 return true;
             }
             if (kind === 'policy') {
@@ -601,6 +589,13 @@ export function useLocator(map: L.Map | undefined): void {
                 }, delayMs);
             };
 
+            const retryExpiredCredentials = (error: EFBackendError) => {
+                showErr(error);
+                cleanupPolling();
+                trackerRunningRef.current = true;
+                scheduleNextPoll(EXPIRED_CREDENTIAL_RETRY_MS);
+            };
+
             const pollOnce = async () => {
                 if (!trackerRunningRef.current || disposed) return;
 
@@ -621,7 +616,7 @@ export function useLocator(map: L.Map | undefined): void {
                         disableLocatorSync();
                         return;
                     }
-                    if (onUpstream(error)) {
+                    if (onUpstream(error, retryExpiredCredentials)) {
                         return;
                     }
                     if (error.code !== 'ENDFIELD_POSITION_UNAVAILABLE') {
@@ -659,7 +654,7 @@ export function useLocator(map: L.Map | undefined): void {
                                 code: message.error.code ?? 'LOCATOR_STREAM_ERROR',
                                 details: message.error.details,
                             });
-                            if (onUpstream(error)) {
+                            if (onUpstream(error, retryExpiredCredentials)) {
                                 socket.close(1000, 'locator upstream state changed');
                             }
                         }
@@ -698,7 +693,7 @@ export function useLocator(map: L.Map | undefined): void {
                 .catch((error: unknown) => {
                     if (disposed) return;
                     if (error instanceof EFBackendError) {
-                        if (onUpstream(error)) {
+                        if (onUpstream(error, retryExpiredCredentials)) {
                             return;
                         }
                         if (error.code !== 'ENDFIELD_POSITION_UNAVAILABLE') {

@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import styles from './viewer.module.scss';
 import PopoverTooltip from '@/component/popover/popover';
 import { useTranslateUI } from '@/locale';
-import { formatDateTimeYYYYMMDDHHMMSS, formatElapsedShort, parseDateLike } from '@/utils/timeFormat';
+import { formatRelativeTime, parseDateLike } from '@/utils/timeFormat';
 import UpvoteIcon from '@/assets/images/UI/upvote.svg?react';
 import FlagIcon from '@/assets/images/UI/flag.svg?react';
 import ShareIcon from '@/assets/images/UI/share.svg?react';
@@ -120,10 +120,18 @@ const Viewer: React.FC<ViewerProps> = ({
         : recallRequested;
 
     const createdAtDate = useMemo(() => parseDateLike(currentCreatedAt), [currentCreatedAt]);
-    const createdAtLabel = createdAtDate ? formatDateTimeYYYYMMDDHHMMSS(createdAtDate) : '';
+    const createdAtLabel = createdAtDate ? formatRelativeTime(createdAtDate, {
+        precision: 'dateTime',
+        agoDisplay: 'hover',
+        agoLabel: tUI('idcard.ago'),
+    }).label : '';
     const refreshCreatedAtAgo = useCallback(() => {
         setCreatedAtAgo(createdAtDate
-            ? `${formatElapsedShort(createdAtDate.getTime(), Date.now())} ${tUI('idcard.ago')}`
+            ? formatRelativeTime(createdAtDate, {
+                precision: 'dateTime',
+                agoDisplay: 'hover',
+                agoLabel: tUI('idcard.ago'),
+            }).hoverLabel
             : '');
     }, [createdAtDate, tUI]);
     const flagLabel = currentFlagged ? tUI('detail.viewer.unflag') : tUI('detail.viewer.flag');

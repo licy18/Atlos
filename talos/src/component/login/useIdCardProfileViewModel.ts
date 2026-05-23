@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useTranslateUI } from '@/locale';
-import { formatDateYYYYMMDD, formatElapsedShort, parseDateLike } from '@/utils/timeFormat';
+import { formatRelativeTime, parseDateLike } from '@/utils/timeFormat';
 import type { SessionUser, UserGroupCode } from './authTypes';
 
 type KarmaLevel = 0 | 1 | 2 | 3 | 4 | 5;
@@ -143,10 +143,11 @@ export const useIdCardProfileViewModel = ({
     const ageText = isGuest
       ? hasLoggedInBefore ? logintipText : registipText
       : registeredDate
-      ? (() => {
-          const elapsed = formatElapsedShort(registeredDate.getTime(), Date.now());
-          return `${since} ${formatDateYYYYMMDD(registeredDate)} (${elapsed} ${ago})`;
-        })()
+      ? `${since} ${formatRelativeTime(registeredDate, {
+          precision: 'date',
+          agoDisplay: 'inline',
+          agoLabel: ago,
+        }).label}`
       : `${since} --`;
 
     const titleSource = isGuest ? 'g' : sessionUser?.titleCode || groupCode;

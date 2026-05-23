@@ -35,9 +35,16 @@ interface LocationBindingProps {
     onClose: () => void;
     onBound?: (binding: EFBindingSummary) => void;
     modalSize?: ModalProps['size'];
+    enableLocatorOnBound?: boolean;
 }
 
-const LocationBinding: React.FC<LocationBindingProps> = ({ open, onClose, onBound, modalSize = 'l' }) => {
+const LocationBinding: React.FC<LocationBindingProps> = ({
+    open,
+    onClose,
+    onBound,
+    modalSize = 'l',
+    enableLocatorOnBound = true,
+}) => {
     const t = useTranslateUI();
     const locale = useLocale();
     const existingTrackerConfig = useMemo(() => readEFTrackerConf(), []);
@@ -87,10 +94,12 @@ const LocationBinding: React.FC<LocationBindingProps> = ({ open, onClose, onBoun
         if (sessionUser?.uid) {
             setCachedBinding(sessionUser.uid, binding);
         }
-        applyRole(mode, role);
+        if (enableLocatorOnBound) {
+            applyRole(mode, role);
+        }
         onBound?.(binding);
         close();
-    }, [close, onBound, sessionUser?.uid]);
+    }, [close, enableLocatorOnBound, onBound, sessionUser?.uid]);
 
     const loadRoles = useCallback(async (
         nextFlowId: string,
@@ -185,10 +194,14 @@ const LocationBinding: React.FC<LocationBindingProps> = ({ open, onClose, onBoun
         },
     ], [t]);
 
-    const bindLabelTemplate = t('locator.binding.bindWithCountdown');
+    const bindLabelTemplate = enableLocatorOnBound
+        ? t('locator.binding.bindWithCountdown')
+        : t('locator.binding.bindOnlyWithCountdown');
     const bindLabel = countdown > 0
         ? bindLabelTemplate.replace('{sec}', String(countdown))
-        : t('locator.binding.bind');
+        : enableLocatorOnBound
+            ? t('locator.binding.bind')
+            : t('locator.binding.bindOnly');
 
     return (
         <Modal

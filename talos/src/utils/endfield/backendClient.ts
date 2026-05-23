@@ -36,6 +36,18 @@ export type EFPositionEnvelope = {
     binding?: EFBindingSummary;
 };
 
+export type EFOfficialMarksResponse = {
+    binding: EFBindingSummary;
+    timestamp?: string;
+    markedIds: string[];
+    pointIds: string[];
+    markers: Array<{
+        id: string;
+        isUserMarked: boolean;
+    }>;
+    raw?: unknown;
+};
+
 export type EFPositionSocketMessage =
     | ({ type: 'position' } & EFPositionEnvelope)
     | {
@@ -65,6 +77,7 @@ type ApiErrorPayload = {
 
 const BINDING_API_BASE = `${getAuthBase()}/binding/v1/endfield`;
 const LOCATOR_API_BASE = `${getAuthBase()}/locator`;
+const SYNC_API_BASE = `${getAuthBase()}/sync/v1`;
 
 export class EFBackendError extends Error {
     readonly status: number;
@@ -167,6 +180,9 @@ export const agreePolicy = (role?: { roleId?: string; serverId?: number | string
 
 export const getEFPosition = (options: { includeBinding?: boolean } = {}): Promise<{ data: PositionResponse['data']; binding?: EFBindingSummary }> =>
     requestJson(LOCATOR_API_BASE, options.includeBinding ? '/position?binding=1' : '/position');
+
+export const getEFOfficialMarks = (): Promise<EFOfficialMarksResponse> =>
+    requestJson(SYNC_API_BASE, '/official');
 
 export const openEFPositionSocket = (options: { includeBinding?: boolean } = {}): WebSocket => {
     const path = options.includeBinding ? '/position-stream?binding=1' : '/position-stream';

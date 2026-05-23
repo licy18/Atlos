@@ -22,6 +22,7 @@ import { getAppDocument, subscribePictureInPictureState } from '@/component/scal
 
 const UserGuide = lazy(() => import('@/component/userGuide/UserGuide'));
 const LocationAuth = lazy(() => import('@/component/locator/LocationAuth'));
+const EndfieldBindingHost = lazy(() => import('@/component/locator/EndfieldBindingHost'));
 
 declare global {
     interface Window {
@@ -166,6 +167,9 @@ function App() {
                     <LocationAuth />
                 </Suspense>
             )}
+            <Suspense fallback={null}>
+                <EndfieldBindingHost />
+            </Suspense>
             {/*<SupportAutoPopup />*/}
             <div className='app theme-transition-scope' style={{ '--sidebar-width': `${sidebarWidth}px` } as CSSProperties}>
                 {shouldLoadUserGuide && (
