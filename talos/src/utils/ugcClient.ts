@@ -74,8 +74,8 @@ type PendingSubmissionRequest = {
 };
 
 const UGC_API_BASE = `${getAuthBase()}/uploads/v1`;
-const IMAGE_CACHE_TTL_MS = 60_000;
-const SUBMISSION_CACHE_TTL_MS = 30_000;
+const IMAGE_CACHE_TTL_MS = 10_000;
+const SUBMISSION_CACHE_TTL_MS = 0;
 const MAX_UPLOAD_BYTES = 15 * 1024 * 1024;
 const CLIENT_WEBP_MAX_BYTES = 4 * 1024 * 1024;
 const CLIENT_WEBP_MAX_EDGE = 2160;

@@ -47,11 +47,12 @@ export const LOCATOR_REMINDER_STRATEGIES = {
         include: [
             'collection.*',
             'archives.*',
-            'exploration.*',
+            'exploration.*'
+        ],
+        exclude: [
             'exploration.pressure_plate',
             'exploration.wooden_box',
         ],
-        exclude: [],
     },
     manual: {
         include: [

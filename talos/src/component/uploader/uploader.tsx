@@ -100,7 +100,8 @@ const useUpload = (point: IMarkerData) => {
     const target = useMemo(() => resolveUGCUploadTarget(point), [point]);
     const [images, setImages] = useState<UGCImage[]>([]);
     const [myImages, setMyImages] = useState<UGCSubmissionImage[]>([]);
-    const [loading, setLoading] = useState(false);
+    const [publicImagesLoading, setPublicImagesLoading] = useState(false);
+    const [myImagesLoading, setMyImagesLoading] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [progress, setProgress] = useState(0);
     const [error, setError] = useState<string | null>(null);
@@ -129,10 +130,13 @@ const useUpload = (point: IMarkerData) => {
         setLastSubmission(null);
         setViewerOpen(false);
         setSelectedImageId(null);
+        setPublicImagesLoading(false);
+        setMyImagesLoading(false);
         if (!target) return;
 
         let disposed = false;
-        setLoading(true);
+        setPublicImagesLoading(true);
+        setMyImagesLoading(Boolean(user));
         void listUGCImages(point.id)
             .then((nextImages) => {
                 if (!disposed) setImages(nextImages);
@@ -141,7 +145,7 @@ const useUpload = (point: IMarkerData) => {
                 if (!disposed) setImages([]);
             })
             .finally(() => {
-                if (!disposed) setLoading(false);
+                if (!disposed) setPublicImagesLoading(false);
             });
 
         if (user) {
@@ -151,6 +155,9 @@ const useUpload = (point: IMarkerData) => {
                 })
                 .catch(() => {
                     if (!disposed) setMyImages([]);
+                })
+                .finally(() => {
+                    if (!disposed) setMyImagesLoading(false);
                 });
         }
 
@@ -219,7 +226,8 @@ const useUpload = (point: IMarkerData) => {
         : active
             ? 'hasImage'
             : 'noImage';
-    const canUpload = Boolean(target) && state !== 'hasImage' && state !== 'pending' && !uploading;
+    const loading = publicImagesLoading || myImagesLoading;
+    const canUpload = Boolean(target) && !loading && state !== 'hasImage' && state !== 'pending' && !uploading;
     const canPreview = Boolean(active);
     const interactive = canPreview || canUpload;
     const karma = Number.isFinite(user?.karma) ? Math.max(0, user?.karma as number) : 0;
