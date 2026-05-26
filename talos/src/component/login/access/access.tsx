@@ -260,13 +260,16 @@ const Access = ({
   const repeatPasswordHintText = getFieldHint('repeatPassword');
   const repeatPasswordHintType = getFieldHintType('repeatPassword');
   const shouldShowPwdRegex = isRegisterMode && touchedFields.password && fieldHintCodes.password === 112;
-  const isRegexRemoved = !open || !shouldShowPwdRegex;
+  const shouldShowEmailRegex = isRegisterMode && touchedFields.email && fieldHintCodes.email === 105;
+  const isRegexRemoved = !open || (!shouldShowPwdRegex && !shouldShowEmailRegex);
+  const emailRegexText = t('idcard.auth.emailRegex') || 'Disposable email addresses are not allowed';
   const pwdRegexText = t('idcard.auth.pwdRegex') || '8–20 characters; at least one uppercase';
+  const regexText = shouldShowEmailRegex ? emailRegexText : pwdRegexText;
 
   const shouldShowSendVerificationButton = canShowSendVerificationButton(activeTab, authValues);
   const shouldShowSendResetButton = isResetMode
     && !isResetSubmitStage
-    && validateSendVerificationCode(authValues) === null;
+    && validateSendVerificationCode(authValues, activeTab) === null;
   const authMachineNode = resolveAuthMachineNode({
     mode: activeTab,
     values: authValues,
@@ -425,7 +428,7 @@ const Access = ({
 
     if (isResetMode && !isResetSubmitStage) {
       touchField('email');
-      const emailValidationCode = validateSendVerificationCode(authValues);
+      const emailValidationCode = validateSendVerificationCode(authValues, activeTab);
       if (emailValidationCode) {
         setFieldCode('email', emailValidationCode);
         return;
@@ -541,7 +544,7 @@ const Access = ({
   const handleRequestPasswordReset = async () => {
     touchField('email');
 
-    const emailValidationCode = validateSendVerificationCode(authValues);
+    const emailValidationCode = validateSendVerificationCode(authValues, activeTab);
     if (emailValidationCode) {
       setFieldCode('email', emailValidationCode);
       return;
@@ -595,7 +598,7 @@ const Access = ({
   const handleRequestVerificationCode = async () => {
     touchField('email');
 
-    const emailValidationCode = validateSendVerificationCode(authValues);
+    const emailValidationCode = validateSendVerificationCode(authValues, activeTab);
     if (emailValidationCode) {
       setFieldCode('email', emailValidationCode);
       return;
@@ -833,10 +836,10 @@ const Access = ({
           <div
             className={styles.prtsRegex}
             data-removed={isRegexRemoved ? 'true' : 'false'}
-            data-text={pwdRegexText}
+            data-text={regexText}
             aria-live="polite"
           >
-            {pwdRegexText}
+            {regexText}
           </div>
 
         <div className={styles.lowerSection}>
