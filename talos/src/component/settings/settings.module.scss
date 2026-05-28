@@ -78,7 +78,7 @@
     font-size: 1rem;
     font-weight: 700;
     line-height: 1.25;
-    font-family: 'Novecento DemiBold', 'Novecento Cyrillic DemiBold', 'Novecento Vietnamese DemiBold', 'HMSans_EN','HMSans','UD_ShinGo Regular', 'Noto Sans Arabic', 'Noto Sans Thai', sans-serif;
+    font-family: 'Novecento DemiBold', 'Novecento Cyrillic DemiBold', 'Novecento Vietnamese DemiBold', 'HMSans_EN', HMSans, 'UD_ShinGo Regular', 'Noto Sans Arabic', 'Noto Sans Thai', sans-serif;
     letter-spacing: -.3px;
     color: var(--settings-section-text);
     unicode-bidi: plaintext;
@@ -88,7 +88,7 @@
     font-size: 0.85rem;
     font-weight: 600;
     line-height: 1.25;
-    font-family: 'HMSans_EN','HMSans','UD_ShinGo Regular', 'Noto Sans Arabic', 'Noto Sans Thai', sans-serif;
+    font-family: 'HMSans_EN', HMSans, 'UD_ShinGo Regular', 'Noto Sans Arabic', 'Noto Sans Thai', sans-serif;
     letter-spacing: -.2px;
     color: var(--settings-section-text);
     overflow-wrap: break-word;
@@ -124,6 +124,7 @@
     }
     .settingsTrigger {
         gap: 0.4rem;
+
         // Target the internal label of the Trigger component
         // This relies on the internal structure of Trigger (label is the last div)
         > div:last-child {
@@ -134,7 +135,7 @@
             font-weight: 600;
             color: var(--settings-section-text);
             line-height: 1.2;
-            word-break: break-word;
+            overflow-wrap: anywhere;
         }
     }
 }
@@ -248,7 +249,7 @@
     justify-self: center;
     width: 2rem;
     height: 2rem;
-    fill: currentColor;
+    fill: currentcolor;
     opacity: 1;
     transition: transform 0.45s $moderato-curve;
     filter: drop-shadow(0 0 1.5px rgba($black-0, .3));
@@ -256,7 +257,7 @@
 .themeName {
     grid-area: themeName;
     font-size: 1.15rem;
-    font-family: 'Novecento DemiBold', 'Novecento Cyrillic DemiBold', 'HMSans_EN', 'HMSans', 'Noto Sans Arabic', 'Noto Sans Thai', sans-serif;
+    font-family: 'Novecento DemiBold', 'Novecento Cyrillic DemiBold', 'HMSans_EN', HMSans, 'Noto Sans Arabic', 'Noto Sans Thai', sans-serif;
     font-weight: 700;
     letter-spacing: -.3px;
     line-height: 1;
@@ -270,6 +271,7 @@
 .themeIndicator {
     grid-area: themeInd;
     align-self: center;
+
     // Style from language module's currentTag
     display: inline-flex;
     align-items: center;
@@ -369,7 +371,7 @@
     font-weight: 600;
     color: var(--settings-section-text);
     line-height: 1.2;
-    word-break: break-word;
+    overflow-wrap: anywhere;
     user-select: none;
     transition: color .35s $adagio-curve;
 }

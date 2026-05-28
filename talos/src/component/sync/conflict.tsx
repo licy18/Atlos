@@ -10,7 +10,7 @@ import styles from './conflict.module.scss';
 
 export type SyncConflictSource = {
     side: 'local' | 'remote';
-    remoteSource?: 'official';
+    remoteSource?: 'official' | 'oemDb';
     updatedAt?: number | string | null;
     pointIds: string[];
 };
@@ -86,7 +86,7 @@ const sourceLabel = (source: SyncConflictSource, t: (key: string) => string): st
     if (source.side === 'local') return t('sync.conflict.local');
     const remote = source.remoteSource === 'official'
         ? t('sync.conflict.official')
-        : t('sync.conflict.remote');
+        : t('sync.conflict.oemDb');
     return `${t('sync.conflict.remote')}-${remote}`;
 };
 

@@ -57,6 +57,10 @@
 
     min-width: 20rem;
     max-width: 92dvw; // default size = s
+
+    &:focus, &:focus-visible {
+        outline: none;
+    }
     &[data-size="s"] {
         width: 18rem;
         max-width: 92dvw

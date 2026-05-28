@@ -367,6 +367,7 @@
       "local": "ローカル",
       "remote": "リモート",
       "official": "公式側",
+      "oemDb": "OEM DB",
       "updatedAt": "最終更新",
       "total": "記録済みポイント",
       "region": "エリア",

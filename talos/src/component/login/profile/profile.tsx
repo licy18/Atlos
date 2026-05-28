@@ -4,6 +4,8 @@ import Modal from '@/component/modal/modal';
 import { requestEndfieldBinding } from '@/component/locator';
 import SyncConflictModal, { type SyncConflictChoice } from '@/component/sync/conflict';
 import { useTranslateUI } from '@/locale';
+import { useProgressSyncStore } from '@/store/progressSync';
+import { useUserRecordStore } from '@/store/userRecord';
 import { useDevice } from '@/utils/device';
 import { EFBackendError, getEFBindingStatus } from '@/utils/endfield/backendClient';
 import {
@@ -12,12 +14,24 @@ import {
   loadOfficialMarksSnapshot,
   type OfficialMarksSnapshot,
 } from '@/utils/endfield/officialMarks';
+import { formatElapsedShort, parseDateLike } from '@/utils/timeFormat';
+import ProgressSyncHost from '@/component/progressSync/ProgressSyncHost';
+import { requestProgressSyncNow } from '@/component/progressSync/progressSyncController';
 import { AccessButton } from '../access';
 import IdCardView, { type IdCardRenderModel } from '../idcardView';
 import { useIdCardHoverAngle } from '../useIdCardHoverAngle';
 import styles from './profile.module.scss';
 
 const MODAL_EXIT_DURATION_MS = 325;
+const SYNC_HINT_BUSY_STATUSES = new Set(['checking', 'dirty', 'syncing']);
+const SYNC_HINT_FAILED_STATUSES = new Set(['error', 'offline', 'conflict']);
+
+const arePointSetsEqual = (first: string[], second: string[]): boolean => {
+  if (first.length !== second.length) return false;
+  const firstSet = new Set(first.map((id) => String(id)));
+  if (firstSet.size !== second.length) return false;
+  return second.every((id) => firstSet.has(String(id)));
+};
 
 interface ProfileModalProps {
   profileOpen: boolean;
@@ -54,12 +68,34 @@ const ProfileModal = ({
   const [isImportingOfficialMarks, setIsImportingOfficialMarks] = useState(false);
   const [conflictSnapshot, setConflictSnapshot] = useState<OfficialMarksSnapshot | null>(null);
   const [conflictOpen, setConflictOpen] = useState(false);
+  const [syncHintNow, setSyncHintNow] = useState(Date.now());
   const conflictCleanupTimerRef = useRef<number | null>(null);
   const conflictOpenTimerRef = useRef<number | null>(null);
+  const progressSync = useProgressSyncStore();
+  const activePoints = useUserRecordStore((state) => state.activePoints);
   const profileErrorText = profileError ?? '';
   const shouldShowProfileError = profileOpen && Boolean(profileErrorText);
   const isProfileErrorRemoved = !shouldShowProfileError;
   const modalSize = isMobile ? 'full' : 'm';
+  const syncedAtDate = parseDateLike(progressSync.lastSyncedAt);
+  const syncedAgo = syncedAtDate ? formatElapsedShort(syncedAtDate.getTime(), syncHintNow) : '';
+  const syncPointCount = Math.max(progressSync.localPointCount, progressSync.remotePointCount);
+  const isProgressSyncing = progressSync.status === 'checking' || progressSync.status === 'syncing';
+  const isLocalCloudSynced = progressSync.status === 'synced'
+    && progressSync.baseline !== null
+    && arePointSetsEqual(activePoints, progressSync.baseline.pointIds);
+  const syncFailureReason = progressSync.status === 'offline'
+    ? t('idcard.profile.syncOffline')
+    : progressSync.status === 'conflict'
+      ? t('idcard.profile.syncConflict')
+      : progressSync.error || t('idcard.profile.syncUnknownError');
+  const syncHint = SYNC_HINT_FAILED_STATUSES.has(progressSync.status)
+    ? (t('idcard.profile.syncFailed') || 'Sync failed ({reason})').replace('{reason}', syncFailureReason)
+    : SYNC_HINT_BUSY_STATUSES.has(progressSync.status)
+      ? (t('idcard.profile.syncSyncing') || 'Syncing {count} points...').replace('{count}', String(syncPointCount))
+      : syncedAgo
+        ? (t('idcard.profile.syncSynced') || 'Data synced with cloud - updated {times} ago').replace('{times}', syncedAgo)
+        : '';
 
   useEffect(() => () => {
     if (conflictCleanupTimerRef.current !== null) {
@@ -69,6 +105,13 @@ const ProfileModal = ({
       window.clearTimeout(conflictOpenTimerRef.current);
     }
   }, []);
+
+  useEffect(() => {
+    if (!profileOpen || !progressSync.lastSyncedAt) return undefined;
+    const timer = window.setInterval(() => setSyncHintNow(Date.now()), 1000);
+    setSyncHintNow(Date.now());
+    return () => window.clearInterval(timer);
+  }, [profileOpen, progressSync.lastSyncedAt]);
 
   const clearConflictTimers = () => {
     if (conflictCleanupTimerRef.current !== null) {
@@ -152,6 +195,7 @@ const ProfileModal = ({
 
   return (
     <>
+      <ProgressSyncHost />
       <Modal
         open={profileOpen}
         size={modalSize}
@@ -187,6 +231,11 @@ const ProfileModal = ({
             nameAriaLabel={t('idcard.profile.nameEditHint')}
             nameMaxLength={15}
           />
+          {syncHint && (
+            <div className={styles.profileSyncHint} aria-live="polite">
+              {syncHint}
+            </div>
+          )}
 
           <div className={styles.profileDivider} data-label={t('idcard.profile.note') || 'Note'}></div>
 
@@ -210,6 +259,17 @@ const ProfileModal = ({
           <div className={styles.profileDivider} data-label={t('idcard.profile.auditLabel') || 'Audit'}></div>
 
           <div className={styles.profileActions}>
+            <div className={styles.profileActionWide}>
+              <AccessButton
+                onClick={() => {
+                  void requestProgressSyncNow();
+                }}
+                disabled={isSavingProfile || isProgressSyncing || isLocalCloudSynced}
+                label={isProgressSyncing
+                  ? t('common.loading') || 'Loading...'
+                  : t('idcard.profile.syncNow')}
+              />
+            </div>
             <div className={styles.profileActionWide}>
               <AccessButton
                 onClick={() => {

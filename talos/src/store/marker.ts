@@ -2,7 +2,6 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useUserRecord } from './userRecord';
 import useRegion from './region';
-import { DATASET_VERSION } from '@/data/migration/version';
 import { useEffect, useMemo } from 'react';
 import {
     getLoadedRegionMarkers,
@@ -37,8 +36,6 @@ interface IMarkerStore {
     setTemporarySelected: (id: string, value: boolean) => void;
     clearTemporarySelected: (ids?: Iterable<string>) => void;
 
-    /** Version of the dataset when selectedPoints was last modified */
-    datasetVersion: number;
     markerDataVersion: number;
     bumpMarkerDataVersion: () => void;
 }
@@ -98,7 +95,6 @@ export const useMarkerStore = create<IMarkerStore>()(
             setSearchString: (value: string) => {
                 set({ searchString: value });
             },
-            datasetVersion: DATASET_VERSION,
             selectedPoints: [],
             temporarySelectedPoints: [],
             toggleSelected: (id: string) => {
@@ -113,14 +109,12 @@ export const useMarkerStore = create<IMarkerStore>()(
                             selectedPoints: exists
                                 ? state.selectedPoints
                                 : [...state.selectedPoints, id],
-                            datasetVersion: DATASET_VERSION,
                         };
                     } else {
                         return {
                             selectedPoints: exists
                                 ? state.selectedPoints.filter((x) => x !== id)
                                 : state.selectedPoints,
-                            datasetVersion: DATASET_VERSION,
                         };
                     }
                 });
@@ -160,7 +154,7 @@ export const useMarkerStore = create<IMarkerStore>()(
         }),
         {
             name: 'marker-filter',
-            partialize: (state) => ({ filter: state.filter, selectedPoints: state.selectedPoints, datasetVersion: state.datasetVersion }),
+            partialize: (state) => ({ filter: state.filter, selectedPoints: state.selectedPoints }),
         },
     ),
 );

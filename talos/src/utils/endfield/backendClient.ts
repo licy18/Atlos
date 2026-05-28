@@ -78,6 +78,15 @@ type ApiErrorPayload = {
 const BINDING_API_BASE = `${getAuthBase()}/binding/v1/endfield`;
 const LOCATOR_API_BASE = `${getAuthBase()}/locator`;
 const SYNC_API_BASE = `${getAuthBase()}/sync/v1`;
+const BINDING_STATUS_MEMORY_TTL_MS = 3_000;
+
+type EFBindingStatusResponse = { binding: EFBindingSummary };
+
+let bindingStatusInFlight: Promise<EFBindingStatusResponse> | null = null;
+let bindingStatusMemoryCache: {
+    expiresAt: number;
+    value: EFBindingStatusResponse;
+} | null = null;
 
 export class EFBackendError extends Error {
     readonly status: number;
@@ -137,7 +146,37 @@ async function requestJson<T>(baseUrl: string, path: string, init?: RequestInit)
 }
 
 export const getEFBindingStatus = (): Promise<{ binding: EFBindingSummary }> =>
-    requestJson(BINDING_API_BASE, '/status');
+    getEFBindingStatusCached();
+
+const clearBindingStatusMemoryCache = (): void => {
+    bindingStatusMemoryCache = null;
+    bindingStatusInFlight = null;
+};
+
+function getEFBindingStatusCached(): Promise<EFBindingStatusResponse> {
+    const now = Date.now();
+    if (bindingStatusMemoryCache && bindingStatusMemoryCache.expiresAt > now) {
+        return Promise.resolve(bindingStatusMemoryCache.value);
+    }
+
+    if (bindingStatusInFlight) {
+        return bindingStatusInFlight;
+    }
+
+    bindingStatusInFlight = requestJson<EFBindingStatusResponse>(BINDING_API_BASE, '/status')
+        .then((value) => {
+            bindingStatusMemoryCache = {
+                expiresAt: Date.now() + BINDING_STATUS_MEMORY_TTL_MS,
+                value,
+            };
+            return value;
+        })
+        .finally(() => {
+            bindingStatusInFlight = null;
+        });
+
+    return bindingStatusInFlight;
+}
 
 export const exchangeEFToken = (provider: EFProvider, token: string): Promise<{ flowId: string; roles: EFRoleOption[] }> =>
     requestJson(BINDING_API_BASE, '/exchange-token', {
@@ -145,8 +184,9 @@ export const exchangeEFToken = (provider: EFProvider, token: string): Promise<{ 
         body: JSON.stringify({ provider, token }),
     });
 
-export const bindEFRole = (flowId: string, role: { serverId: number; roleId: string }): Promise<{ ok: true; binding: EFBindingSummary }> =>
-    requestJson(BINDING_API_BASE, '/bind-role', {
+export const bindEFRole = async (flowId: string, role: { serverId: number; roleId: string }): Promise<{ ok: true; binding: EFBindingSummary }> => {
+    clearBindingStatusMemoryCache();
+    const result = await requestJson<{ ok: true; binding: EFBindingSummary }>(BINDING_API_BASE, '/bind-role', {
         method: 'POST',
         body: JSON.stringify({
             flowId,
@@ -154,18 +194,29 @@ export const bindEFRole = (flowId: string, role: { serverId: number; roleId: str
             roleId: role.roleId,
         }),
     });
+    clearBindingStatusMemoryCache();
+    return result;
+};
 
-export const disableEFBinding = (): Promise<{ ok: true; binding: EFBindingSummary }> =>
-    requestJson(BINDING_API_BASE, '/disable', {
+export const disableEFBinding = async (): Promise<{ ok: true; binding: EFBindingSummary }> => {
+    clearBindingStatusMemoryCache();
+    const result = await requestJson<{ ok: true; binding: EFBindingSummary }>(BINDING_API_BASE, '/disable', {
         method: 'POST',
         body: '{}',
     });
+    clearBindingStatusMemoryCache();
+    return result;
+};
 
-export const unlinkEFBinding = (): Promise<{ ok: true; binding: EFBindingSummary }> =>
-    requestJson(BINDING_API_BASE, '/unlink', {
+export const unlinkEFBinding = async (): Promise<{ ok: true; binding: EFBindingSummary }> => {
+    clearBindingStatusMemoryCache();
+    const result = await requestJson<{ ok: true; binding: EFBindingSummary }>(BINDING_API_BASE, '/unlink', {
         method: 'POST',
         body: '{}',
     });
+    clearBindingStatusMemoryCache();
+    return result;
+};
 
 export const agreePolicy = (role?: { roleId?: string; serverId?: number | string }): Promise<AgreeRes> =>
     requestJson(LOCATOR_API_BASE, '/agree-policy', {

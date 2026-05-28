@@ -367,6 +367,7 @@
       "local": "로컬",
       "remote": "원격",
       "official": "공식 지도",
+      "oemDb": "OEM DB",
       "updatedAt": "최종 수정일",
       "total": "기록된 지점",
       "region": "지역",
