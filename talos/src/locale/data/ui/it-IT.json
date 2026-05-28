@@ -362,8 +362,16 @@
     }
   },
   "sync": {
+    "now": "Sincronizza con OEM Cloud",
+    "already": "Sincronizzato con il cloud",
+    "done": "Sincronizzato - {times} fa",
+    "syncing": "Sincronizzazione di {count} punti",
+    "failed": "Sincronizzazione non riuscita ({reason})",
+    "offline": "Offline",
+    "dataConflict": "Conflitto di dati",
+    "unknown": "Errore sconosciuto",
     "conflict": {
-      "title": "Conflitto di avanzamento",
+      "title": "Conflitto di dati",
       "local": "Locale",
       "remote": "Remoto",
       "official": "Ufficiale",

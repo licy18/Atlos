@@ -362,8 +362,16 @@
     }
   },
   "sync": {
+    "now": "Đồng bộ với OEM Cloud",
+    "already": "Đã đồng bộ với đám mây",
+    "done": "Đã đồng bộ - {times} trước",
+    "syncing": "Đang đồng bộ {count} điểm",
+    "failed": "Đồng bộ thất bại ({reason})",
+    "offline": "Ngoại tuyến",
+    "dataConflict": "Xung đột dữ liệu",
+    "unknown": "Lỗi không xác định",
     "conflict": {
-      "title": "Xung đột tiến độ",
+      "title": "Xung đột dữ liệu",
       "local": "Cục bộ",
       "remote": "Đám mây",
       "official": "Bản đồ chính thức",

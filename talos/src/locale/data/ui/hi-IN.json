@@ -362,8 +362,16 @@
     }
   },
   "sync": {
+    "now": "OEM Cloud से सिंक करें",
+    "already": "क्लाउड के साथ सिंक है",
+    "done": "सिंक किया गया - {times} पहले",
+    "syncing": "सिंक हो रहा है: {count} बिंदु",
+    "failed": "सिंक विफल ({reason})",
+    "offline": "ऑफ़लाइन",
+    "dataConflict": "डेटा विरोध",
+    "unknown": "अज्ञात त्रुटि",
     "conflict": {
-      "title": "प्रगति विरोध",
+      "title": "डेटा विरोध",
       "local": "लोकल",
       "remote": "रिमोट",
       "official": "आधिकारिक",

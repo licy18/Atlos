@@ -362,8 +362,16 @@
     }
   },
   "sync": {
+    "now": "Synkronisera med OEM Cloud",
+    "already": "Synkroniserad med molnet",
+    "done": "Synkroniserad - för {times} sedan",
+    "syncing": "Synkroniserar {count} punkter",
+    "failed": "Synkronisering misslyckades ({reason})",
+    "offline": "Offline",
+    "dataConflict": "Datakonflikt",
+    "unknown": "Okänt fel",
     "conflict": {
-      "title": "Synkroniseringskonflikt",
+      "title": "Datakonflikt",
       "local": "Lokal",
       "remote": "Fjärr",
       "official": "Officiell",

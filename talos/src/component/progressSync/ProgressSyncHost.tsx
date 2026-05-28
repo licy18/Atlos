@@ -12,7 +12,6 @@ import {
     syncCloudProgress,
 } from '@/utils/progressSyncClient';
 
-const DEBOUNCE_MS = 1500;
 const MAX_DIRTY_MS = 60_000;
 const COUNT_FLUSH_THRESHOLD = 10;
 
@@ -72,7 +71,6 @@ const ProgressSyncHost = () => {
     const setError = useProgressSyncStore((state) => state.setError);
     const setConflict = useProgressSyncStore((state) => state.setConflict);
 
-    const debounceTimerRef = useRef<number | null>(null);
     const maxTimerRef = useRef<number | null>(null);
     const inFlightRef = useRef(false);
     const suppressLocalChangeRef = useRef(false);
@@ -90,10 +88,6 @@ const ProgressSyncHost = () => {
     }, [sessionUser?.uid]);
 
     const clearTimers = useCallback(() => {
-        if (debounceTimerRef.current !== null) {
-            window.clearTimeout(debounceTimerRef.current);
-            debounceTimerRef.current = null;
-        }
         if (maxTimerRef.current !== null) {
             window.clearTimeout(maxTimerRef.current);
             maxTimerRef.current = null;
@@ -300,14 +294,6 @@ const ProgressSyncHost = () => {
             void syncNow('auto');
             return;
         }
-
-        if (debounceTimerRef.current !== null) {
-            window.clearTimeout(debounceTimerRef.current);
-        }
-        debounceTimerRef.current = window.setTimeout(() => {
-            debounceTimerRef.current = null;
-            void syncNow('auto');
-        }, DEBOUNCE_MS);
 
         if (maxTimerRef.current === null) {
             maxTimerRef.current = window.setTimeout(() => {

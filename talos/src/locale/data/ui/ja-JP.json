@@ -362,8 +362,16 @@
     }
   },
   "sync": {
+    "now": "OEM Cloudへデータを同期",
+    "already": "クラウドと同期済み",
+    "done": "クラウド同期済み · {times}前",
+    "syncing": "{count}件のポイントを同期中",
+    "failed": "同期に失敗しました（{reason}）",
+    "offline": "オフライン",
+    "dataConflict": "データ競合",
+    "unknown": "不明なエラー",
     "conflict": {
-      "title": "進捗の競合",
+      "title": "データ競合",
       "local": "ローカル",
       "remote": "リモート",
       "official": "公式側",

@@ -84,17 +84,22 @@ const ProfileModal = ({
   const isLocalCloudSynced = progressSync.status === 'synced'
     && progressSync.baseline !== null
     && arePointSetsEqual(activePoints, progressSync.baseline.pointIds);
+  const syncButtonLabel = isProgressSyncing
+    ? t('common.loading')
+    : isLocalCloudSynced
+      ? t('sync.already')
+      : t('sync.now');
   const syncFailureReason = progressSync.status === 'offline'
-    ? t('idcard.profile.syncOffline')
+    ? t('sync.offline')
     : progressSync.status === 'conflict'
-      ? t('idcard.profile.syncConflict')
-      : progressSync.error || t('idcard.profile.syncUnknownError');
+      ? t('sync.dataConflict')
+      : progressSync.error || t('sync.unknown');
   const syncHint = SYNC_HINT_FAILED_STATUSES.has(progressSync.status)
-    ? (t('idcard.profile.syncFailed') || 'Sync failed ({reason})').replace('{reason}', syncFailureReason)
+    ? t('sync.failed').replace('{reason}', syncFailureReason)
     : SYNC_HINT_BUSY_STATUSES.has(progressSync.status)
-      ? (t('idcard.profile.syncSyncing') || 'Syncing {count} points...').replace('{count}', String(syncPointCount))
+      ? t('sync.syncing').replace('{count}', String(syncPointCount))
       : syncedAgo
-        ? (t('idcard.profile.syncSynced') || 'Data synced with cloud - updated {times} ago').replace('{times}', syncedAgo)
+        ? t('sync.done').replace('{times}', syncedAgo)
         : '';
 
   useEffect(() => () => {
@@ -214,7 +219,7 @@ const ProfileModal = ({
         }}
         customHeight='80dvh'
       >
-        <div className={styles.profileModal}>
+        <div className={styles.profileWrap}>
           <IdCardView
             embedded
             profile={cardProfile}
@@ -265,9 +270,7 @@ const ProfileModal = ({
                   void requestProgressSyncNow();
                 }}
                 disabled={isSavingProfile || isProgressSyncing || isLocalCloudSynced}
-                label={isProgressSyncing
-                  ? t('common.loading') || 'Loading...'
-                  : t('idcard.profile.syncNow')}
+                label={syncButtonLabel}
               />
             </div>
             <div className={styles.profileActionWide}>

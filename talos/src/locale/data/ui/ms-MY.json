@@ -362,8 +362,16 @@
     }
   },
   "sync": {
+    "now": "Segerak ke OEM Cloud",
+    "already": "Selari dengan Awan",
+    "done": "Disegerakkan - {times} yang lalu",
+    "syncing": "Menyegerak {count} Titik",
+    "failed": "Gagal disegerakkan ({reason})",
+    "offline": "Luar talian",
+    "dataConflict": "Konflik Data",
+    "unknown": "Ralat tidak diketahui",
     "conflict": {
-      "title": "Konflik Kemajuan",
+      "title": "Konflik Data",
       "local": "Tempatan",
       "remote": "Jauh",
       "official": "Rasmi",

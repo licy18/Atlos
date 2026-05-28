@@ -20,6 +20,7 @@ $karma-5: url('@/assets/images/UI/avt/Karma5.svg');
     --idcard-age: #{$grey-2};
     --idcard-id: #{$grey-2};
     --id-highlight-border: #{$primary-accent-5};
+    --idcard-hover-hl: #{$primary-accent-5};
 
     --avt-bg: #{$white-1};
     --avt-shadow: #{$grey-3};
@@ -39,6 +40,7 @@ $karma-5: url('@/assets/images/UI/avt/Karma5.svg');
     --idcard-age: #{$mid};
     --idcard-id: #{$white-3};
     --id-highlight-border: #{$primary-accent-3};
+    --idcard-hover-hl: #{$primary-accent-3};
 
     --avt-bg: #{$grey-3};
     --avt-shadow: #{$grey-1};
@@ -55,6 +57,12 @@ $karma-5: url('@/assets/images/UI/avt/Karma5.svg');
     syntax: '<angle>';
     inherits: true;
     initial-value: 90deg;
+}
+
+@property --idcard-hover-hl {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: $primary-accent-5;
 }
 
 .idCard {
@@ -84,8 +92,8 @@ $karma-5: url('@/assets/images/UI/avt/Karma5.svg');
         width: calc(100% + $border-width * 2);
         height: calc(100% + $border-width * 2);
         transform: translate(-#{$border-width}, -#{$border-width});
-        background: linear-gradient(var(--idcard-hover-angle, 90deg), transparent 0%, transparent 20%, var(--id-highlight-border) 100%);
-        transition: --idcard-hover-angle 1s cubic-bezier(0.22, 0.85, 0.3, 1);
+        background: linear-gradient(var(--idcard-hover-angle, 90deg), transparent 0%, transparent 20%, var(--idcard-hover-hl, var(--id-highlight-border)) 100%);
+        transition: --idcard-hover-angle 1s cubic-bezier(0.22, 0.85, 0.3, 1), --idcard-hover-hl 0.35s $adagio-curve;
         border-radius: 6.5% 6.5% 6.5% 6.5% / 12.5% 12.5% 12.5% 12.5%;
 
         @supports (corner-shape: superellipse(1.5)) {
