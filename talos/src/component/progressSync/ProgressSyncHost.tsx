@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import SyncConflictModal, { type SyncConflictChoice } from '@/component/sync/conflict';
 import { setProgressSyncRequestHandler } from '@/component/progressSync/progressSyncController';
 import { useAuthStore } from '@/store/auth';
-import { useProgressSyncStore, type CloudProgress } from '@/store/progressSync';
+import { useProgressSyncStore, type CloudProgress, type ProgressConflictState } from '@/store/progressSync';
 import { useUserRecordStore } from '@/store/userRecord';
-import { getProgressManifestPayload, type ProgressManifestPayload } from '@/utils/progressBitmap';
+import { getProgressManifestPayload, getProgressMarkerIndex, type ProgressManifestPayload } from '@/utils/progressBitmap';
 import {
     fetchCloudProgress,
     ProgressSyncError,
@@ -14,6 +14,7 @@ import {
 
 const MAX_DIRTY_MS = 60_000;
 const COUNT_FLUSH_THRESHOLD = 10;
+const MODAL_EXIT_DURATION_MS = 325;
 
 type SyncReason = 'startup' | 'auto' | 'manual' | 'visibility' | 'online' | 'conflict';
 type ProgressBase = Pick<CloudProgress, 'revision' | 'markerIndexHash' | 'pointIds'>;
@@ -50,6 +51,31 @@ const buildPointPatch = (basePointIds: string[], nextPointIds: string[]): {
     return { setPointIds, clearPointIds };
 };
 
+const splitByKnownPointIds = (pointIds: string[], knownPointIds: Set<string>): {
+    known: string[];
+    unknown: string[];
+} => {
+    const known: string[] = [];
+    const unknown: string[] = [];
+    normalizePointIds(pointIds).forEach((pointId) => {
+        if (knownPointIds.has(pointId)) {
+            known.push(pointId);
+        } else {
+            unknown.push(pointId);
+        }
+    });
+    return { known, unknown };
+};
+
+const mergeVisibleWithLocalUnknown = (
+    visiblePointIds: string[],
+    localPointIds: string[],
+    knownPointIds: Set<string>,
+): string[] => {
+    const localUnknownPointIds = splitByKnownPointIds(localPointIds, knownPointIds).unknown;
+    return normalizePointIds([...visiblePointIds, ...localUnknownPointIds]);
+};
+
 const countPointDelta = (before: string[], after: string[]): number => {
     const patch = buildPointPatch(before, after);
     return patch.setPointIds.length + patch.clearPointIds.length;
@@ -72,12 +98,16 @@ const ProgressSyncHost = () => {
     const setConflict = useProgressSyncStore((state) => state.setConflict);
 
     const maxTimerRef = useRef<number | null>(null);
+    const conflictCleanupTimerRef = useRef<number | null>(null);
     const inFlightRef = useRef(false);
     const suppressLocalChangeRef = useRef(false);
     const dirtyCountRef = useRef(0);
     const baselineRef = useRef<ProgressBase | null>(baseline);
     const manifestRef = useRef<ProgressManifestPayload | null>(null);
+    const knownPointIdsRef = useRef<Set<string>>(new Set());
     const sessionUidRef = useRef(sessionUser?.uid ?? null);
+    const [renderedConflict, setRenderedConflict] = useState<ProgressConflictState | null>(conflict);
+    const [conflictOpen, setConflictOpen] = useState(Boolean(conflict));
 
     useEffect(() => {
         baselineRef.current = baseline;
@@ -87,6 +117,31 @@ const ProgressSyncHost = () => {
         sessionUidRef.current = sessionUser?.uid ?? null;
     }, [sessionUser?.uid]);
 
+    useEffect(() => {
+        if (conflictCleanupTimerRef.current !== null) {
+            window.clearTimeout(conflictCleanupTimerRef.current);
+            conflictCleanupTimerRef.current = null;
+        }
+
+        if (conflict) {
+            setRenderedConflict(conflict);
+            setConflictOpen(true);
+            return;
+        }
+
+        setConflictOpen(false);
+        conflictCleanupTimerRef.current = window.setTimeout(() => {
+            setRenderedConflict(null);
+            conflictCleanupTimerRef.current = null;
+        }, MODAL_EXIT_DURATION_MS);
+    }, [conflict]);
+
+    useEffect(() => () => {
+        if (conflictCleanupTimerRef.current !== null) {
+            window.clearTimeout(conflictCleanupTimerRef.current);
+        }
+    }, []);
+
     const clearTimers = useCallback(() => {
         if (maxTimerRef.current !== null) {
             window.clearTimeout(maxTimerRef.current);
@@ -95,6 +150,8 @@ const ProgressSyncHost = () => {
     }, []);
 
     const ensureManifest = useCallback(async (): Promise<ProgressManifestPayload> => {
+        const markerIndex = await getProgressMarkerIndex();
+        knownPointIdsRef.current = new Set(markerIndex.pointIds);
         const manifest = await getProgressManifestPayload();
         if (manifestRef.current?.markerIndexHash !== manifest.markerIndexHash) {
             await registerProgressManifest(manifest);
@@ -104,9 +161,14 @@ const ProgressSyncHost = () => {
     }, []);
 
     const applyRemotePoints = useCallback((progress: CloudProgress) => {
-        const remotePointIds = normalizePointIds(progress.pointIds);
+        const remotePointIds = splitByKnownPointIds(progress.pointIds, knownPointIdsRef.current).known;
+        const nextLocalPointIds = mergeVisibleWithLocalUnknown(
+            remotePointIds,
+            useUserRecordStore.getState().activePoints,
+            knownPointIdsRef.current,
+        );
         suppressLocalChangeRef.current = true;
-        useUserRecordStore.getState().setPoints(remotePointIds);
+        useUserRecordStore.getState().setPoints(nextLocalPointIds);
         queueMicrotask(() => {
             suppressLocalChangeRef.current = false;
         });
@@ -120,7 +182,7 @@ const ProgressSyncHost = () => {
         localPointIds: string[],
         remoteProgress: CloudProgress,
     ) => {
-        const remotePointIds = normalizePointIds(remoteProgress.pointIds);
+        const remotePointIds = splitByKnownPointIds(remoteProgress.pointIds, knownPointIdsRef.current).known;
         setCounts({ localPointCount: localPointIds.length, remotePointCount: remotePointIds.length });
         setConflict({
             localPointIds,
@@ -149,12 +211,14 @@ const ProgressSyncHost = () => {
         try {
             const manifest = await ensureManifest();
             const localState = useUserRecordStore.getState();
-            const activePoints = normalizePointIds(options.pointIds ?? localState.activePoints);
+            const knownPointIds = knownPointIdsRef.current;
+            const localPointIds = normalizePointIds(options.pointIds ?? localState.activePoints);
+            const { known: activePoints, unknown: retainedLocalPointIds } = splitByKnownPointIds(localPointIds, knownPointIds);
             let base = options.forceBase ?? baselineRef.current;
 
             if (!base) {
                 const { progress: remoteProgress } = await fetchCloudProgress();
-                const remote = { ...remoteProgress, pointIds: normalizePointIds(remoteProgress.pointIds) };
+                const remote = { ...remoteProgress, pointIds: splitByKnownPointIds(remoteProgress.pointIds, knownPointIds).known };
                 if (!isRemoteEmpty(remote) && !arePointSetsEqual(remote.pointIds, activePoints)) {
                     openConflict(activePoints, remote);
                     return;
@@ -164,12 +228,13 @@ const ProgressSyncHost = () => {
                 base = remote;
             }
 
-            if (base.markerIndexHash && base.markerIndexHash !== manifest.markerIndexHash) {
-                throw new Error('Cloud progress uses a different marker index.');
-            }
+            const basePointIds = splitByKnownPointIds(base.pointIds, knownPointIds).known;
+            const markerIndexChanged = Boolean(base.markerIndexHash && base.markerIndexHash !== manifest.markerIndexHash);
 
             if (
-                arePointSetsEqual(base.pointIds, activePoints)
+                arePointSetsEqual(basePointIds, activePoints)
+                && retainedLocalPointIds.length === 0
+                && !markerIndexChanged
                 && (reason === 'visibility' || reason === 'online' || reason === 'manual')
             ) {
                 setCounts({ localPointCount: activePoints.length, remotePointCount: activePoints.length });
@@ -179,8 +244,9 @@ const ProgressSyncHost = () => {
                 return;
             }
 
-            const patch = buildPointPatch(base.pointIds, activePoints);
-            if (patch.setPointIds.length === 0 && patch.clearPointIds.length === 0) {
+            const patch = buildPointPatch(basePointIds, activePoints);
+            const setPointIds = normalizePointIds([...patch.setPointIds, ...retainedLocalPointIds]);
+            if (setPointIds.length === 0 && patch.clearPointIds.length === 0 && !markerIndexChanged) {
                 setStatus('synced');
                 dirtyCountRef.current = 0;
                 clearTimers();
@@ -189,7 +255,7 @@ const ProgressSyncHost = () => {
 
             const response = await syncCloudProgress({
                 baseRevision: base.revision,
-                setPointIds: patch.setPointIds,
+                setPointIds,
                 clearPointIds: patch.clearPointIds,
                 clientMutationId: buildMutationId(),
                 updatedAt: options.updatedAt ?? localState.updatedAt,
@@ -211,7 +277,10 @@ const ProgressSyncHost = () => {
             void reason;
         } catch (error) {
             if (error instanceof ProgressSyncError && error.status === 409 && error.current) {
-                openConflict(useUserRecordStore.getState().activePoints, error.current);
+                openConflict(
+                    splitByKnownPointIds(useUserRecordStore.getState().activePoints, knownPointIdsRef.current).known,
+                    error.current,
+                );
                 return;
             }
 
@@ -232,14 +301,16 @@ const ProgressSyncHost = () => {
         try {
             await ensureManifest();
             const { progress: remoteProgress } = await fetchCloudProgress();
-            const remote = { ...remoteProgress, pointIds: normalizePointIds(remoteProgress.pointIds) };
-            const localPointIds = normalizePointIds(useUserRecordStore.getState().activePoints);
+            const knownPointIds = knownPointIdsRef.current;
+            const remote = { ...remoteProgress, pointIds: splitByKnownPointIds(remoteProgress.pointIds, knownPointIds).known };
+            const localStatePointIds = normalizePointIds(useUserRecordStore.getState().activePoints);
+            const { known: localPointIds, unknown: retainedLocalPointIds } = splitByKnownPointIds(localStatePointIds, knownPointIds);
             setCounts({ localPointCount: localPointIds.length, remotePointCount: remote.pointIds.length });
 
             if (isRemoteEmpty(remote)) {
                 setBaseline(remote);
                 baselineRef.current = remote;
-                if (localPointIds.length > 0) {
+                if (localPointIds.length > 0 || retainedLocalPointIds.length > 0) {
                     inFlightRef.current = false;
                     await syncNow('startup', { forceBase: remote });
                     return;
@@ -251,19 +322,30 @@ const ProgressSyncHost = () => {
             if (arePointSetsEqual(localPointIds, remote.pointIds)) {
                 setBaseline(remote);
                 baselineRef.current = remote;
+                if (
+                    (remote.markerIndexHash && remote.markerIndexHash !== manifestRef.current?.markerIndexHash)
+                    || retainedLocalPointIds.length > 0
+                ) {
+                    inFlightRef.current = false;
+                    await syncNow('startup', { forceBase: remote });
+                    return;
+                }
                 setStatus('synced');
                 return;
             }
 
             const currentBaseline = baselineRef.current;
-            if (currentBaseline && arePointSetsEqual(localPointIds, currentBaseline.pointIds)) {
+            if (currentBaseline && arePointSetsEqual(localPointIds, splitByKnownPointIds(currentBaseline.pointIds, knownPointIds).known)) {
                 applyRemotePoints(remote);
                 return;
             }
 
             if (
                 currentBaseline
-                && (remote.revision === currentBaseline.revision || arePointSetsEqual(remote.pointIds, currentBaseline.pointIds))
+                && (
+                    remote.revision === currentBaseline.revision
+                    || arePointSetsEqual(remote.pointIds, splitByKnownPointIds(currentBaseline.pointIds, knownPointIds).known)
+                )
             ) {
                 setBaseline(remote);
                 baselineRef.current = remote;
@@ -287,7 +369,12 @@ const ProgressSyncHost = () => {
         if (changedPoints <= 0) return;
         dirtyCountRef.current += changedPoints;
         setStatus('dirty');
-        setCounts({ localPointCount: useUserRecordStore.getState().activePoints.length });
+        setCounts({
+            localPointCount: splitByKnownPointIds(
+                useUserRecordStore.getState().activePoints,
+                knownPointIdsRef.current,
+            ).known.length,
+        });
 
         if (dirtyCountRef.current >= COUNT_FLUSH_THRESHOLD) {
             clearTimers();
@@ -351,13 +438,19 @@ const ProgressSyncHost = () => {
     }, [syncNow]);
 
     const handleConflictResolve = useCallback((choice: SyncConflictChoice) => {
-        if (!conflict) return;
-        const remoteBase = conflict.remoteProgress;
+        const activeConflict = conflict ?? renderedConflict;
+        if (!activeConflict) return;
+        const remoteBase = activeConflict.remoteProgress;
+        const knownPointIds = knownPointIdsRef.current;
+        const localUnknownPointIds = splitByKnownPointIds(
+            useUserRecordStore.getState().activePoints,
+            knownPointIds,
+        ).unknown;
         const pointIds = choice === 'a'
-            ? conflict.localPointIds
+            ? activeConflict.localPointIds
             : choice === 'b'
-                ? conflict.remotePointIds
-                : [...new Set([...conflict.localPointIds, ...conflict.remotePointIds])];
+                ? activeConflict.remotePointIds
+                : [...new Set([...activeConflict.localPointIds, ...activeConflict.remotePointIds])];
 
         if (choice === 'b') {
             applyRemotePoints(remoteBase);
@@ -368,28 +461,32 @@ const ProgressSyncHost = () => {
         setBaseline(remoteBase);
         baselineRef.current = remoteBase;
         suppressLocalChangeRef.current = true;
-        useUserRecordStore.getState().setPoints(pointIds);
+        useUserRecordStore.getState().setPoints(normalizePointIds([...pointIds, ...localUnknownPointIds]));
         const updatedAt = useUserRecordStore.getState().updatedAt;
         queueMicrotask(() => {
             suppressLocalChangeRef.current = false;
         });
         setConflict(null);
-        void syncNow('conflict', { forceBase: remoteBase, pointIds, updatedAt });
-    }, [applyRemotePoints, conflict, setBaseline, setConflict, syncNow]);
+        void syncNow('conflict', {
+            forceBase: remoteBase,
+            pointIds: normalizePointIds([...pointIds, ...localUnknownPointIds]),
+            updatedAt,
+        });
+    }, [applyRemotePoints, conflict, renderedConflict, setBaseline, setConflict, syncNow]);
 
-    return conflict ? (
+    return renderedConflict ? (
         <SyncConflictModal
-            open
+            open={conflictOpen}
             sourceA={{
                 side: 'local',
-                updatedAt: conflict.localUpdatedAt,
-                pointIds: conflict.localPointIds,
+                updatedAt: renderedConflict.localUpdatedAt,
+                pointIds: renderedConflict.localPointIds,
             }}
             sourceB={{
                 side: 'remote',
                 remoteSource: 'oemDb',
-                updatedAt: conflict.remoteUpdatedAt,
-                pointIds: conflict.remotePointIds,
+                updatedAt: renderedConflict.remoteUpdatedAt,
+                pointIds: renderedConflict.remotePointIds,
             }}
             onClose={() => setConflict(null)}
             onResolve={handleConflictResolve}
