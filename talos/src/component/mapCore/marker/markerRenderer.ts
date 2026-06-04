@@ -14,6 +14,9 @@ import { getActivePoints, useUserRecordStore } from '@/store/userRecord';
 import { useUiPrefsStore } from '@/store/uiPrefs';
 import { useHistoryStore } from '@/store/history';
 import { batchCheckSelectedPoints, isLassoSelected } from '@/component/settings/useMapMultiSelect';
+import { getLayerByTier, getLayerTier, useLayerStore, type LayerType } from '@/store/layer';
+import { REGION_DICT } from '@/data/map';
+import useRegion from '@/store/region';
 
 interface MarkerStateHandlers {
     beforeCheck?: (markerData: IMarkerData, context: { filterWasActive: boolean }) => boolean;
@@ -55,6 +58,34 @@ const ensureMarkerTypeFilterSelected = (typeKey: string): void => {
 const getMarkerInnerElement = (layer: L.Marker): HTMLElement | null => {
     const markerRoot = layer.getElement?.() as HTMLElement | null;
     return markerRoot?.querySelector(`.${styles.markerInner}, .${styles.noFrameInner}`) ?? null;
+};
+
+const getMarkerRelativeTier = (markerData: IMarkerData, currentLayer: LayerType): number =>
+    markerData.tier - getLayerTier(currentLayer);
+
+export const syncMarkerTierAttribute = (
+    layer: L.Layer,
+    markerData: IMarkerData,
+    currentLayer: LayerType = useLayerStore.getState().currentLayer,
+): void => {
+    if (!(layer instanceof L.Marker)) return;
+    const inner = getMarkerInnerElement(layer);
+    if (!inner) return;
+
+    inner.dataset.tier = String(getMarkerRelativeTier(markerData, currentLayer));
+};
+
+const switchToMarkerLayer = (markerData: IMarkerData): void => {
+    const targetLayer = getLayerByTier(markerData.tier);
+    if (!targetLayer) return;
+
+    const currentRegion = useRegion.getState().currentRegionKey;
+    const availableLayers = REGION_DICT[currentRegion]?.layers;
+    if (targetLayer !== 'M' && !availableLayers?.includes(targetLayer)) return;
+
+    const layerStore = useLayerStore.getState();
+    if (layerStore.currentLayer === targetLayer) return;
+    layerStore.setCurrentLayer(targetLayer);
 };
 
 const syncMarkerStateClasses = (inner: HTMLElement, markerId: string): void => {
@@ -183,6 +214,7 @@ const RENDERER_DICT: Record<
             const markerRoot = layer.getElement?.() as HTMLElement | null;
             const inner = markerRoot?.querySelector(`.${styles.markerInner}, .${styles.noFrameInner}`);
             if (!inner) return;
+            syncMarkerTierAttribute(layer, markerData);
             // entry fade-in
             inner.classList.add(styles.appearing);
             const { selectedPoints, temporarySelectedPoints } = useMarkerStore.getState();
@@ -201,6 +233,7 @@ const RENDERER_DICT: Record<
         
         layer.addEventListener('click', (e) => {
             e.originalEvent.stopPropagation();
+            switchToMarkerLayer(markerData);
             handleMarkerClickState(markerData, layer, handlers);
             
             LOGGER.debug('marker clicked', markerData);
@@ -243,6 +276,7 @@ const RENDERER_DICT: Record<
             const markerRoot = layer.getElement?.() as HTMLElement | null;
             const inner = markerRoot?.querySelector(`.${styles.markerInner}, .${styles.noFrameInner}`);
             if (!inner) return;
+            syncMarkerTierAttribute(layer, markerData);
             // entry fade-in
             inner.classList.add(styles.appearing);
             const { selectedPoints, temporarySelectedPoints } = useMarkerStore.getState();
@@ -261,6 +295,7 @@ const RENDERER_DICT: Record<
             
         layer.addEventListener('click', (e) => {
             e.originalEvent.stopPropagation();
+            switchToMarkerLayer(markerData);
             handleMarkerClickState(markerData, layer, handlers);
             
             LOGGER.debug('marker clicked', markerData);
@@ -298,6 +333,7 @@ export function getMarkerLayer(
             const markerRoot = layer.getElement?.() as HTMLElement | null;
             const inner = markerRoot?.querySelector(`.${styles.markerInner}, .${styles.noFrameInner}`);
             if (inner) {
+                syncMarkerTierAttribute(layer, markerData);
                 inner.classList.add(styles.checked);
             }
         }, 0);

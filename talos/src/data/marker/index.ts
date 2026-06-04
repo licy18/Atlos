@@ -7,6 +7,7 @@ export interface IMarkerData {
     z: number;
     x: number;
     y: number;
+    tier: number;
     pos: [number, number];
     subregId: string;
     type: string;
@@ -19,6 +20,7 @@ type IRawMarkerTuple = [
     z: number,
     x: number,
     y: number,
+    tier: number,
     type: string | null,
 ];
 
@@ -27,6 +29,7 @@ interface IRawMarkerObject {
     z?: number;
     x?: number;
     y?: number;
+    tier?: number;
     pos?: [number, number] | [number, number, number];
     subregId?: string;
     type: string | null;
@@ -53,17 +56,19 @@ export interface IMarkerType {
  */
 const normalizeMarker = (raw: IRawMarkerData, subregId: string): IMarkerData => {
     const rawObject = Array.isArray(raw)
-        ? { id: raw[0], z: raw[1], x: raw[2], y: raw[3], type: raw[4] }
+        ? { id: raw[0], z: raw[1], x: raw[2], y: raw[3], tier: raw[4], type: raw[5] }
         : raw;
     const z = rawObject.z ?? rawObject.pos?.[0] ?? 0;
     const x = rawObject.x ?? rawObject.pos?.[1] ?? 0;
     const y = rawObject.y ?? rawObject.pos?.[2] ?? 0;
+    const tier = rawObject.tier ?? 0;
 
     return {
         id: String(rawObject.id),
         z,
         x,
         y,
+        tier,
         pos: [z, x],
         subregId: rawObject.subregId ?? subregId,
         type: rawObject.type ?? '',

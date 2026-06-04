@@ -62,7 +62,7 @@ const getSubregionLabel = (
     subregionId: string,
     tGame: (key: string) => unknown,
 ): string => {
-    const regionKey = getRegionForMarker({ id: '', z: 0, x: 0, y: 0, pos: [0, 0], type: '', subregId: subregionId });
+    const regionKey = getRegionForMarker({ id: '', z: 0, x: 0, y: 0, tier: 0, pos: [0, 0], type: '', subregId: subregionId });
     const regionCode = REGION_CODE_MAP[regionKey] ?? regionKey;
     const subKey = SUBREGION_DICT[subregionId]?.name;
     let sub: unknown;
