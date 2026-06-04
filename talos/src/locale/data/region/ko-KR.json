@@ -204,6 +204,21 @@
           "urban_development_hall": "도시 건설관",
           "serenity_garden": "안사원"
         }
+      },
+      "SV": {
+        "name": "장검 골짜기",
+        "short": "SV",
+        "site": {
+          "leeward_trail": "산 뒤편 작은 길",
+          "west_gorge_path": "서쪽 골짜기 좁은 길",
+          "south_gorge_rampart": "남쪽 골짜기 옛 방벽",
+          "east_gorge_ruins": "동쪽 골짜기 유적",
+          "shadow_tunnel": "유경 동굴",
+          "north_gorge_crag": "북쪽 골짜기 부유 절벽",
+          "deep_gorge_vault": "골짜기 하부 비밀 창고",
+          "old_blade_precipice": "옛 검 절벽",
+          "gorge_overhang": "현곡대"
+        }
       }
     }
   },

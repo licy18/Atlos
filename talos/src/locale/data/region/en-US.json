@@ -137,6 +137,7 @@
           "citizen_square": "Citizen Square",
           "qijian_dais": "Qijian Dais",
           "long_pavilion": "Long Pavilion",
+          "wuling_north": "Wuling North",
           "main_pillar_office": "Main Pillar Office",
           "restricted_area": "Restricted Area",
           "tianjing_courtyard": "Tianjing Courtyard",
@@ -203,6 +204,21 @@
           "lake_islet": "Lake Islet",
           "urban_development_hall": "Urban Development Hall",
           "serenity_garden": "Serenity Garden"
+        }
+      },
+      "SV": {
+        "name": "Sword Vault Dale",
+        "short": "SV",
+        "site": {
+          "leeward_trail": "Leeward Trail",
+          "west_gorge_path": "West Gorge Path",
+          "south_gorge_rampart": "South Gorge Rampart",
+          "east_gorge_ruins": "East Gorge Ruins",
+          "shadow_tunnel": "Shadow Tunnel",
+          "north_gorge_crag": "North Gorge Crag",
+          "deep_gorge_vault": "Deep Gorge Vault",
+          "old_blade_precipice": "Old Blade Precipice",
+          "gorge_overhang": "Gorge Overhang"
         }
       }
     }

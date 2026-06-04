@@ -204,6 +204,21 @@
           "urban_development_hall": "Зал городского развития",
           "serenity_garden": "Сад спокойствия"
         }
+      },
+      "SV": {
+        "name": "Долина Залежи Клинков",
+        "short": "ЗК",
+        "site": {
+          "leeward_trail": "Подветренная тропа",
+          "west_gorge_path": "Путь западного ущелья",
+          "south_gorge_rampart": "Бастион южного ущелья",
+          "east_gorge_ruins": "Руины восточного ущелья",
+          "shadow_tunnel": "Теневой туннель",
+          "north_gorge_crag": "Утес северного ущелья",
+          "deep_gorge_vault": "Хранилище глубокого ущелья",
+          "old_blade_precipice": "Обрыв старого клинка",
+          "gorge_overhang": "Уступ над ущельем"
+        }
       }
     }
   },

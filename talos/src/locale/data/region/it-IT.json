@@ -126,7 +126,7 @@
           "bureau_of_swordmancers": "Dipartimento degli Spadamanti",
           "residential_area": "Area abitativa",
           "monitoring_center": "Centro di monitoraggio",
-          "marker_stone_flats": "Pianure di pietre di demarcazione",
+          "marker_stone_flats": "Piazzale della pietra di demarcazione",
           "xiranflow_channel": "Canale Xiranflow",
           "fangxing_avenue": "Viale Fangxing",
           "tianshi_pillar_array": "Schiera di colonne Tianshi",
@@ -203,6 +203,21 @@
           "lake_islet": "Isoletta del lago",
           "urban_development_hall": "Sala di sviluppo urbano",
           "serenity_garden": "Giardino della serenità"
+        }
+      },
+      "SV": {
+        "name": "Valletta di Voltaspada",
+        "short": "VV",
+        "site": {
+          "leeward_trail": "Sentiero sottovento",
+          "west_gorge_path": "Sentiero della gola ovest",
+          "south_gorge_rampart": "Bastione della gola sud",
+          "east_gorge_ruins": "Rovine della gola est",
+          "shadow_tunnel": "Tunnel delle ombre",
+          "north_gorge_crag": "Rupe della gola nord",
+          "deep_gorge_vault": "Cripta della gola profonda",
+          "old_blade_precipice": "Precipizio dell'antica lama",
+          "gorge_overhang": "Sporgenza della gola"
         }
       }
     }

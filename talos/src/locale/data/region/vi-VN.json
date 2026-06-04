@@ -204,6 +204,21 @@
           "urban_development_hall": "Sảnh Phát Triển Đô Thị",
           "serenity_garden": "Vườn Tĩnh Lặng"
         }
+      },
+      "SV": {
+        "name": "Cốc Tàng Kiếm",
+        "short": "SV",
+        "site": {
+          "leeward_trail": "Đường Mòn Khuất Gió",
+          "west_gorge_path": "Lối Hẻm Núi Phía Tây",
+          "south_gorge_rampart": "Lũy Hẻm Núi Phía Nam",
+          "east_gorge_ruins": "Phế Tích Hẻm Núi Phía Đông",
+          "shadow_tunnel": "Đường Hầm Bóng Tối",
+          "north_gorge_crag": "Vách Đá Hẻm Núi Phía Bắc",
+          "deep_gorge_vault": "Hầm Sâu Hẻm Núi",
+          "old_blade_precipice": "Vách Đao Cổ",
+          "gorge_overhang": "Mỏm Cheo Leo Hẻm Núi"
+        }
       }
     }
   },

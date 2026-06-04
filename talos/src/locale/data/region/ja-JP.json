@@ -204,6 +204,21 @@
           "urban_development_hall": "都市建設館",
           "serenity_garden": "安思園"
         }
+      },
+      "SV": {
+        "name": "蔵剣谷",
+        "short": "剣",
+        "site": {
+          "leeward_trail": "山の小道",
+          "west_gorge_path": "谷西の通路",
+          "south_gorge_rampart": "谷南の旧跡",
+          "east_gorge_ruins": "谷東の遺跡",
+          "shadow_tunnel": "密かな洞窟",
+          "north_gorge_crag": "谷北の浮崖",
+          "deep_gorge_vault": "谷底の秘庫",
+          "old_blade_precipice": "古剣崖",
+          "gorge_overhang": "懸谷台"
+        }
       }
     }
   },

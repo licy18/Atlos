@@ -126,7 +126,7 @@
           "bureau_of_swordmancers": "Bureau dos Espadeiros",
           "residential_area": "Área Residencial",
           "monitoring_center": "Centro de Monitoramento",
-          "marker_stone_flats": "Planícies de Pedra de Marcação",
+          "marker_stone_flats": "Planícies da Pedra de Marcação",
           "xiranflow_channel": "Canal de Fluxo de Xiranita",
           "fangxing_avenue": "Avenida Fangxing",
           "tianshi_pillar_array": "Conjunto de Pilares de Tianshi",
@@ -174,9 +174,9 @@
         "site": {
           "skyhold_ridge": "Cume das Nuvens",
           "ancestral_spring": "Fonte Ancestral",
-          "causeway_trail": "Trilha da Calçada",
+          "causeway_trail": "Trilha do Passeio",
           "main_fort": "Forte Principal",
-          "bladewoods": "Bladewoods"
+          "bladewoods": "Bosque das Espadas"
         }
       },
       "TA": {
@@ -203,6 +203,21 @@
           "lake_islet": "Ilhota do Lago",
           "urban_development_hall": "Salão do Desenvolvimento Urbano",
           "serenity_garden": "Jardim da Serenidade"
+        }
+      },
+      "SV": {
+        "name": "Vale do Cofre de Espadas",
+        "short": "CE",
+        "site": {
+          "leeward_trail": "Trilha de Sotavento",
+          "west_gorge_path": "Trilha do Desfiladeiro Oeste",
+          "south_gorge_rampart": "Muralha do Desfiladeiro Sul",
+          "east_gorge_ruins": "Ruínas do Desfiladeiro Leste",
+          "shadow_tunnel": "Túnel das Sombras",
+          "north_gorge_crag": "Penhasco do Desfiladeiro Norte",
+          "deep_gorge_vault": "Cofre do Desfiladeiro Profundo",
+          "old_blade_precipice": "Precipício da Velha Espada",
+          "gorge_overhang": "Beirada do Desfiladeiro"
         }
       }
     }
