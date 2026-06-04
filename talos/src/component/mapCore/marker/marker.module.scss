@@ -96,6 +96,11 @@
             opacity: 0.5;
         }
     }
+    &.offLayer {
+        img {
+            filter: grayscale(1);
+        }
+    }
 }
 .noFrameInner {
     opacity: 1;
@@ -120,6 +125,11 @@
             opacity: 0.5;
         }
     }
+    &.offLayer {
+        img {
+            filter: grayscale(1);
+        }
+    }
 }
 .noFrameInner, .markerInner {
     position: absolute;
@@ -128,21 +138,18 @@
     transform: translate3d(-50%, -50%, 0);
 }
 
-.markerInner[data-tier]:not([data-tier='0'])::after,
-.noFrameInner[data-tier]:not([data-tier='0'])::after {
+.markerInner[data-tier]::after, .noFrameInner[data-tier]::after {
     content: attr(data-tier);
     position: absolute;
     right: -0.45rem;
     top: -0.45rem;
     min-width: 1rem;
     height: 1rem;
-    padding: 0 0.2rem;
+    padding: 0 3px;
     border-radius: 0.5rem;
-    background-color: $primary-accent-5;
-    color: $black-1;
     box-shadow: 0 1px 4px rgba($black-0, 0.6);
     font-family: 'Novecento Medium', sans-serif;
-    font-size: 0.68rem;
+    font-size: 0.6875rem;
     font-weight: 700;
     line-height: 1rem;
     text-align: center;
@@ -151,10 +158,37 @@
     box-sizing: border-box;
 }
 
-.markerInner[data-tier^='-']:not([data-tier='0'])::after,
-.noFrameInner[data-tier^='-']:not([data-tier='0'])::after {
-    background-color: $secondary-accent-1;
-    color: $white-1;
+.noFrameInner[data-tier]::after {
+    right: 50%;
+    top: 0;
+    transform: translate3d(50%, 0, 0);
+}
+
+:is(.markerInner, .noFrameInner) {
+    &[data-tier^="L"] {color: $grey-1;}
+    &[data-tier="L1"]::after {
+        background-color: $primary-accent-1;
+    }
+    &[data-tier="L2"]::after {
+        background-color: $primary-accent-3;
+    }
+    &[data-tier="L3"]::after {
+        background-color: $primary-accent-5;
+    }
+
+    &[data-tier^="B"] {color: $white-1};
+    &[data-tier="B1"]::after {
+        background-color: $secondary-accent-0;
+    }
+    &[data-tier="B2"]::after {
+        background-color: $secondary-accent-1;
+    }
+    &[data-tier="B3"]::after {
+        background-color: $secondary-accent-2;
+    }
+    &[data-tier="B4"]::after {
+        background-color: $secondary-accent-3;
+    }
 }
 
 .noFrameMarkerIcon {
@@ -186,6 +220,11 @@
 .markerInner.checked.appearing,
 .noFrameInner.checked.appearing {
     animation: markerFadeInChecked 0.15s ease-out forwards;
+}
+
+.markerInner.offLayer.appearing,
+.noFrameInner.offLayer.appearing {
+    animation: markerFadeIn 0.15s ease-out forwards;
 }
 
 @keyframes markerFadeInChecked {
@@ -241,6 +280,11 @@
     animation: markerFadeOutChecked 0.15s ease-in forwards;
 }
 
+.markerInner.offLayer.disappearing,
+.noFrameInner.offLayer.disappearing {
+    animation: markerFadeOut 0.15s ease-in forwards;
+}
+
 @keyframes markerFadeOutChecked {
     from {
         opacity: 0.3;
@@ -275,6 +319,13 @@
 
         opacity: 1;
         transition: opacity 0.3s $moderato-curve;
+
+        > img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
         &::before {
             content: '';
@@ -357,12 +408,14 @@
         transition: transform 0.35s $presto-curve, opacity 0.35s $presto-curve;
     }
     .subIcon {
+        display: block;
         position: absolute;
         left: 50%;
         top: 50%;
         transform: translate3d(-50%, -50%, 0);
         width: 100%;
         height: 100%;
+        object-fit: contain;
         background-position: center;
         background-size: contain;
         background-repeat: no-repeat;
