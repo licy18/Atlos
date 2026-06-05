@@ -771,6 +771,115 @@
             6555.5,
             2725.5
           ]
+        },
+        "WL/SV": {
+          "id": "WL/SV",
+          "type": "sub",
+          "region": "WL",
+          "sub": "SV",
+          "point": [
+            8213.876184198283,
+            7278.799370436153
+          ]
+        },
+        "WL/SV/east_gorge_ruins": {
+          "id": "WL/SV/east_gorge_ruins",
+          "type": "site",
+          "region": "WL",
+          "sub": "SV",
+          "site": "east_gorge_ruins",
+          "point": [
+            8714,
+            7430
+          ]
+        },
+        "WL/SV/gorge_overhang": {
+          "id": "WL/SV/gorge_overhang",
+          "type": "site",
+          "region": "WL",
+          "sub": "SV",
+          "site": "gorge_overhang",
+          "point": [
+            9079.99949190961,
+            7850.608932808679
+          ]
+        },
+        "WL/SV/west_gorge_path": {
+          "id": "WL/SV/west_gorge_path",
+          "type": "site",
+          "region": "WL",
+          "sub": "SV",
+          "site": "west_gorge_path",
+          "point": [
+            7436,
+            7112
+          ]
+        },
+        "WL/SV/south_gorge_rampart": {
+          "id": "WL/SV/south_gorge_rampart",
+          "type": "site",
+          "region": "WL",
+          "sub": "SV",
+          "site": "south_gorge_rampart",
+          "point": [
+            7858,
+            7498
+          ]
+        },
+        "WL/SV/north_gorge_crag": {
+          "id": "WL/SV/north_gorge_crag",
+          "type": "site",
+          "region": "WL",
+          "sub": "SV",
+          "site": "north_gorge_crag",
+          "point": [
+            8420,
+            6732
+          ]
+        },
+        "WL/SV/deep_gorge_vault": {
+          "id": "WL/SV/deep_gorge_vault",
+          "type": "site",
+          "region": "WL",
+          "sub": "SV",
+          "site": "deep_gorge_vault",
+          "point": [
+            8111.286821537331,
+            7241.79992816499
+          ]
+        },
+        "WL/SV/old_blade_precipice": {
+          "id": "WL/SV/old_blade_precipice",
+          "type": "site",
+          "region": "WL",
+          "sub": "SV",
+          "site": "old_blade_precipice",
+          "point": [
+            7560,
+            7706
+          ]
+        },
+        "WL/SV/leeward_trail": {
+          "id": "WL/SV/leeward_trail",
+          "type": "site",
+          "region": "WL",
+          "sub": "SV",
+          "site": "leeward_trail",
+          "point": [
+            6892.876903006465,
+            6871.663699570869
+          ]
+        },
+        "WL/SV/shadow_tunnel": {
+          "id": "WL/SV/shadow_tunnel",
+          "type": "site",
+          "region": "WL",
+          "sub": "SV",
+          "site": "shadow_tunnel",
+          "point": [
+            9186,
+            7196
+          ]
         }
       }
     },

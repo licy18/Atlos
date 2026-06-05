@@ -25,6 +25,7 @@ export interface ModalProps {
   exitDuration?: number;
   /** whether to play enter animation on first / every open (triggered by first frame closed -> open) */
   animateOnOpen?: boolean;
+  customHeight?: string; // custom modal height, e.g. '400px' or '50vh'
 }
 
 const FOCUS_SELECTOR = [
@@ -57,6 +58,7 @@ const Modal: React.FC<ModalProps> = ({
   keepMounted = true,
   exitDuration = 325,
   animateOnOpen = true,
+  customHeight,
 }) => {
   const tUI = useTranslateUI();
   /**
@@ -246,7 +248,9 @@ const Modal: React.FC<ModalProps> = ({
             )}
           </div>
         )}
-        <div className={styles.modalContent} ref={contentRef}>{children}</div>
+        <div className={styles.modalContent} ref={contentRef} style={customHeight ? { maxHeight: customHeight } : undefined}>
+          {children}
+        </div>
         
         {/* Top blur: visible when not scrolled to top */}
         <LinearBlur

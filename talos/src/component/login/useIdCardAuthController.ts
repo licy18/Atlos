@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   AuthFlowError,
+  exchangeAuthCode,
   fetchSessionUser,
   getResetPasswordPreview,
   getAuthBase,
@@ -71,6 +72,26 @@ const hasOnceLogin = (): boolean => {
   return raw === 'true' || raw === '1';
 };
 
+const hasPendingAuthCode = (): boolean => {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  return Boolean(new URL(window.location.href).searchParams.get('auth_code')?.trim());
+};
+
+const buildOAuthCallbackUrl = (): string => {
+  const callbackUrl = new URL(window.location.href);
+  callbackUrl.searchParams.delete('auth_code');
+  callbackUrl.searchParams.delete('error');
+  callbackUrl.searchParams.delete('error_description');
+  callbackUrl.searchParams.delete('state');
+  callbackUrl.searchParams.delete('code');
+  callbackUrl.searchParams.delete('token');
+  callbackUrl.searchParams.delete('email');
+  return callbackUrl.toString();
+};
+
 const cachedSession = getCachedSession();
 
 export const useIdCardAuthController = () => {
@@ -137,8 +158,48 @@ export const useIdCardAuthController = () => {
   }, [clearSessionUser, setSessionUser]);
 
   useEffect(() => {
+    if (hasPendingAuthCode()) {
+      return;
+    }
+
     void syncSession({ silent: true });
   }, [syncSession]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const url = new URL(window.location.href);
+    const authCode = url.searchParams.get('auth_code')?.trim() ?? '';
+    if (!authCode) {
+      return;
+    }
+
+    url.searchParams.delete('auth_code');
+    window.history.replaceState({}, '', url.toString());
+
+    void exchangeAuthCode(authCode)
+      .then(async (user) => {
+        const refreshedUser = (await fetchSessionUser().catch(() => null)) ?? user;
+        markOnceLogin();
+        setHasLoggedInBefore(true);
+        setSessionUser(refreshedUser);
+        setAuthReady(true);
+        setOpen(false);
+        if (refreshedUser.needsProfileSetup) {
+          setProfileName('');
+          setProfileAvatar(normalizeAvatarIndex(refreshedUser.avatar));
+          setProfileError(null);
+          setProfileOpen(true);
+        }
+      })
+      .catch((error) => {
+        setAuthReady(true);
+        setAuthError(mapAuthErrorToHint(error));
+        setOpen(true);
+      });
+  }, [setSessionUser]);
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -218,7 +279,7 @@ export const useIdCardAuthController = () => {
     setIsSubmitting(true);
 
     try {
-      const callbackURL = window.location.href;
+      const callbackURL = buildOAuthCallbackUrl();
       const { redirectUrl } = await startDiscordAuth(callbackURL);
       window.location.assign(redirectUrl);
     } catch (error) {
@@ -235,7 +296,7 @@ export const useIdCardAuthController = () => {
     setIsSubmitting(true);
 
     try {
-      const callbackURL = window.location.href;
+      const callbackURL = buildOAuthCallbackUrl();
       const { redirectUrl } = await startGoogleAuth(callbackURL);
       window.location.assign(redirectUrl);
     } catch (error) {

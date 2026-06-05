@@ -32,7 +32,7 @@
       "main": "Główny",
       "sub": "Podreg"
     },
-    "noInfo": "Brak informacji. Kliknij, aby przesłać zrzut ekranu punktu.",
+    "noInfo": "Brak obrazu. Użyj {paste} / {click}, aby przesłać.",
     "communityRule1": "Przed przesłaniem upewnij się, że przeczytałeś i przestrzegasz",
     "communityRule2": "Wytycznych społeczności",
     "uploading": "Przesyłanie...",
@@ -51,7 +51,7 @@
       "unrecall": "Anuluj usunięcie"
     },
     "errors": {
-      "unsupportedType": "Obsługiwane są tylko obrazy JPEG/PNG/WebP/AVIF.",
+      "unsupportedType": "Obsługiwane są tylko obrazy JPEG/PNG/WebP/AVIF/HEIC.",
       "fileTooLarge": "Plik obrazu jest zbyt duży.",
       "imageDecodeFailed": "Przeglądarka nie mogła otworzyć tego obrazu.",
       "imageProcessingUnavailable": "Lokalne przetwarzanie obrazu jest niedostępne.",
@@ -59,12 +59,13 @@
       "uploadInvalidResponse": "Odpowiedź API przesyłania jest nieprawidłowa.",
       "uploadNetwork": "Błąd sieci podczas przesyłania.",
       "uploadAborted": "Przesyłanie anulowane.",
+      "rateLimited": "Osiągnięto limit przesyłania, spróbuj ponownie później.",
       "uploadFailed": "Przesyłanie nie powiodło się. Spróbuj ponownie.",
       "backendUnknown": "Usługa przesyłania zwróciła błąd."
     }
   },
   "footer": {
-    "icp": "沪ICP备2025119702号-1"
+    "icp": "Designed by cirisus, HK"
   },
   "sidebar": {
     "alt": {
@@ -223,6 +224,7 @@
       "verification": "Kod weryfikacyjny:",
       "forgotPW": "Zapomniałeś hasła?",
       "pwdRegex": "8–20 znaków; co najmniej jedna duża litera",
+      "emailRegex": "Jednorazowe adresy e-mail nie są dozwolone",
       "send": "Wyślij",
       "sendResetLink": "Zresetuj",
       "resend": "Ponów ({count})",
@@ -247,6 +249,7 @@
         "102": "Nieprawidłowy e-mail",
         "103": "E-mail jest już w użyciu",
         "104": "Nie znaleziono e-maila",
+        "105": "Email Not Supported",
         "111": "Wymagane hasło",
         "112": "Nieprawidłowe hasło",
         "113": "Hasła nie są identyczne",
@@ -278,6 +281,7 @@
       "noteNickname": "Nazwa użytkownika może składać się z maksymalnie 15 znaków (litery, cyfry, myślniki i podkreślenia).",
       "noteUID": "UID jest nadawany przy rejestracji i nie można go zmienić. Nazwę użytkownika możesz zaktualizować w dowolnej chwili. Kliknij awatar, aby go zmienić.",
       "auditLabel": "Akcje",
+      "importOfficial": "Importuj z oficjalnej mapy",
       "save": "Zapisz zmiany",
       "saving": "Zapisywanie...",
       "logout": "Wyloguj się"
@@ -286,7 +290,10 @@
   "scale": {
     "pip": {
       "activeTitle": "Tryb obraz w obrazie jest aktywny",
-      "returnHint": "Kliknij logo, aby wrócić do tej karty"
+      "returnHint": "Kliknij logo, aby wrócić do tej karty",
+      "enterMode": "Włącz tryb PiP",
+      "exitMode": "Wyłącz tryb PiP",
+      "unsupported": "PiP nie jest obsługiwane"
     }
   },
   "locator": {
@@ -309,6 +316,8 @@
       "unlink": "Odłącz",
       "bindWithCountdown": "Powiąż i włącz synchronizację ({sec})",
       "bind": "Powiąż i włącz synchronizację",
+      "bindOnlyWithCountdown": "Połącz konto ({sec})",
+      "bindOnly": "Połącz konto",
       "locateAuth": "Autoryzuj",
       "locateAuthBody": "Włączenie synchronizacji lokalizacji umożliwi dostęp do Twojej pozycji w grze. Włączyć?",
       "authAndSync": "Autoryzuj i uruchom sync"
@@ -350,6 +359,29 @@
       "roleRequired": "Wybierz rolę.",
       "unlinkFailed": "Odłączenie nie powiodło się.",
       "authorizationFailed": "Autoryzacja nie powiodła się."
+    }
+  },
+  "sync": {
+    "now": "Synchronizuj z OEM Cloud",
+    "already": "Zsynchronizowano z chmurą",
+    "done": "Zsynchronizowano - {times} temu",
+    "syncing": "Synchronizacja {count} punktów",
+    "failed": "Błąd synchronizacji ({reason})",
+    "offline": "Offline",
+    "dataConflict": "Konflikt danych",
+    "unknown": "Nieznany błąd",
+    "conflict": {
+      "title": "Konflikt danych",
+      "local": "Lokalne",
+      "remote": "Zdalne",
+      "official": "Oficjalne",
+      "oemDb": "OEM DB",
+      "updatedAt": "Ostatnia modyfikacja",
+      "total": "Oznaczone punkty",
+      "region": "Region",
+      "keepA": "Zachowaj dane {label}",
+      "keepB": "Użyj danych {label}",
+      "merge": "Scal oba źródła danych ({count})"
     }
   },
   "links": {

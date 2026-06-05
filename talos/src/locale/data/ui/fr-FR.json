@@ -32,7 +32,7 @@
       "main": "Principal",
       "sub": "Sous"
     },
-    "noInfo": "Aucune information. Cliquez pour téléverser une capture d’écran du point.",
+    "noInfo": "Aucune image. Utilisez {paste} / {click} pour importer.",
     "communityRule1": "Avant de téléverser, assurez-vous d’avoir lu et de respecter les",
     "communityRule2": "Règles de la communauté",
     "uploading": "Téléversement...",
@@ -51,7 +51,7 @@
       "unrecall": "Annuler le retrait"
     },
     "errors": {
-      "unsupportedType": "Seules les images JPEG/PNG/WebP/AVIF sont prises en charge.",
+      "unsupportedType": "Seules les images JPEG/PNG/WebP/AVIF/HEIC sont prises en charge.",
       "fileTooLarge": "Le fichier image est trop volumineux.",
       "imageDecodeFailed": "Le navigateur n’a pas pu ouvrir cette image.",
       "imageProcessingUnavailable": "Le traitement local de l’image est indisponible.",
@@ -59,12 +59,13 @@
       "uploadInvalidResponse": "Le service de téléversement a renvoyé une réponse invalide.",
       "uploadNetwork": "Une erreur réseau est survenue pendant le téléversement.",
       "uploadAborted": "Le téléversement a été annulé.",
+      "rateLimited": "Limite d’envoi atteinte, réessayez plus tard.",
       "uploadFailed": "Échec du téléversement. Veuillez réessayer plus tard.",
       "backendUnknown": "Le service de téléversement a renvoyé une erreur."
     }
   },
   "footer": {
-    "icp": "沪ICP备2025119702号-1"
+    "icp": "Designed by cirisus, HK"
   },
   "sidebar": {
     "alt": {
@@ -223,6 +224,7 @@
       "verification": "Vérification:",
       "forgotPW": "Mot de passe oublié ?",
       "pwdRegex": "8–20 caractères; au moins une lettre majuscule",
+      "emailRegex": "Les adresses e-mail jetables ne sont pas autorisées",
       "send": "Envoyer",
       "sendResetLink": "Réinitialiser",
       "resend": "Renvoyer ({count})",
@@ -247,6 +249,7 @@
         "102": "Email invalide",
         "103": "Email occupé",
         "104": "Email non enregistré",
+        "105": "Email Not Supported",
         "111": "Mot de passe requis",
         "112": "Mot de passe invalide",
         "113": "Mots de passe différents",
@@ -278,6 +281,7 @@
       "noteNickname": "Vous ne pouvez pas utiliser plus de 15 lettres, chiffres, traits d’union et traits de soulignement dans votre nom d’utilisateur.",
       "noteUID": "L'UID est attribué lors de la première configuration et ne peut pas être modifié. Vous pouvez mettre à jour votre nom d'utilisateur à tout moment. Cliquez sur la zone de l'avatar pour changer d'avatar.",
       "auditLabel": "Audit",
+      "importOfficial": "Importer depuis la carte officielle",
       "save": "Enregistrer",
       "saving": "Économie...",
       "logout": "Se déconnecter"
@@ -286,7 +290,10 @@
   "scale": {
     "pip": {
       "activeTitle": "Le mode Image dans l'image est actif",
-      "returnHint": "Cliquez sur le logo pour revenir à cet onglet"
+      "returnHint": "Cliquez sur le logo pour revenir à cet onglet",
+      "enterMode": "Activer le mode PiP",
+      "exitMode": "Quitter le mode PiP",
+      "unsupported": "Document Picture-in-Picture n’est pas pris en charge"
     }
   },
   "locator": {
@@ -309,6 +316,8 @@
       "unlink": "Délier",
       "bindWithCountdown": "Lier et activer la synchro ({sec})",
       "bind": "Lier et activer la synchro",
+      "bindOnlyWithCountdown": "Lier le compte ({sec})",
+      "bindOnly": "Lier le compte",
       "locateAuth": "Autoriser",
       "locateAuthBody": "Activer la synchronisation de position permettra d'accéder à votre position en jeu. Voulez-vous l'activer ?",
       "authAndSync": "Autoriser et démarrer la synchro"
@@ -350,6 +359,29 @@
       "roleRequired": "Veuillez sélectionner un rôle.",
       "unlinkFailed": "Échec du déliement.",
       "authorizationFailed": "Autorisation échouée."
+    }
+  },
+  "sync": {
+    "now": "Synchroniser avec OEM Cloud",
+    "already": "Synchronisé avec le cloud",
+    "done": "Synchronisé - il y a {times}",
+    "syncing": "Synchronisation de {count} points",
+    "failed": "Échec de la synchronisation ({reason})",
+    "offline": "Hors ligne",
+    "dataConflict": "Conflit de données",
+    "unknown": "Erreur inconnue",
+    "conflict": {
+      "title": "Conflit de données",
+      "local": "Local",
+      "remote": "Distant",
+      "official": "Officiel",
+      "oemDb": "OEM DB",
+      "updatedAt": "Dernière modification",
+      "total": "Points marqués",
+      "region": "Région",
+      "keepA": "Conserver les données {label}",
+      "keepB": "Utiliser les données {label}",
+      "merge": "Fusionner les deux sources ({count})"
     }
   },
   "links": {

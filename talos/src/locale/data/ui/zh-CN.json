@@ -32,7 +32,7 @@
       "main": "主区域",
       "sub": "子区域"
     },
-    "noInfo": "暂无信息，点击上传点位截图",
+    "noInfo": "暂无信息，使用 {paste} / {click} 上传点位截图",
     "communityRule1": "上传前，请您详阅并遵循",
     "communityRule2": "OEM 社区守则",
     "uploading": "正在上传…",
@@ -51,7 +51,7 @@
       "unrecall": "取消撤回"
     },
     "errors": {
-      "unsupportedType": "仅支持 JPEG/PNG/WebP/AVIF 图片",
+      "unsupportedType": "仅支持 JPEG/PNG/WebP/AVIF/HEIC 图片",
       "fileTooLarge": "图片文件过大",
       "imageDecodeFailed": "浏览器无法读取此图片",
       "imageProcessingUnavailable": "本地图片处理不可用",
@@ -59,12 +59,13 @@
       "uploadInvalidResponse": "上传接口返回异常",
       "uploadNetwork": "上传时发生网络错误",
       "uploadAborted": "上传已取消",
+      "rateLimited": "上传过于频繁，请稍后再试",
       "uploadFailed": "上传失败，请稍后再试",
       "backendUnknown": "上传服务返回错误"
     }
   },
   "footer": {
-    "icp": "沪ICP备2025119702号-1"
+    "icp": "Designed by cirisus, HK"
   },
   "sidebar": {
     "alt": {
@@ -223,6 +224,7 @@
       "verification": "验证码",
       "forgotPW": "忘记密码？",
       "pwdRegex": "密码应为 8–20 个字符；含至少 1 个大写字母",
+      "emailRegex": "请勿使用一次性邮箱服务",
       "send": "发送验证码",
       "sendResetLink": "重置",
       "resend": "重新发送({count})",
@@ -247,6 +249,7 @@
         "102": "邮箱地址无效",
         "103": "邮箱已被注册",
         "104": "邮箱尚未注册",
+        "105": "邮箱不支持",
         "111": "请填写密码",
         "112": "密码不合法",
         "113": "两次密码不一致",
@@ -278,6 +281,7 @@
       "noteNickname": "您可以使用至多十五个字母、数字、连字符或下划线作为您的用户名。",
       "noteUID": "UID 仅在首次设置用户名时分配且不可更改，但您可以随时更新自己的用户名。点击头像区域可以切换其他头像。",
       "auditLabel": "操作",
+      "importOfficial": "从官方地图导入点位数据",
       "save": "保存更改",
       "saving": "保存中…",
       "logout": "登出"
@@ -286,7 +290,10 @@
   "scale": {
     "pip": {
       "activeTitle": "画中画模式已开启",
-      "returnHint": "点击 Logo 以返回当前标签页。"
+      "returnHint": "点击 Logo 以返回当前标签页。",
+      "enterMode": "开启画中画模式",
+      "exitMode": "退出画中画模式",
+      "unsupported": "当前浏览器不支持文档画中画"
     }
   },
   "locator": {
@@ -309,6 +316,8 @@
       "unlink": "解除绑定",
       "bindWithCountdown": "绑定并启用位置同步（{sec}）",
       "bind": "绑定并启用位置同步",
+      "bindOnlyWithCountdown": "绑定账号（{sec}）",
+      "bindOnly": "绑定账号",
       "locateAuth": "位置同步授权",
       "locateAuthBody": "启用位置同步后将允许访问您的游戏内位置信息。是否启用？",
       "authAndSync": "授权并开始同步"
@@ -350,6 +359,29 @@
       "roleRequired": "请选择角色。",
       "unlinkFailed": "解除绑定失败。",
       "authorizationFailed": "授权失败。"
+    }
+  },
+  "sync": {
+    "now": "立即同步进度至云端",
+    "already": "本地进度已经与云端一致",
+    "done": "数据已同步 - {times} 前更新",
+    "syncing": "正在同步 {count} 个点位",
+    "failed": "同步失败（{reason}）",
+    "offline": "已离线",
+    "dataConflict": "进度冲突",
+    "unknown": "未知错误",
+    "conflict": {
+      "title": "进度冲突",
+      "local": "本地",
+      "remote": "远端",
+      "official": "官方地图",
+      "oemDb": "OEM数据库",
+      "updatedAt": "最后更新时间",
+      "total": "总收集点位数量",
+      "region": "区域",
+      "keepA": "保留{label}数据",
+      "keepB": "使用{label}数据",
+      "merge": "合并以上来源的数据 ({count})"
     }
   },
   "links": {

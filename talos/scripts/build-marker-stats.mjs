@@ -14,7 +14,7 @@ const normalizeRawMarker = (raw) => {
   if (Array.isArray(raw)) {
     return {
       id: raw[0],
-      type: raw[4],
+      type: raw[5],
     };
   }
   return raw;

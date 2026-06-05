@@ -4,7 +4,7 @@
     "sub": {
       "PL": {
         "name": "供能高地",
-        "short": "供",
+        "short": "高",
         "site": {
           "old_dorms": "舊宿舍區",
           "originium_power_plant": "源石發電站",
@@ -21,7 +21,7 @@
       },
       "OL": {
         "name": "礦脈源區",
-        "short": "脈",
+        "short": "礦",
         "site": {
           "originium_passage": "源石隧道",
           "cradle_of_the_ages": "世代搖籃",
@@ -74,7 +74,7 @@
       },
       "VP": {
         "name": "谷地通道",
-        "short": "谷",
+        "short": "通",
         "site": {
           "valley_fort": "谷地要塞",
           "arsenal": "軍械庫",
@@ -137,6 +137,7 @@
           "citizen_square": "市民廣場",
           "qijian_dais": "棄劍台",
           "long_pavilion": "長亭",
+          "wuling_north": "武陵北",
           "main_pillar_office": "總樁辦公室",
           "restricted_area": "警戒區",
           "tianjing_courtyard": "天井院",
@@ -151,7 +152,7 @@
       },
       "JY": {
         "name": "景玉谷",
-        "short": "玉",
+        "short": "景",
         "site": {
           "treadway": "踩道",
           "ecological_research_station": "生態實驗站",
@@ -170,7 +171,7 @@
       },
       "QB": {
         "name": "清波寨",
-        "short": "清",
+        "short": "寨",
         "site": {
           "skyhold_ridge": "頂天梁",
           "ancestral_spring": "祖泉",
@@ -180,29 +181,44 @@
         }
       },
       "TA": {
-        "name": "试验园区",
-        "short": "园",
+        "name": "實驗園區",
+        "short": "園",
         "site": {
-          "test_area_entrance": "试验园区入口",
-          "type_c_auxiliary_pillar_area_1": "一号丙型辅桩区",
-          "type_c_auxiliary_pillar_area_2": "二号丙型辅桩区",
-          "type_c_auxiliary_pillar_area_3": "三号丙型辅桩区",
-          "test_area_peripheries": "园区外围",
-          "meridian_grid_area": "经纬田区",
-          "integrated_rd_area": "综合科研区",
-          "water_treatment_sector": "污水处理区"
+          "test_area_entrance": "實驗園區入口",
+          "type_c_auxiliary_pillar_area_1": "一號丙型輔樁區",
+          "type_c_auxiliary_pillar_area_2": "二號丙型輔樁區",
+          "type_c_auxiliary_pillar_area_3": "三號丙型輔樁區",
+          "test_area_peripheries": "園區外圍",
+          "meridian_grid_area": "經緯田區",
+          "integrated_rd_area": "綜合科研區",
+          "water_treatment_sector": "汙水處理區"
         }
       },
       "MS": {
         "name": "首墩",
         "short": "墩",
         "site": {
-          "watchtower_reservoir_station": "望楼蓄水站",
-          "restricted_area": "控制区",
-          "cloudrest_woods": "栖云林地",
-          "lake_islet": "湖心岛",
-          "urban_development_hall": "城建馆",
-          "serenity_garden": "安思园"
+          "watchtower_reservoir_station": "望樓蓄水站",
+          "restricted_area": "控制區",
+          "cloudrest_woods": "棲雲林地",
+          "lake_islet": "湖心島",
+          "urban_development_hall": "城建館",
+          "serenity_garden": "安思園"
+        }
+      },
+      "SV": {
+        "name": "藏劍谷",
+        "short": "藏",
+        "site": {
+          "leeward_trail": "山後小徑",
+          "west_gorge_path": "西谷峽道",
+          "south_gorge_rampart": "南谷舊垣",
+          "east_gorge_ruins": "東谷遺跡",
+          "shadow_tunnel": "幽徑隧洞",
+          "north_gorge_crag": "北谷浮崖",
+          "deep_gorge_vault": "谷底秘庫",
+          "old_blade_precipice": "古劍崖",
+          "gorge_overhang": "懸谷台"
         }
       }
     }
@@ -210,7 +226,7 @@
   "DJ": {
     "main": "O.M.V.帝江號",
     "sub": {
-      "name": "O.M.V.帝江號",
+      "name": "OMV Dijiang",
       "site": {
         "bridge": "艦橋",
         "reception_room": "會客室",

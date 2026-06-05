@@ -32,7 +32,7 @@
       "main": "Utama",
       "sub": "Sub"
     },
-    "noInfo": "Tiada maklumat. Klik untuk memuat naik tangkapan skrin lokasi.",
+    "noInfo": "Tiada gambar. Guna {paste} / {click} untuk muat naik.",
     "communityRule1": "Sebelum memuat naik, pastikan anda telah membaca dan mematuhi",
     "communityRule2": "Garis Panduan Komuniti",
     "uploading": "Memuat naik...",
@@ -51,7 +51,7 @@
       "unrecall": "Batalkan pemadaman"
     },
     "errors": {
-      "unsupportedType": "Hanya imej JPEG/PNG/WebP/AVIF disokong.",
+      "unsupportedType": "Hanya imej JPEG/PNG/WebP/AVIF/HEIC disokong.",
       "fileTooLarge": "Fail imej terlalu besar.",
       "imageDecodeFailed": "Pelayar tidak dapat membuka imej ini.",
       "imageProcessingUnavailable": "Pemprosesan imej setempat tidak tersedia.",
@@ -59,12 +59,13 @@
       "uploadInvalidResponse": "Respons API muat naik tidak sah.",
       "uploadNetwork": "Ralat rangkaian semasa memuat naik.",
       "uploadAborted": "Muat naik dibatalkan.",
+      "rateLimited": "Had muat naik dicapai, cuba lagi kemudian.",
       "uploadFailed": "Muat naik gagal. Sila cuba lagi.",
       "backendUnknown": "Perkhidmatan muat naik mengembalikan ralat."
     }
   },
   "footer": {
-    "icp": "沪ICP备2025119702号-1"
+    "icp": "Designed by cirisus, HK"
   },
   "sidebar": {
     "alt": {
@@ -223,6 +224,7 @@
       "verification": "Kod Pengesahan:",
       "forgotPW": "Lupa kata laluan?",
       "pwdRegex": "8–20 aksara; 1 huruf besar",
+      "emailRegex": "Alamat e-mel pakai buang tidak dibenarkan",
       "send": "Hantar",
       "sendResetLink": "Tetap Semula",
       "resend": "Hantar Semula ({count})",
@@ -247,6 +249,7 @@
         "102": "Format e-mel tidak sah",
         "103": "Emel ini telah digunakan",
         "104": "Emel tidak ditemui",
+        "105": "Email Not Supported",
         "111": "Sila masukkan kata laluan",
         "112": "Kata laluan tidak sah",
         "113": "Kata laluan tidak sepadan",
@@ -278,6 +281,7 @@
       "noteNickname": "Nama pengguna tidak boleh melebihi 15 aksara (hanya huruf, nombor, sempang, dan garis bawah dibenarkan).",
       "noteUID": "UID ditetapkan pada kali pertama dan tidak boleh diubah. Namun, anda boleh mengemas kini nama pengguna pada bila-bila masa. Klik kawasan avatar untuk menukarnya.",
       "auditLabel": "Tindakan",
+      "importOfficial": "Import daripada Peta Rasmi",
       "save": "Simpan Perubahan",
       "saving": "Menyimpan...",
       "logout": "Log Keluar"
@@ -286,7 +290,10 @@
   "scale": {
     "pip": {
       "activeTitle": "Gambar dalam gambar aktif",
-      "returnHint": "Klik logo untuk kembali ke tab ini"
+      "returnHint": "Klik logo untuk kembali ke tab ini",
+      "enterMode": "Masuk mod PiP",
+      "exitMode": "Keluar mod PiP",
+      "unsupported": "PiP tidak disokong"
     }
   },
   "locator": {
@@ -309,6 +316,8 @@
       "unlink": "Nyahpaut",
       "bindWithCountdown": "Paut & aktifkan segerak lokasi ({sec})",
       "bind": "Paut & aktifkan segerak lokasi",
+      "bindOnlyWithCountdown": "Pautkan akaun ({sec})",
+      "bindOnly": "Pautkan akaun",
       "locateAuth": "Kebenaran",
       "locateAuthBody": "Mengaktifkan segerak lokasi membenarkan akses ke lokasi dalam permainan anda. Mahu aktifkan?",
       "authAndSync": "Benarkan & mula sync"
@@ -350,6 +359,29 @@
       "roleRequired": "Sila pilih peranan.",
       "unlinkFailed": "Nyahpaut gagal.",
       "authorizationFailed": "Kebenaran gagal."
+    }
+  },
+  "sync": {
+    "now": "Segerak ke OEM Cloud",
+    "already": "Selari dengan Awan",
+    "done": "Disegerakkan - {times} yang lalu",
+    "syncing": "Menyegerak {count} Titik",
+    "failed": "Gagal disegerakkan ({reason})",
+    "offline": "Luar talian",
+    "dataConflict": "Konflik Data",
+    "unknown": "Ralat tidak diketahui",
+    "conflict": {
+      "title": "Konflik Data",
+      "local": "Tempatan",
+      "remote": "Jauh",
+      "official": "Rasmi",
+      "oemDb": "OEM DB",
+      "updatedAt": "Terakhir diubah",
+      "total": "Titik Ditanda",
+      "region": "Rantau",
+      "keepA": "Kekalkan Data {label}",
+      "keepB": "Guna Data {label}",
+      "merge": "Gabungkan Kedua-dua Data ({count})"
     }
   },
   "links": {

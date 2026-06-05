@@ -32,7 +32,7 @@
       "main": "Haupt",
       "sub": "Unter"
     },
-    "noInfo": "Keine Informationen. Klicken, um Punktdetails hochzuladen.",
+    "noInfo": "Kein Bild. Nutze {paste} / {click} zum Hochladen.",
     "communityRule1": "Bitte lesen und befolgen Sie vor dem Hochladen die folgenden",
     "communityRule2": "Community-Richtlinien",
     "uploading": "Wird hochgeladen...",
@@ -59,12 +59,13 @@
       "uploadInvalidResponse": "Der Upload-Dienst hat eine ungültige Antwort zurückgegeben.",
       "uploadNetwork": "Beim Hochladen ist ein Netzwerkfehler aufgetreten.",
       "uploadAborted": "Der Upload wurde abgebrochen.",
+      "rateLimited": "Upload-Limit erreicht, bitte später erneut versuchen.",
       "uploadFailed": "Upload fehlgeschlagen. Bitte versuchen Sie es später erneut.",
       "backendUnknown": "Der Upload-Dienst hat einen Fehler zurückgegeben."
     }
   },
   "footer": {
-    "icp": "沪ICP备2025119702号-1"
+    "icp": "Designed by cirisus, HK"
   },
   "sidebar": {
     "alt": {
@@ -223,6 +224,7 @@
       "verification": "Code:",
       "forgotPW": "Passwort vergessen?",
       "pwdRegex": "8–20 Zeichen; mindestens ein Großbuchstabe",
+      "emailRegex": "Wegwerf-E-Mail-Adressen sind nicht erlaubt",
       "send": "Senden",
       "sendResetLink": "Reset-Link senden",
       "resend": "Erneut senden({count})",
@@ -247,6 +249,7 @@
         "102": "E-Mail ungültig",
         "103": "E-Mail bereits vergeben",
         "104": "E-Mail nicht registriert",
+        "105": "Email Not Supported",
         "111": "Passwort erforderlich",
         "112": "Passwort ungültig",
         "113": "Passwörter nicht überein",
@@ -278,6 +281,7 @@
       "noteNickname": "Sie können maximal 15 Buchstaben, Zahlen, Bindestriche und Unterstriche in Ihrem Benutzernamen verwenden.",
       "noteUID": "Die UID wird bei der ersten Einrichtung zugewiesen und kann nicht geändert werden. Sie können Ihren Benutzernamen jederzeit aktualisieren. Klicken Sie auf den Avatar-Bereich, um den Avatar zu wechseln.",
       "auditLabel": "Prüfung",
+      "importOfficial": "Von der offiziellen Karte importieren",
       "save": "Speichern",
       "saving": "Speichern...",
       "logout": "Abmelden"
@@ -286,7 +290,10 @@
   "scale": {
     "pip": {
       "activeTitle": "Bild-in-Bild ist aktiv",
-      "returnHint": "Klicke auf das Logo, um zu diesem Tab zurückzukehren"
+      "returnHint": "Klicke auf das Logo, um zu diesem Tab zurückzukehren",
+      "enterMode": "PiP-Modus starten",
+      "exitMode": "PiP-Modus beenden",
+      "unsupported": "PiP wird nicht unterstützt"
     }
   },
   "locator": {
@@ -309,6 +316,8 @@
       "unlink": "Entkoppeln",
       "bindWithCountdown": "Binden & Standortsync aktivieren ({sec})",
       "bind": "Binden & Standortsync aktivieren",
+      "bindOnlyWithCountdown": "Konto verknüpfen ({sec})",
+      "bindOnly": "Konto verknüpfen",
       "locateAuth": "Autorisieren",
       "locateAuthBody": "Das Aktivieren der Standortsync erlaubt den Zugriff auf Ihre In-Game-Position. Möchten Sie aktivieren?",
       "authAndSync": "Autorisieren & Sync starten"
@@ -350,6 +359,29 @@
       "roleRequired": "Bitte Rolle auswählen.",
       "unlinkFailed": "Entkoppeln fehlgeschlagen.",
       "authorizationFailed": "Autorisierung fehlgeschlagen."
+    }
+  },
+  "sync": {
+    "now": "Daten mit OEM Cloud synchronisieren",
+    "already": "Mit Cloud synchronisiert",
+    "done": "Synchronisiert - vor {times}",
+    "syncing": "Synchronisiere {count} Punkte",
+    "failed": "Synchronisierung fehlgeschlagen ({reason})",
+    "offline": "Offline",
+    "dataConflict": "Datenkonflikt",
+    "unknown": "Unbekannter Fehler",
+    "conflict": {
+      "title": "Datenkonflikt",
+      "local": "Lokal",
+      "remote": "Remote",
+      "official": "Offiziell",
+      "oemDb": "OEM DB",
+      "updatedAt": "Zuletzt geändert",
+      "total": "Markierungen",
+      "region": "Region",
+      "keepA": "{label}-Daten behalten",
+      "keepB": "{label}-Daten nutzen",
+      "merge": "Beide Daten zusammenführen ({count})"
     }
   },
   "links": {

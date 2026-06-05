@@ -335,6 +335,7 @@ export class MapCore {
         }
 
         this.currentLayer = layer;
+        this.markerLayer.updateLayerTier(layer);
         this.map.fire('talos:layerSwitched', { layer });
     }
 }

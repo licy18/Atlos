@@ -1,5 +1,13 @@
-export const parseDateLike = (value?: string): Date | null => {
-    if (!value) return null;
+export const parseDateLike = (value?: string | number | null): Date | null => {
+    if (value === undefined || value === null || value === '') return null;
+
+    if (typeof value === 'number') {
+        if (!Number.isFinite(value)) return null;
+        const ms = value < 1_000_000_000_000 ? value * 1000 : value;
+        const date = new Date(ms);
+        return Number.isNaN(date.getTime()) ? null : date;
+    }
+
     const raw = value.trim();
     if (!raw) return null;
 
@@ -56,4 +64,56 @@ export const formatElapsedShort = (fromMs: number, nowMs: number): string => {
 
     const days = Math.floor(diffSec / (24 * 60 * 60));
     return `${days}d`;
+};
+
+export type DateTimePrecision = 'date' | 'dateTime';
+
+export type AgoDisplay = 'none' | 'inline' | 'hover';
+
+export interface FormattedRelativeTime {
+    label: string;
+    hoverLabel: string;
+    agoText: string;
+}
+
+export const formatRelativeTime = (
+    date: Date,
+    {
+        precision = 'dateTime',
+        agoDisplay = 'none',
+        nowMs = Date.now(),
+        agoLabel = 'ago',
+    }: {
+        precision?: DateTimePrecision;
+        agoDisplay?: AgoDisplay;
+        nowMs?: number;
+        agoLabel?: string;
+    } = {},
+): FormattedRelativeTime => {
+    const label = precision === 'date'
+        ? formatDateYYYYMMDD(date)
+        : formatDateTimeYYYYMMDDHHMMSS(date);
+    const agoText = `${formatElapsedShort(date.getTime(), nowMs)} ${agoLabel}`;
+
+    if (agoDisplay === 'inline') {
+        return {
+            label: `${label} (${agoText})`,
+            hoverLabel: '',
+            agoText,
+        };
+    }
+
+    if (agoDisplay === 'hover') {
+        return {
+            label,
+            hoverLabel: agoText,
+            agoText,
+        };
+    }
+
+    return {
+        label,
+        hoverLabel: '',
+        agoText,
+    };
 };

@@ -78,7 +78,7 @@
     font-size: 1rem;
     font-weight: 700;
     line-height: 1.25;
-    font-family: 'Novecento DemiBold', 'Novecento Cyrillic DemiBold', 'Novecento Vietnamese DemiBold', 'HMSans_EN','HMSans','UD_ShinGo Regular', 'Noto Sans Arabic', 'Noto Sans Thai', sans-serif;
+    font-family: 'Novecento DemiBold', 'Novecento Cyrillic DemiBold', 'Novecento Vietnamese DemiBold', 'HMSans_EN', HMSans, 'UD_ShinGo Regular', 'Noto Sans Arabic', 'Noto Sans Thai', sans-serif;
     letter-spacing: -.3px;
     color: var(--settings-section-text);
     unicode-bidi: plaintext;
@@ -88,7 +88,7 @@
     font-size: 0.85rem;
     font-weight: 600;
     line-height: 1.25;
-    font-family: 'HMSans_EN','HMSans','UD_ShinGo Regular', 'Noto Sans Arabic', 'Noto Sans Thai', sans-serif;
+    font-family: 'HMSans_EN', HMSans, 'UD_ShinGo Regular', 'Noto Sans Arabic', 'Noto Sans Thai', sans-serif;
     letter-spacing: -.2px;
     color: var(--settings-section-text);
     overflow-wrap: break-word;
@@ -124,6 +124,7 @@
     }
     .settingsTrigger {
         gap: 0.4rem;
+
         // Target the internal label of the Trigger component
         // This relies on the internal structure of Trigger (label is the last div)
         > div:last-child {
@@ -134,7 +135,7 @@
             font-weight: 600;
             color: var(--settings-section-text);
             line-height: 1.2;
-            word-break: break-word;
+            overflow-wrap: anywhere;
         }
     }
 }
@@ -248,7 +249,7 @@
     justify-self: center;
     width: 2rem;
     height: 2rem;
-    fill: currentColor;
+    fill: currentcolor;
     opacity: 1;
     transition: transform 0.45s $moderato-curve;
     filter: drop-shadow(0 0 1.5px rgba($black-0, .3));
@@ -256,7 +257,7 @@
 .themeName {
     grid-area: themeName;
     font-size: 1.15rem;
-    font-family: 'Novecento DemiBold', 'Novecento Cyrillic DemiBold', 'HMSans_EN', 'HMSans', 'Noto Sans Arabic', 'Noto Sans Thai', sans-serif;
+    font-family: 'Novecento DemiBold', 'Novecento Cyrillic DemiBold', 'HMSans_EN', HMSans, 'Noto Sans Arabic', 'Noto Sans Thai', sans-serif;
     font-weight: 700;
     letter-spacing: -.3px;
     line-height: 1;
@@ -270,6 +271,7 @@
 .themeIndicator {
     grid-area: themeInd;
     align-self: center;
+
     // Style from language module's currentTag
     display: inline-flex;
     align-items: center;
@@ -369,79 +371,7 @@
     font-weight: 600;
     color: var(--settings-section-text);
     line-height: 1.2;
-    word-break: break-word;
+    overflow-wrap: anywhere;
     user-select: none;
     transition: color .35s $adagio-curve;
-}
-
-.shortcutKeys {
-    flex: 0 0 auto;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-/* Key cap styling — inspired by embed.scss span.keyboard */
-
-$keyCap-unit: 1.25rem; // Base size for a single key unit
-.keyCap {
-    position: relative;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 1px;
-    background-color: $grey-1;
-    box-shadow: 0 0 2px 1px rgba($black-0, 0.4);
-    text-align: center;
-    font-family: 'Novecento Medium', system-ui, -apple-system, sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    color: $white-1;
-    user-select: none;
-    transition: all 0.2s ease;
-
-    /* narrow = 1 unit (default) */
-    &[data-ch='1u'], &:not([data-ch]) {
-        height: calc(#{$keyCap-unit} + 1px);
-        width: calc(#{$keyCap-unit} + 1px);
-    }
-
-    /* wide = 2 units */
-    &[data-ch='2u'] {
-        height: calc(#{$keyCap-unit} + 1px);
-        width: calc(2 * #{$keyCap-unit} + 5px);
-        letter-spacing: -.5px;
-    }
-
-    &::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1.5px solid $white-1;
-        border-radius: 4px;
-        box-shadow:
-            0 0 2px 1px rgba($black-0, 0.4),
-            inset 0 0 2px rgba($black-0, 0.2);
-        z-index: -1;
-    }
-
-    &[data-ch='1u']::before, &:not([data-ch])::before {
-        width: calc($keyCap-unit + 4px);
-        height: calc($keyCap-unit + 4px);
-    }
-
-    &[data-ch='2u']::before {
-        width: calc(2 * #{$keyCap-unit} + 8px);
-        height: calc($keyCap-unit + 4px);
-    }
-
-    &[data-ch='3u']::before {
-        width: calc(3 * #{$keyCap-unit} + 12px);
-        height: calc($keyCap-unit + 4px);
-    }
 }

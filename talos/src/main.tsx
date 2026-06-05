@@ -6,8 +6,6 @@ import { fontLoader } from './locale/fontLoader.ts';
 import { i18nInitPromise } from '@/locale';
 import { loadDevTools } from '@/devtools/loadDevTool';
 import { applyUrlParams } from '@/utils/urlState';
-import { useUserRecordStore } from '@/store/userRecord';
-import { useMarkerStore } from '@/store/marker';
 
 const enforceLocalhostHost = (): boolean => {
     if (typeof window === 'undefined') return false;
@@ -23,13 +21,6 @@ async function bootstrap(){
     if (enforceLocalhostHost()) return;
 
     await i18nInitPromise;
-
-    // After migration updates localStorage, force stores to re-read from the
-    // now-migrated localStorage. Without this, stores hydrated with old string
-    // IDs during module evaluation (sync) and would overwrite the migration
-    // (async) on the next set() call.
-    await useUserRecordStore.persist.rehydrate();
-    await useMarkerStore.persist.rehydrate();
 
     // Apply URL parameters to set initial state
     await applyUrlParams();

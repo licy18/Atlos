@@ -2,7 +2,7 @@ import { REGION_DICT } from '@/data/map';
 import { IMarkerData, MARKER_TYPE_DICT, loadRegionMarkers } from '@/data/marker';
 import LOGGER from '@/utils/log';
 import L from 'leaflet';
-import { emitPreviewLeave, getMarkerLayer } from './markerRenderer';
+import { emitPreviewLeave, getMarkerLayer, syncMarkerTierAttribute } from './markerRenderer';
 import styles from './marker.module.scss';
 import { ClusterLayer } from './clusterLayer';
 import { useUiPrefsStore } from '@/store/uiPrefs';
@@ -10,6 +10,7 @@ import { getActivePoints } from '@/store/userRecord';
 import { useMarkerStore } from '@/store/marker';
 import { registerLassoHandler } from '@/component/settings/useMapMultiSelect';
 import { convertMapMarkerToEFGamePosition, type EFGamePosition, type RegionProfile } from '@/utils/endfield/locatorTransform';
+import type { LayerType } from '@/store/layer';
 
 const LOCATOR_PROXIMITY_XZ_METERS = 20;
 const LOCATOR_PROXIMITY_Y_METERS = 6;
@@ -47,6 +48,7 @@ export class MarkerLayer {
      * 已收集的点位列表
      */
     collectedPoints: string[] = [];
+    private currentLayer: LayerType = 'M';
 
     private _onSwitchCurrentMarker?: (marker: IMarkerData) => void;
     /**
@@ -140,6 +142,15 @@ export class MarkerLayer {
         const markerRoot = layer.getElement();
         if (!markerRoot) return null;
         return markerRoot.querySelector<HTMLElement>(`.${styles.markerInner}, .${styles.noFrameInner}`);
+    }
+
+    updateLayerTier(layer: LayerType) {
+        this.currentLayer = layer;
+        Object.entries(this.markerDict).forEach(([id, markerLayer]) => {
+            const markerData = this.markerDataDict[id];
+            if (!markerData) return;
+            syncMarkerTierAttribute(markerLayer, markerData, layer);
+        });
     }
 
     stopMarkerPulse(id: string) {
@@ -490,6 +501,7 @@ export class MarkerLayer {
 
     async changeRegion(regionId: string) {
         this.clearProximityReminder();
+        this.currentLayer = 'M';
         this.temporaryVisibleIds.clear();
         this.proximityTemporaryVisibleIds.clear();
         this.syncTemporaryVisibleMarkers();
@@ -508,6 +520,7 @@ export class MarkerLayer {
         this.clusterLayer.setActiveSubregions(subregions);
         const markers = await loadRegionMarkers(regionId);
         this.importMarker(markers);
+        this.updateLayerTier(this.currentLayer);
 
         if (this.clusterLayer.isEnabled()) {
             this.clusterLayer.applyFilter(this.activeFilterKeys);

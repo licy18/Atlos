@@ -8,11 +8,14 @@ import React, {
 import styles from './scale.module.scss';
 import L from 'leaflet';
 import { useAppPictureInPicture } from './pip';
+import PopoverTooltip from '@/component/popover/popover';
+import { useTranslateUI } from '@/locale';
 
 const calculateScale = (current: number, min: number, max: number) =>
     Math.max(0, Math.min(1, (current - min) / (max - min)));
 
 const ScaleDesktop = ({ map }: { map: L.Map }) => {
+    const tUI = useTranslateUI();
     const [zoomLevel, setZoomLevel] = useState(map?.getZoom() || 0);
     const [zoomBounds, setZoomBounds] = useState({
         min: map?.getMinZoom() || 0,
@@ -197,16 +200,23 @@ const ScaleDesktop = ({ map }: { map: L.Map }) => {
             </div>
 
             <div className={`${styles.buttonFrame} ${styles.pipFrame}`}>
-                <button
-                    type="button"
-                    className={`${styles.zoomButton} ${styles.pipButton} ${pictureInPicture.active ? styles.active : ''} ${!pictureInPicture.supported ? styles.disabled : ''}`}
-                    onClick={handlePictureInPictureToggle}
-                    disabled={!pictureInPicture.supported}
-                    aria-label={pictureInPicture.active ? 'Exit picture-in-picture' : 'Open picture-in-picture'}
-                    title={pictureInPicture.supported ? 'Picture-in-picture' : 'Document Picture-in-Picture is not supported'}
+                <PopoverTooltip
+                    content={pictureInPicture.supported
+                        ? tUI(pictureInPicture.active ? 'scale.pip.exitMode' : 'scale.pip.enterMode')
+                        : tUI('scale.pip.unsupported')}
+                    placement="left"
+                    gap={8}
                 >
-                    PiP
-                </button>
+                    <button
+                        type="button"
+                        className={`${styles.zoomButton} ${styles.pipButton} ${pictureInPicture.active ? styles.active : ''} ${!pictureInPicture.supported ? styles.disabled : ''}`}
+                        onClick={handlePictureInPictureToggle}
+                        disabled={!pictureInPicture.supported}
+                        aria-label={String(tUI(pictureInPicture.active ? 'scale.pip.exitMode' : 'scale.pip.enterMode'))}
+                    >
+                        PiP
+                    </button>
+                </PopoverTooltip>
             </div>
         </div>
     );

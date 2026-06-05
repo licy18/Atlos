@@ -204,6 +204,21 @@
           "urban_development_hall": "Salón de Desarrollo Urbano",
           "serenity_garden": "Jardín de la Serenidad"
         }
+      },
+      "SV": {
+        "name": "Valle Ocultaespadas",
+        "short": "VO",
+        "site": {
+          "leeward_trail": "Sendero de sotavento",
+          "west_gorge_path": "Sendero del desfiladero oeste",
+          "south_gorge_rampart": "Muralla del desfiladero sur",
+          "east_gorge_ruins": "Ruinas del desfiladero este",
+          "shadow_tunnel": "Túnel sombrío",
+          "north_gorge_crag": "Peñasco del desfiladero norte",
+          "deep_gorge_vault": "Bóveda del desfiladero profundo",
+          "old_blade_precipice": "Precipicio de la hoja antigua",
+          "gorge_overhang": "Saliente del desfiladero"
+        }
       }
     }
   },

@@ -2,28 +2,28 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { useUiPrefsStore } from './uiPrefs';
 import { createConditionalStorage } from '@/utils/storage';
-import { DATASET_VERSION } from '@/data/migration/version';
 
 interface IUserRecordStore {
     activePoints: string[];
-    datasetVersion: number;
+    updatedAt: number;
     addPoint: (id: string) => void;
     deletePoint: (id: string) => void;
     clearPoints: () => void;
+    setPoints: (ids: string[]) => void;
 }
 
 export const useUserRecordStore = create<IUserRecordStore>()(
     persist<IUserRecordStore, [], [], Partial<IUserRecordStore>>(
         (set, get) => ({
             activePoints: [],
-            datasetVersion: DATASET_VERSION,
+            updatedAt: Date.now(),
             addPoint: (id) => {
                 if (get().activePoints.includes(id)) {
                     return;
                 } else {
                     set((state) => ({
                         activePoints: [...state.activePoints, id],
-                        datasetVersion: DATASET_VERSION,
+                        updatedAt: Date.now(),
                     }));
                 }
             },
@@ -35,12 +35,18 @@ export const useUserRecordStore = create<IUserRecordStore>()(
                         activePoints: state.activePoints.filter(
                             (point) => point !== id,
                         ),
-                        datasetVersion: DATASET_VERSION,
+                        updatedAt: Date.now(),
                     }));
                 }
             },
             clearPoints: () => {
-                set({ activePoints: [], datasetVersion: DATASET_VERSION });
+                set({ activePoints: [], updatedAt: Date.now() });
+            },
+            setPoints: (ids) => {
+                set({
+                    activePoints: [...new Set(ids.map((id) => String(id)).filter(Boolean))],
+                    updatedAt: Date.now(),
+                });
             },
         }),
         {
@@ -51,7 +57,7 @@ export const useUserRecordStore = create<IUserRecordStore>()(
             )),
             partialize: (state) => ({
                 activePoints: state.activePoints,
-                datasetVersion: state.datasetVersion,
+                updatedAt: state.updatedAt,
             }),
             merge: (persistedState, currentState) => {
                 const persisted = persistedState as Partial<IUserRecordStore>;
@@ -62,7 +68,11 @@ export const useUserRecordStore = create<IUserRecordStore>()(
                 // localStorage during hydration — that would wipe the user's
                 // progress silently if they toggle the setting off and on.
                 if (persisted.activePoints && persisted.activePoints.length > 0) {
-                    return { ...currentState, activePoints: persisted.activePoints };
+                    return {
+                        ...currentState,
+                        activePoints: persisted.activePoints,
+                        updatedAt: persisted.updatedAt ?? currentState.updatedAt,
+                    };
                 }
                 return currentState;
             },

@@ -32,7 +32,7 @@
       "main": "Principal",
       "sub": "Sub"
     },
-    "noInfo": "Sem informações. Clique para enviar uma captura de tela do ponto.",
+    "noInfo": "Sem imagem. Use {paste} / {click} para fazer upload.",
     "communityRule1": "Antes de enviar, confirme que você leu e segue as",
     "communityRule2": "Diretrizes da Comunidade",
     "uploading": "Enviando...",
@@ -51,7 +51,7 @@
       "unrecall": "Cancelar remoção"
     },
     "errors": {
-      "unsupportedType": "Apenas imagens JPEG/PNG/WebP/AVIF são suportadas.",
+      "unsupportedType": "Apenas imagens JPEG/PNG/WebP/AVIF/HEIC são suportadas.",
       "fileTooLarge": "O arquivo de imagem é grande demais.",
       "imageDecodeFailed": "O navegador não conseguiu abrir esta imagem.",
       "imageProcessingUnavailable": "O processamento local de imagem não está disponível.",
@@ -59,12 +59,13 @@
       "uploadInvalidResponse": "O serviço de envio retornou uma resposta inválida.",
       "uploadNetwork": "Ocorreu um erro de rede durante o envio.",
       "uploadAborted": "O envio foi cancelado.",
+      "rateLimited": "Limite de envio atingido, tente novamente mais tarde.",
       "uploadFailed": "Falha no envio. Tente novamente mais tarde.",
       "backendUnknown": "O serviço de envio retornou um erro."
     }
   },
   "footer": {
-    "icp": "沪ICP备2025119702号-1"
+    "icp": "Designed by cirisus, HK"
   },
   "sidebar": {
     "alt": {
@@ -223,6 +224,7 @@
       "verification": "Verificação:",
       "forgotPW": "Esqueceu a senha?",
       "pwdRegex": "8–20 caracteres; pelo menos uma letra maiúscula",
+      "emailRegex": "E-mails descartáveis não são permitidos",
       "send": "Enviar",
       "sendResetLink": "Redefinição",
       "resend": "Reenviar ({count})",
@@ -247,6 +249,7 @@
         "102": "Email inválido",
         "103": "Email já em uso",
         "104": "Email não registrado",
+        "105": "Email Not Supported",
         "111": "Senha obrigatória",
         "112": "Senha inválida",
         "113": "Senhas não conferem",
@@ -278,6 +281,7 @@
       "noteNickname": "Você pode usar no máximo 15 caracteres (letras, números, hífens e sublinhado).",
       "noteUID": "O UID é definido no primeiro cadastro e não pode ser alterado. O nome de usuário pode ser atualizado a qualquer momento. Clique no avatar para trocar a imagem.",
       "auditLabel": "Auditoria",
+      "importOfficial": "Importar do Mapa Oficial",
       "save": "Salvar alterações",
       "saving": "Salvando...",
       "logout": "Sair"
@@ -286,7 +290,10 @@
   "scale": {
     "pip": {
       "activeTitle": "Picture-in-picture ativado",
-      "returnHint": "Clique no logo para voltar a esta guia"
+      "returnHint": "Clique no logo para voltar a esta guia",
+      "enterMode": "Entrar no modo PiP",
+      "exitMode": "Sair do modo PiP",
+      "unsupported": "PiP não é compatível"
     }
   },
   "locator": {
@@ -309,6 +316,8 @@
       "unlink": "Desvincular",
       "bindWithCountdown": "Vincular e ativar sincronização ({sec})",
       "bind": "Vincular e ativar sincronização",
+      "bindOnlyWithCountdown": "Vincular conta ({sec})",
+      "bindOnly": "Vincular conta",
       "locateAuth": "Autorizar",
       "locateAuthBody": "Ativar a sincronização de localização permitirá acesso à sua posição no jogo. Deseja ativar?",
       "authAndSync": "Autorizar e iniciar sync"
@@ -350,6 +359,29 @@
       "roleRequired": "Selecione um papel.",
       "unlinkFailed": "Falha ao desvincular.",
       "authorizationFailed": "Falha na autorização."
+    }
+  },
+  "sync": {
+    "now": "Sincronizar com OEM Cloud",
+    "already": "Sincronizado com a nuvem",
+    "done": "Sincronizado - há {times}",
+    "syncing": "Sincronizando {count} pontos",
+    "failed": "Falha ao sincronizar ({reason})",
+    "offline": "Offline",
+    "dataConflict": "Conflito de dados",
+    "unknown": "Erro desconhecido",
+    "conflict": {
+      "title": "Conflito de dados",
+      "local": "Local",
+      "remote": "Remoto",
+      "official": "Oficial",
+      "oemDb": "OEM DB",
+      "updatedAt": "Última modificação",
+      "total": "Pontos marcados",
+      "region": "Região",
+      "keepA": "Manter dados {label}",
+      "keepB": "Usar dados {label}",
+      "merge": "Mesclar ambas as fontes ({count})"
     }
   },
   "links": {

@@ -12,6 +12,7 @@
  */
 
 import { isApplePlatform } from '@/utils/platform';
+import type { KeyChip } from '@/component/shortcut';
 
 // ─── Keyboard modifier helpers ───────────────────────────────
 
@@ -24,21 +25,6 @@ export const modPrefix = (): string => (isApplePlatform() ? 'meta' : 'ctrl');
 /** Whether the platform modifier key (Cmd / Ctrl) is currently pressed */
 export const isModKeyPressed = (e: MouseEvent | KeyboardEvent): boolean =>
     isApplePlatform() ? e.metaKey : e.ctrlKey;
-
-// ─── Key display types ───────────────────────────────────────
-
-/** A single key chip shown in the Settings keyboard section */
-export interface KeyChip {
-    /** Display text on the key cap */
-    label: string;
-    /** Key cap width unit: '1u' (default), '2u', or '3u' */
-    size?: '1u' | '2u' | '3u';
-    /**
-     * When set to 'mod', the display layer (KeyCap) resolves the actual width
-     * based on the current platform (1u on Mac for ⌘, 2u on Windows for Ctrl).
-     */
-    variant?: 'mod';
-}
 
 export interface ShortcutEntry {
     /** Unique id, also used as i18n key `settings.shortcuts.<id>` */

@@ -32,7 +32,7 @@
       "main": "Main",
       "sub": "Sub"
     },
-    "noInfo": "No info. Click to upload snapshot.",
+    "noInfo": "No image. Use {paste} / {click} to upload.",
     "communityRule1": "By uploading, make sure you have read and follow the",
     "communityRule2": "Community Guidelines",
     "uploading": "Uploading...",
@@ -51,7 +51,7 @@
       "unrecall": "Cancel recall"
     },
     "errors": {
-      "unsupportedType": "Only JPEG/PNG/WebP/AVIF images are supported.",
+      "unsupportedType": "Only JPEG/PNG/WebP/AVIF/HEIC images are supported.",
       "fileTooLarge": "The image is too large.",
       "imageDecodeFailed": "This image could not be opened by the browser.",
       "imageProcessingUnavailable": "Local image processing is unavailable.",
@@ -59,12 +59,13 @@
       "uploadInvalidResponse": "The upload response was invalid.",
       "uploadNetwork": "Network error while uploading.",
       "uploadAborted": "Upload was cancelled.",
+      "rateLimited": "Upload rate limit reached, retry later.",
       "uploadFailed": "Upload failed, please try again.",
       "backendUnknown": "Upload service returned an error."
     }
   },
   "footer": {
-    "icp": "沪ICP备2025119702号-1"
+    "icp": "Designed by cirisus, HK"
   },
   "sidebar": {
     "alt": {
@@ -223,6 +224,7 @@
       "verification": "Verification:",
       "forgotPW": "Forgot password?",
       "pwdRegex": "8–20 characters; at least one uppercase",
+      "emailRegex": "Disposable email addresses are not allowed",
       "send": "Send",
       "sendResetLink": "Reset",
       "resend": "Resend({count})",
@@ -247,6 +249,7 @@
         "102": "Email Invalid",
         "103": "Email Occupied",
         "104": "Email Not Found",
+        "105": "Email Not Supported",
         "111": "Password Required",
         "112": "Password Invalid",
         "113": "Passwords Mismatch",
@@ -277,7 +280,8 @@
       "note": "Note",
       "noteNickname": "You can use no more than 15 letters, numbers, hyphens and underscores in your username.",
       "noteUID": "UID is assigned on first setup and cannot be changed. You can update your username any time. Click the avatar area to switch avatar.",
-      "auditLabel": "Audit",
+      "auditLabel": "Action",
+      "importOfficial": "Import from Official Map",
       "save": "Save Changes",
       "saving": "Saving...",
       "logout": "Sign Out"
@@ -286,7 +290,10 @@
   "scale": {
     "pip": {
       "activeTitle": "Picture-in-picture is active",
-      "returnHint": "Click the Logo to return to this tab"
+      "returnHint": "Click the Logo to return to this tab",
+      "enterMode": "Enter PiP mode",
+      "exitMode": "Exit PiP mode",
+      "unsupported": "Document PiP is not supported"
     }
   },
   "locator": {
@@ -309,6 +316,8 @@
       "unlink": "Unlink",
       "bindWithCountdown": "Bind and enable location sync ({sec})",
       "bind": "Bind and enable location sync",
+      "bindOnlyWithCountdown": "Bind account ({sec})",
+      "bindOnly": "Bind account",
       "locateAuth": "Authorize",
       "locateAuthBody": "Enabling Location Sync will allow access to your in-game location information. Do you want to enable it.",
       "authAndSync": "Authorize and start sync"
@@ -350,6 +359,29 @@
       "roleRequired": "Please select a role.",
       "unlinkFailed": "Failed to unlink binding.",
       "authorizationFailed": "Authorization failed."
+    }
+  },
+  "sync": {
+    "now": "Sync Data to OEM Cloud",
+    "already": "Everything is up to date",
+    "done": "Synced to Cloud: {times} ago",
+    "syncing": "Syncing: {count} Points",
+    "failed": "Sync Failed ({reason})",
+    "offline": "Offline",
+    "dataConflict": "Data Conflict",
+    "unknown": "Unknown",
+    "conflict": {
+      "title": "Data Conflict",
+      "local": "Local",
+      "remote": "Remote",
+      "official": "Official",
+      "oemDb": "OEM DB",
+      "updatedAt": "Last modified",
+      "total": "Marked Points",
+      "region": "Region",
+      "keepA": "Keep {label} Data",
+      "keepB": "Use {label} Data",
+      "merge": "Merge both sources ({count})"
     }
   },
   "links": {

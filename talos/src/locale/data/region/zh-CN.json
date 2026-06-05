@@ -4,7 +4,7 @@
     "sub": {
       "PL": {
         "name": "供能高地",
-        "short": "供",
+        "short": "高",
         "site": {
           "old_dorms": "旧宿舍区",
           "originium_power_plant": "源石发电站",
@@ -21,7 +21,7 @@
       },
       "OL": {
         "name": "矿脉源区",
-        "short": "脉",
+        "short": "矿",
         "site": {
           "originium_passage": "源石隧道",
           "cradle_of_the_ages": "世代摇篮",
@@ -41,7 +41,7 @@
       },
       "OP": {
         "name": "源石研究园",
-        "short": "研",
+        "short": "园",
         "site": {
           "control_center": "总控中心",
           "route_5": "五号公路",
@@ -74,7 +74,7 @@
       },
       "VP": {
         "name": "谷地通道",
-        "short": "谷",
+        "short": "通",
         "site": {
           "valley_fort": "谷地要塞",
           "arsenal": "军械库",
@@ -137,6 +137,7 @@
           "citizen_square": "市民广场",
           "qijian_dais": "弃剑台",
           "long_pavilion": "长亭",
+          "wuling_north": "武陵北",
           "main_pillar_office": "总桩办公室",
           "restricted_area": "警戒区",
           "tianjing_courtyard": "天井院",
@@ -151,7 +152,7 @@
       },
       "JY": {
         "name": "景玉谷",
-        "short": "玉",
+        "short": "景",
         "site": {
           "treadway": "踩道",
           "ecological_research_station": "生态实验站",
@@ -170,7 +171,7 @@
       },
       "QB": {
         "name": "清波寨",
-        "short": "清",
+        "short": "寨",
         "site": {
           "skyhold_ridge": "顶天梁",
           "ancestral_spring": "祖泉",
@@ -204,13 +205,28 @@
           "urban_development_hall": "城建馆",
           "serenity_garden": "安思园"
         }
+      },
+      "SV": {
+        "name": "藏剑谷",
+        "short": "藏",
+        "site": {
+          "leeward_trail": "山后小径",
+          "west_gorge_path": "西谷峡道",
+          "south_gorge_rampart": "南谷旧垣",
+          "east_gorge_ruins": "东谷遗迹",
+          "shadow_tunnel": "幽径隧洞",
+          "north_gorge_crag": "北谷浮崖",
+          "deep_gorge_vault": "谷底秘库",
+          "old_blade_precipice": "古剑崖",
+          "gorge_overhang": "悬谷台"
+        }
       }
     }
   },
   "DJ": {
     "main": "O.M.V.帝江号",
     "sub": {
-      "name": "O.M.V.帝江号",
+      "name": "OMV Dijiang",
       "site": {
         "bridge": "舰桥",
         "reception_room": "会客室",

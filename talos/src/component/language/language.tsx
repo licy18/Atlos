@@ -21,7 +21,6 @@ const LANG_LABEL_KEYS: Record<string, string> = {
   'ko-KR': '한국어',
   'ru-RU': 'Русский',
   'es-ES': 'Español',
-
   'fr-FR': 'Français',
   'de-DE': 'Deutsch',
   'it-IT': 'Italiano',
@@ -132,6 +131,7 @@ const LanguageModal: React.FC<LanguageProps> = ({ open, onClose, onChange, onSel
       onChange={onChange}
       title={t('language.title')}
       icon={<I18nIcon aria-hidden="true" />}
+      customHeight='65dvh'
     >
       <div
         className={styles.langList}

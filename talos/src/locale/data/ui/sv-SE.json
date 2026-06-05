@@ -32,7 +32,7 @@
       "main": "Område",
       "sub": "Zon"
     },
-    "noInfo": "Ingen information. Klicka för att ladda upp en skärmbild av platsen.",
+    "noInfo": "Ingen bild. Använd {paste} / {click} för att ladda upp.",
     "communityRule1": "Innan du laddar upp, se till att du har läst och följer",
     "communityRule2": "Community-riktlinjer",
     "uploading": "Laddar upp...",
@@ -51,7 +51,7 @@
       "unrecall": "Avbryt borttagning"
     },
     "errors": {
-      "unsupportedType": "Endast JPEG/PNG/WebP/AVIF-bilder stöds.",
+      "unsupportedType": "Endast JPEG/PNG/WebP/AVIF/HEIC-bilder stöds.",
       "fileTooLarge": "Bildfilen är för stor.",
       "imageDecodeFailed": "Webbläsaren kunde inte öppna bilden.",
       "imageProcessingUnavailable": "Lokal bildbehandling är inte tillgänglig.",
@@ -59,12 +59,13 @@
       "uploadInvalidResponse": "Uppladdnings-API:ets svar var ogiltigt.",
       "uploadNetwork": "Nätverksfel vid uppladdning.",
       "uploadAborted": "Uppladdningen avbröts.",
+      "rateLimited": "Uppladdningsgränsen har nåtts, försök igen senare.",
       "uploadFailed": "Uppladdningen misslyckades. Försök igen senare.",
       "backendUnknown": "Uppladdningstjänsten returnerade ett fel."
     }
   },
   "footer": {
-    "icp": "沪ICP备2025119702号-1"
+    "icp": "Designed by cirisus, HK"
   },
   "sidebar": {
     "alt": {
@@ -223,6 +224,7 @@
       "verification": "Verifieringskod:",
       "forgotPW": "Glömt lösenordet?",
       "pwdRegex": "8–20 tecken; minst en stor bokstav",
+      "emailRegex": "Engångs-e-postadresser är inte tillåtna",
       "send": "Skicka",
       "sendResetLink": "Återställ",
       "resend": "Skicka({count})",
@@ -247,6 +249,7 @@
         "102": "Ogiltig e-postadress",
         "103": "E-posten används redan",
         "104": "E-posten hittades inte",
+        "105": "Email Not Supported",
         "111": "Lösenord krävs",
         "112": "Ogiltigt lösenord",
         "113": "Lösenorden matchar inte",
@@ -278,6 +281,7 @@
       "noteNickname": "Du kan använda max 15 tecken (endast bokstäver, siffror, bindestreck och understreck) i ditt användarnamn.",
       "noteUID": "UID tilldelas vid registrering och kan inte ändras. Du kan uppdatera ditt användarnamn när som helst. Klicka på avataren för att byta bild.",
       "auditLabel": "Åtgärder",
+      "importOfficial": "Importera från den officiella kartan",
       "save": "Spara ändringar",
       "saving": "Sparar...",
       "logout": "Logga ut"
@@ -286,7 +290,10 @@
   "scale": {
     "pip": {
       "activeTitle": "Bild-i-bild är aktivt",
-      "returnHint": "Klicka på logotypen för att återgå till den här fliken"
+      "returnHint": "Klicka på logotypen för att återgå till den här fliken",
+      "enterMode": "Gå in i PiP-läge",
+      "exitMode": "Lämna PiP-läge",
+      "unsupported": "PiP stöds inte"
     }
   },
   "locator": {
@@ -309,6 +316,8 @@
       "unlink": "Koppla bort",
       "bindWithCountdown": "Koppla och aktivera sync ({sec})",
       "bind": "Koppla och aktivera sync",
+      "bindOnlyWithCountdown": "Länka konto ({sec})",
+      "bindOnly": "Länka konto",
       "locateAuth": "Godkänn",
       "locateAuthBody": "Aktivering av plats-synk ger åtkomst till din position i spelet. Vill du aktivera?",
       "authAndSync": "Godkänn och starta synk"
@@ -350,6 +359,29 @@
       "roleRequired": "Välj en roll.",
       "unlinkFailed": "Koppla bort misslyckades.",
       "authorizationFailed": "Godkännande misslyckades."
+    }
+  },
+  "sync": {
+    "now": "Synkronisera med OEM Cloud",
+    "already": "Synkroniserad med molnet",
+    "done": "Synkroniserad - för {times} sedan",
+    "syncing": "Synkroniserar {count} punkter",
+    "failed": "Synkronisering misslyckades ({reason})",
+    "offline": "Offline",
+    "dataConflict": "Datakonflikt",
+    "unknown": "Okänt fel",
+    "conflict": {
+      "title": "Datakonflikt",
+      "local": "Lokal",
+      "remote": "Fjärr",
+      "official": "Officiell",
+      "oemDb": "OEM DB",
+      "updatedAt": "Senast ändrad",
+      "total": "Markerade punkter",
+      "region": "Region",
+      "keepA": "Behåll {label}-data",
+      "keepB": "Använd {label}-data",
+      "merge": "Slå ihop båda datakällorna ({count})"
     }
   },
   "links": {

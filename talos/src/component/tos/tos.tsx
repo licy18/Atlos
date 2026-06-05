@@ -140,9 +140,9 @@ const TOSModal: React.FC<ToSProps> = ({ open, onClose, onChange }) => {
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = async (event) => {
+    reader.onload = (event) => {
       const content = event.target?.result as string;
-      const success = await importMarkerData(content, {
+      const success = importMarkerData(content, {
         clearPoints: () => useUserRecordStore.getState().clearPoints(),
         addPoint: (id: string) => useUserRecordStore.getState().addPoint(id),
         setFilter: (filter: string[]) => useMarkerStore.getState().setFilter(filter),

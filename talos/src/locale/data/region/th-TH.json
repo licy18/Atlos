@@ -204,6 +204,21 @@
           "urban_development_hall": "หอ​การพัฒนา​เมือง",
           "serenity_garden": "สวน​แห่ง​ความสงบ"
         }
+      },
+      "SV": {
+        "name": "เดล​คลัง​ดาบ",
+        "short": "SV",
+        "site": {
+          "leeward_trail": "เส้นทาง​ใต้​ลม",
+          "west_gorge_path": "เส้นทาง​หุบเขา​ตะวันตก",
+          "south_gorge_rampart": "กำแพง​หุบเขา​ทางใต้",
+          "east_gorge_ruins": "ซาก​โบราณ​หุบเขา​ตะวันออก",
+          "shadow_tunnel": "อุโมงค์​เงา",
+          "north_gorge_crag": "เงื้อม​ผา​หุบเขา​ทางเหนือ",
+          "deep_gorge_vault": "คลัง​หุบเขา​ลึก",
+          "old_blade_precipice": "ชะง่อน​ผา​คม​ดาบ​โบราณ",
+          "gorge_overhang": "เพิงผา​หุบเขา"
+        }
       }
     }
   },

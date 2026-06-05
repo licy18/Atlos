@@ -14,6 +14,9 @@ import { getActivePoints, useUserRecordStore } from '@/store/userRecord';
 import { useUiPrefsStore } from '@/store/uiPrefs';
 import { useHistoryStore } from '@/store/history';
 import { batchCheckSelectedPoints, isLassoSelected } from '@/component/settings/useMapMultiSelect';
+import { getLayerByTier, getLayerTier, useLayerStore, type LayerType } from '@/store/layer';
+import { REGION_DICT } from '@/data/map';
+import useRegion from '@/store/region';
 
 interface MarkerStateHandlers {
     beforeCheck?: (markerData: IMarkerData, context: { filterWasActive: boolean }) => boolean;
@@ -41,7 +44,7 @@ export const MARKER_ICON_DICT = Object.values(MARKER_TYPE_DICT).reduce<
             popupAnchor: [0, 0],
             tooltipAnchor: [0, 0],
             className: styles.FrameMarkerIcon,
-            html: `<div class="${styles.markerInner}"><div class="${styles.FrameImage}" style="background-image: url(${iconUrl})"></div></div>`,
+            html: `<div class="${styles.markerInner}"><div class="${styles.FrameImage}"><img src="${iconUrl}" alt="${typeInfo.key}" /></div></div>`,
         });
     return acc;
 }, {});
@@ -55,6 +58,49 @@ const ensureMarkerTypeFilterSelected = (typeKey: string): void => {
 const getMarkerInnerElement = (layer: L.Marker): HTMLElement | null => {
     const markerRoot = layer.getElement?.() as HTMLElement | null;
     return markerRoot?.querySelector(`.${styles.markerInner}, .${styles.noFrameInner}`) ?? null;
+};
+
+const getMarkerTierLabel = (tier: number): string | null => {
+    const normalizedTier = Math.trunc(tier);
+    if (normalizedTier === 0) return null;
+    return `${normalizedTier < 0 ? 'B' : 'L'}${Math.abs(normalizedTier)}`;
+};
+
+export const getMarkerRelativeTier = (markerData: IMarkerData, currentLayer: LayerType): number =>
+    markerData.tier - getLayerTier(currentLayer);
+
+export const syncMarkerTierAttribute = (
+    layer: L.Layer,
+    markerData: IMarkerData,
+    currentLayer: LayerType = useLayerStore.getState().currentLayer,
+): void => {
+    if (!(layer instanceof L.Marker)) return;
+    const inner = getMarkerInnerElement(layer);
+    if (!inner) return;
+
+    const markerTierLabel = getMarkerTierLabel(markerData.tier);
+    if (!markerTierLabel) {
+        delete inner.dataset.tier;
+    } else {
+        inner.dataset.tier = markerTierLabel;
+    }
+
+    const isCurrentTier = markerData.tier === getLayerTier(currentLayer);
+    inner.classList.toggle(styles.currentTier, isCurrentTier);
+    inner.classList.toggle(styles.offLayer, !isCurrentTier);
+};
+
+const switchToMarkerLayer = (markerData: IMarkerData): void => {
+    const targetLayer = getLayerByTier(markerData.tier);
+    if (!targetLayer) return;
+
+    const currentRegion = useRegion.getState().currentRegionKey;
+    const availableLayers = REGION_DICT[currentRegion]?.layers;
+    if (targetLayer !== 'M' && !availableLayers?.includes(targetLayer)) return;
+
+    const layerStore = useLayerStore.getState();
+    if (layerStore.currentLayer === targetLayer) return;
+    layerStore.setCurrentLayer(targetLayer);
 };
 
 const syncMarkerStateClasses = (inner: HTMLElement, markerId: string): void => {
@@ -183,6 +229,7 @@ const RENDERER_DICT: Record<
             const markerRoot = layer.getElement?.() as HTMLElement | null;
             const inner = markerRoot?.querySelector(`.${styles.markerInner}, .${styles.noFrameInner}`);
             if (!inner) return;
+            syncMarkerTierAttribute(layer, markerData);
             // entry fade-in
             inner.classList.add(styles.appearing);
             const { selectedPoints, temporarySelectedPoints } = useMarkerStore.getState();
@@ -201,6 +248,7 @@ const RENDERER_DICT: Record<
         
         layer.addEventListener('click', (e) => {
             e.originalEvent.stopPropagation();
+            switchToMarkerLayer(markerData);
             handleMarkerClickState(markerData, layer, handlers);
             
             LOGGER.debug('marker clicked', markerData);
@@ -227,9 +275,9 @@ const RENDERER_DICT: Record<
             tooltipAnchor: [0, 0],
             className: styles.FrameMarkerIcon,
             html: `<div class="${styles.markerInner}">
-                       <div class="${styles.FrameImage}" style="background-image: url(${iconUrl})"></div>
+                       <div class="${styles.FrameImage}"><img src="${iconUrl}" alt="${markerData.type}" /></div>
                        <div class="${styles.subIconContainer}">
-                           <div class="${styles.subIcon}" style="background-image: url(${subIconUrl})"></div>
+                           <img src="${subIconUrl}" class="${styles.subIcon}" />
                        </div>
                    </div>`,
         });
@@ -243,6 +291,7 @@ const RENDERER_DICT: Record<
             const markerRoot = layer.getElement?.() as HTMLElement | null;
             const inner = markerRoot?.querySelector(`.${styles.markerInner}, .${styles.noFrameInner}`);
             if (!inner) return;
+            syncMarkerTierAttribute(layer, markerData);
             // entry fade-in
             inner.classList.add(styles.appearing);
             const { selectedPoints, temporarySelectedPoints } = useMarkerStore.getState();
@@ -261,6 +310,7 @@ const RENDERER_DICT: Record<
             
         layer.addEventListener('click', (e) => {
             e.originalEvent.stopPropagation();
+            switchToMarkerLayer(markerData);
             handleMarkerClickState(markerData, layer, handlers);
             
             LOGGER.debug('marker clicked', markerData);
@@ -298,6 +348,7 @@ export function getMarkerLayer(
             const markerRoot = layer.getElement?.() as HTMLElement | null;
             const inner = markerRoot?.querySelector(`.${styles.markerInner}, .${styles.noFrameInner}`);
             if (inner) {
+                syncMarkerTierAttribute(layer, markerData);
                 inner.classList.add(styles.checked);
             }
         }, 0);

@@ -65,6 +65,10 @@ const isProd = process.env.NODE_ENV === 'production';
 const assetsHost = isProd
     ? joinCdnPath(config?.web?.build?.cdn, resolvedPrefix)
     : '';
+const excludedClipDirNames = new Set(['jinlong']);
+const scriptExts = new Set(['.py', '.sh', '.js', '.mjs', '.ts', '.bash', '.zsh']);
+
+const isExcludedClipDir = (name) => excludedClipDirNames.has(name.toLowerCase());
 
 if (isProd) {
     console.log(
@@ -80,6 +84,8 @@ const getMapClipTargets = () => {
     const mapDirs = fs.readdirSync(clipsDir);
 
     for (const mapName of mapDirs) {
+        if (isExcludedClipDir(mapName)) continue;
+
         const mapPath = resolve(clipsDir, mapName);
         if (!fs.statSync(mapPath).isDirectory()) continue;
 
@@ -96,6 +102,53 @@ const getMapClipTargets = () => {
         }
     }
     return targets;
+};
+
+const cleanDistClipsPlugin = () => {
+    let distDir = resolve(__dirname, 'dist');
+
+    const removeScriptFiles = (dir) => {
+        if (!existsSync(dir)) return;
+
+        const entries = fs.readdirSync(dir, { withFileTypes: true });
+        for (const entry of entries) {
+            const fullPath = resolve(dir, entry.name);
+            if (entry.isDirectory()) {
+                removeScriptFiles(fullPath);
+                continue;
+            }
+
+            if (scriptExts.has(entry.name.slice(entry.name.lastIndexOf('.')).toLowerCase())) {
+                fs.rmSync(fullPath, { force: true });
+            }
+        }
+    };
+
+    return {
+        name: 'clean-dist-clips',
+        configResolved(resolvedConfig) {
+            distDir = resolve(resolvedConfig.root, resolvedConfig.build.outDir);
+        },
+        closeBundle() {
+            const clipsDir = resolve(distDir, 'clips');
+            if (!existsSync(clipsDir)) return;
+
+            const entries = fs.readdirSync(clipsDir, { withFileTypes: true });
+            for (const entry of entries) {
+                const fullPath = resolve(clipsDir, entry.name);
+                if (entry.isDirectory()) {
+                    if (isExcludedClipDir(entry.name)) {
+                        fs.rmSync(fullPath, { recursive: true, force: true });
+                    }
+                    continue;
+                }
+
+                fs.rmSync(fullPath, { force: true });
+            }
+
+            removeScriptFiles(clipsDir);
+        },
+    };
 };
 
 // https://vite.dev/config/
@@ -135,6 +188,7 @@ export default defineConfig({
                 .filter((target) => existsSync(target.src))
                 .concat(getMapClipTargets()), // 只包含存在的源路径
         }),
+        cleanDistClipsPlugin(),
         eslint({
             failOnWarning: false,
             failOnError: true,

@@ -1,10 +1,11 @@
 @use '../prtsTextEffect.scss' as prts;
 
-.profileModal {
+.profileWrap {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   color: var(--auth-text);
+  padding-bottom: .5rem;
 }
 
 .profileDivider {
@@ -36,13 +37,27 @@
   gap: 0.8rem;
   padding: 0 5%;
   font-size: 0.925rem;
-  font-family: "HMSans_EN", "HMSans", "UD_ShinGo Regular", "Noto Sans Arabic", "Noto Sans Thai", sans-serif;
+  font-family: "HMSans_EN", HMSans, "UD_ShinGo Regular", "Noto Sans Arabic", "Noto Sans Thai", sans-serif;
   letter-spacing: -0.2px;
   font-weight: 600;
   line-height: 1.25;
   unicode-bidi: plaintext;
   overflow-wrap: break-word;
   hyphens: auto;
+}
+
+.profileSyncHint {
+  padding: 0 5%;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--auth-text);
+  font-family: 'FedraSansPro Normal', "UD_ShinGo Regular", "Noto Sans Arabic", "Noto Sans Thai", sans-serif;
+  overflow-wrap: anywhere;
+  unicode-bidi: plaintext;
+  text-align: center;
+  font-variant-numeric: lining-nums;
+  letter-spacing: -0.2px;
 }
 
 .profileError {
@@ -57,4 +72,8 @@
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
   padding: 0 5%;
+}
+
+.profileActionWide {
+  grid-column: 1 / -1;
 }

@@ -3,15 +3,51 @@ import { createPortal } from 'react-dom';
 import styles from './viewer.module.scss';
 import PopoverTooltip from '@/component/popover/popover';
 import { useTranslateUI } from '@/locale';
-import { formatDateTimeYYYYMMDDHHMMSS, formatElapsedShort, parseDateLike } from '@/utils/timeFormat';
+import { formatRelativeTime, parseDateLike } from '@/utils/timeFormat';
 import UpvoteIcon from '@/assets/images/UI/upvote.svg?react';
 import FlagIcon from '@/assets/images/UI/flag.svg?react';
 import ShareIcon from '@/assets/images/UI/share.svg?react';
 import RecallIcon from '@/assets/images/UI/recall.svg?react';
+import Carousel from '@/component/carousel';
+import type { UGCImage } from '@/utils/ugcClient';
+
+type CarouselDirection = 'previous' | 'next';
+
+const getViewerUpvoteCount = (image: UGCImage): number => (
+    Number.isFinite(image.upvotes)
+        ? Math.max(0, image.upvotes as number)
+        : Number.isFinite(image.upvoteCount)
+            ? Math.max(0, image.upvoteCount as number)
+            : 0
+);
+
+const getCarouselDirection = (
+    rect: DOMRect,
+    clientX: number,
+    clientY: number,
+    controlWidthRatio: number,
+    controlHeightRatio: number,
+    offsetRatio: number,
+): CarouselDirection | null => {
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+    const controlWidth = rect.width * controlWidthRatio;
+    const controlHeight = controlWidth * controlHeightRatio;
+    const offset = rect.width * offsetRatio;
+    const top = (rect.height - controlHeight) / 2;
+    const bottom = top + controlHeight;
+
+    if (y < top || y > bottom) return null;
+    if (x >= offset && x <= offset + controlWidth) return 'previous';
+    if (x >= rect.width - offset - controlWidth && x <= rect.width - offset) return 'next';
+    return null;
+};
 
 interface ViewerProps {
     open: boolean;
     imageUrl: string;
+    images?: UGCImage[];
+    selectedImageId?: string | null;
     alt: string;
     authorNickname?: string;
     authorPublicUid?: string;
@@ -28,12 +64,15 @@ interface ViewerProps {
     onToggleFlag?: () => void;
     onShare?: () => void;
     onToggleRecall?: () => void;
+    onSelectedImageIdChange?: (imageId: string) => void;
     onClose: () => void;
 }
 
 const Viewer: React.FC<ViewerProps> = ({
     open,
     imageUrl,
+    images,
+    selectedImageId,
     alt,
     authorNickname,
     authorPublicUid,
@@ -50,6 +89,7 @@ const Viewer: React.FC<ViewerProps> = ({
     onToggleFlag,
     onShare,
     onToggleRecall,
+    onSelectedImageIdChange,
     onClose,
 }) => {
     type Phase = 'unmounted' | 'entering' | 'open' | 'exiting';
@@ -57,25 +97,104 @@ const Viewer: React.FC<ViewerProps> = ({
     const [phase, setPhase] = useState<Phase>(() => (open ? 'entering' : 'unmounted'));
     const [imageLoaded, setImageLoaded] = useState(false);
     const [createdAtAgo, setCreatedAtAgo] = useState('');
+    const [carouselHoverDirection, setCarouselHoverDirection] = useState<CarouselDirection | null>(null);
     const tUI = useTranslateUI();
+    const carouselImages = useMemo(
+        () => images?.length ? images : [],
+        [images],
+    );
+    const selectedImage = useMemo(
+        () => carouselImages.find((image) => image.id === selectedImageId) ?? carouselImages[0] ?? null,
+        [carouselImages, selectedImageId],
+    );
+    const currentImageUrl = selectedImage?.url ?? imageUrl;
+    const currentAlt = selectedImage?.content || alt;
+    const currentAuthorNickname = selectedImage?.author?.nickname ?? authorNickname;
+    const currentAuthorPublicUid = selectedImage?.author?.publicUid ?? authorPublicUid;
+    const currentCreatedAt = selectedImage?.createdAt ?? createdAt;
+    const currentUpvoteCount = selectedImage ? getViewerUpvoteCount(selectedImage) : upvoteCount;
+    const currentUpvoted = selectedImage ? Boolean(selectedImage.upvoted) : upvoted;
+    const currentFlagged = selectedImage ? Boolean(selectedImage.flagged) : flagged;
+    const currentRecallRequested = selectedImage
+        ? Boolean(selectedImage.recallRequested || selectedImage.status === 'remove_request')
+        : recallRequested;
 
-    const createdAtDate = useMemo(() => parseDateLike(createdAt), [createdAt]);
-    const createdAtLabel = createdAtDate ? formatDateTimeYYYYMMDDHHMMSS(createdAtDate) : '';
+    const createdAtDate = useMemo(() => parseDateLike(currentCreatedAt), [currentCreatedAt]);
+    const createdAtLabel = createdAtDate ? formatRelativeTime(createdAtDate, {
+        precision: 'dateTime',
+        agoDisplay: 'hover',
+        agoLabel: tUI('idcard.ago'),
+    }).label : '';
     const refreshCreatedAtAgo = useCallback(() => {
         setCreatedAtAgo(createdAtDate
-            ? `${formatElapsedShort(createdAtDate.getTime(), Date.now())} ${tUI('idcard.ago')}`
+            ? formatRelativeTime(createdAtDate, {
+                precision: 'dateTime',
+                agoDisplay: 'hover',
+                agoLabel: tUI('idcard.ago'),
+            }).hoverLabel
             : '');
     }, [createdAtDate, tUI]);
-    const flagLabel = flagged ? tUI('detail.viewer.unflag') : tUI('detail.viewer.flag');
-    const recallLabel = recallRequested ? tUI('detail.viewer.unrecall') : tUI('detail.viewer.recall');
+    const flagLabel = currentFlagged ? tUI('detail.viewer.unflag') : tUI('detail.viewer.flag');
+    const recallLabel = currentRecallRequested ? tUI('detail.viewer.unrecall') : tUI('detail.viewer.recall');
+
+    const handleCarouselLayerClick = useCallback((
+        event: React.MouseEvent<HTMLDivElement>,
+        previous: () => void,
+        next: () => void,
+    ) => {
+        const rect = event.currentTarget.getBoundingClientRect();
+        const direction = getCarouselDirection(rect, event.clientX, event.clientY, 0.04, 1.5879, 0.025);
+
+        if (direction === 'previous') {
+            previous();
+            return;
+        }
+
+        if (direction === 'next') {
+            next();
+        }
+    }, []);
+
+    const handleCarouselLayerPointerMove = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
+        const direction = getCarouselDirection(
+            event.currentTarget.getBoundingClientRect(),
+            event.clientX,
+            event.clientY,
+            0.04,
+            1.5879,
+            0.025,
+        );
+        setCarouselHoverDirection(direction);
+    }, []);
+
+    const handleCarouselLayerPointerLeave = useCallback(() => {
+        setCarouselHoverDirection(null);
+    }, []);
+
+    const handleCarouselLayerKeyDown = useCallback((
+        event: React.KeyboardEvent<HTMLDivElement>,
+        previous: () => void,
+        next: () => void,
+    ) => {
+        if (event.key === 'ArrowLeft') {
+            event.preventDefault();
+            previous();
+            return;
+        }
+
+        if (event.key === 'ArrowRight') {
+            event.preventDefault();
+            next();
+        }
+    }, []);
 
     useEffect(() => {
         setImageLoaded(false);
-    }, [imageUrl]);
+    }, [currentImageUrl]);
 
     useEffect(() => {
         setCreatedAtAgo('');
-    }, [createdAt]);
+    }, [currentCreatedAt]);
 
     useEffect(() => {
         if (open) {
@@ -124,7 +243,7 @@ const Viewer: React.FC<ViewerProps> = ({
         };
     }, [phase, onClose]);
 
-    if (phase === 'unmounted' || !imageUrl || typeof document === 'undefined') {
+    if (phase === 'unmounted' || !currentImageUrl || typeof document === 'undefined') {
         return null;
     }
 
@@ -143,33 +262,60 @@ const Viewer: React.FC<ViewerProps> = ({
                 onClick={(event) => event.stopPropagation()}
                 role="dialog"
                 aria-modal="true"
-                aria-label={alt}
+                aria-label={currentAlt}
             >
-                <div 
-                    className={styles.viewerContent}
-                    style={{ '--bg': `url(${imageUrl})` } as React.CSSProperties}>
-                    {!imageLoaded && (
-                        <div className={styles.viewerSkeleton} aria-hidden="true" />
-                    )}
-                    <img
-                        src={imageUrl}
-                        alt={alt}
-                        className={styles.viewerImage}
-                        data-loaded={imageLoaded ? 'true' : 'false'}
-                        onLoad={() => setImageLoaded(true)}
-                    />
-                </div>
+                <Carousel
+                    items={carouselImages}
+                    selectedKey={selectedImageId}
+                    getKey={(image) => image.id}
+                    onSelectedKeyChange={onSelectedImageIdChange}
+                >
+                    {({ item, hasMultiple, previous, next }) => {
+                        const visibleImageUrl = item?.url ?? currentImageUrl;
+                        const visibleAlt = item?.content || currentAlt;
+                        return (
+                            <div
+                                className={styles.viewerContent}
+                                style={{ '--bg': `url(${visibleImageUrl})` } as React.CSSProperties}
+                            >
+                                {!imageLoaded && (
+                                    <div className={styles.viewerSkeleton} aria-hidden="true" />
+                                )}
+                                <img
+                                    src={visibleImageUrl}
+                                    alt={visibleAlt}
+                                    className={styles.viewerImage}
+                                    data-loaded={imageLoaded ? 'true' : 'false'}
+                                    onLoad={() => setImageLoaded(true)}
+	                                />
+	                                {hasMultiple && (
+	                                    <div
+	                                        className={styles.carouselLayer}
+	                                        data-hover={carouselHoverDirection ?? undefined}
+	                                        role="button"
+	                                        tabIndex={-1}
+	                                        aria-label="Switch image"
+	                                        onClick={(event) => handleCarouselLayerClick(event, previous, next)}
+	                                        onKeyDown={(event) => handleCarouselLayerKeyDown(event, previous, next)}
+	                                        onPointerMove={handleCarouselLayerPointerMove}
+	                                        onPointerLeave={handleCarouselLayerPointerLeave}
+	                                    />
+	                                )}
+	                            </div>
+                        );
+                    }}
+                </Carousel>
                 <div className={styles.viewerMetaBar}>
                     <div className={styles.viewerAuthorBlock}>
                         <div className={styles.viewerMetaRow}>
                             <span className={styles.viewerMetaLabel}>{tUI('detail.viewer.author')}</span>
                             <span className={styles.viewerMetaDivider}>|</span>
-                            <span className={styles.viewerAuthorName}>{authorNickname || '--'}</span>
+                            <span className={styles.viewerAuthorName}>{currentAuthorNickname || '--'}</span>
                         </div>
                         <div className={styles.viewerMetaRow}>
                             <span className={styles.viewerMetaLabel}>OEM ID</span>
                             <span className={styles.viewerMetaDivider}>|</span>
-                            <span className={styles.viewerAuthorId}>{authorPublicUid || '--'}</span>
+                            <span className={styles.viewerAuthorId}>{currentAuthorPublicUid || '--'}</span>
                         </div>
                     </div>
                     <div className={styles.viewerActions}>
@@ -177,14 +323,14 @@ const Viewer: React.FC<ViewerProps> = ({
                             <button
                                 type="button"
                                 className={styles.viewerActionButton}
-                                data-active={upvoted ? 'true' : 'false'}
+                                data-active={currentUpvoted ? 'true' : 'false'}
                                 disabled={actionPending || !onToggleUpvote}
                                 onClick={onToggleUpvote}
-                                aria-pressed={upvoted}
+                                aria-pressed={currentUpvoted}
                                 aria-label='Upvote'
                             >
                                 <UpvoteIcon />
-                                <span className={styles.viewerUpvoteCount}>{upvoteCount}</span>
+                                <span className={styles.viewerUpvoteCount}>{currentUpvoteCount}</span>
                             </button>
                         </PopoverTooltip>
                         <span className={styles.viewerActionDivider} aria-hidden="true"></span>
@@ -193,10 +339,10 @@ const Viewer: React.FC<ViewerProps> = ({
                                 <button
                                     type="button"
                                     className={styles.viewerActionButton}
-                                    data-active={flagged ? 'true' : 'false'}
+                                    data-active={currentFlagged ? 'true' : 'false'}
                                     disabled={actionPending || !onToggleFlag}
                                     onClick={onToggleFlag}
-                                    aria-pressed={flagged}
+                                    aria-pressed={currentFlagged}
                                     aria-label='Flag'
                                 >
                                     <FlagIcon />
@@ -226,10 +372,10 @@ const Viewer: React.FC<ViewerProps> = ({
                                     <button
                                         type="button"
                                         className={styles.viewerActionButton}
-                                        data-active={recallRequested ? 'true' : 'false'}
+                                        data-active={currentRecallRequested ? 'true' : 'false'}
                                         disabled={actionPending || !onToggleRecall}
                                         onClick={onToggleRecall}
-                                        aria-pressed={recallRequested}
+                                        aria-pressed={currentRecallRequested}
                                         aria-label='Recall'
                                     >
                                         <RecallIcon />

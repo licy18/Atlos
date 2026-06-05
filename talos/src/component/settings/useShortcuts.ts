@@ -41,7 +41,7 @@ export function useKeyboardShortcuts(mapInstance: L.Map | undefined) {
     // ── Import ──
     const handleImportFile = useCallback(async (file: File) => {
         const content = await file.text();
-        const success = await importMarkerData(content, {
+        const success = importMarkerData(content, {
             clearPoints: useUserRecordStore.getState().clearPoints,
             addPoint: useUserRecordStore.getState().addPoint,
             setFilter: useMarkerStore.getState().setFilter,

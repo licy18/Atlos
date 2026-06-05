@@ -32,7 +32,7 @@
       "main": "Principale",
       "sub": "Sotto"
     },
-    "noInfo": "Nessuna informazione. Clicca per caricare uno screenshot del punto.",
+    "noInfo": "Nessuna immagine. Usa {paste} / {click} per caricare.",
     "communityRule1": "Prima di caricare, assicurati di aver letto e rispettare le",
     "communityRule2": "Linee guida della community",
     "uploading": "Caricamento...",
@@ -51,7 +51,7 @@
       "unrecall": "Annulla rimozione"
     },
     "errors": {
-      "unsupportedType": "Sono supportate solo immagini JPEG/PNG/WebP/AVIF.",
+      "unsupportedType": "Sono supportate solo immagini JPEG/PNG/WebP/AVIF/HEIC.",
       "fileTooLarge": "Il file immagine è troppo grande.",
       "imageDecodeFailed": "Il browser non ha potuto aprire questa immagine.",
       "imageProcessingUnavailable": "L’elaborazione locale dell’immagine non è disponibile.",
@@ -59,12 +59,13 @@
       "uploadInvalidResponse": "Il servizio di caricamento ha restituito una risposta non valida.",
       "uploadNetwork": "Si è verificato un errore di rete durante il caricamento.",
       "uploadAborted": "Il caricamento è stato annullato.",
+      "rateLimited": "Limite di caricamento raggiunto, riprova più tardi.",
       "uploadFailed": "Caricamento non riuscito. Riprova più tardi.",
       "backendUnknown": "Il servizio di caricamento ha restituito un errore."
     }
   },
   "footer": {
-    "icp": "沪ICP备2025119702号-1"
+    "icp": "Designed by cirisus, HK"
   },
   "sidebar": {
     "alt": {
@@ -223,6 +224,7 @@
       "verification": "Verifica:",
       "forgotPW": "Password dimenticata?",
       "pwdRegex": "8–20 caratteri; almeno una lettera maiuscola",
+      "emailRegex": "Gli indirizzi email usa e getta non sono consentiti",
       "send": "Invia",
       "sendResetLink": "Reset",
       "resend": "Reinvia({count})",
@@ -247,6 +249,7 @@
         "102": "E-mail non valida",
         "103": "E-mail occupata",
         "104": "E-mail nulla",
+        "105": "Email Not Supported",
         "111": "Password richiesta",
         "112": "Password non valida",
         "113": "Password non corrispondenti",
@@ -278,6 +281,7 @@
       "noteNickname": "Non puoi utilizzare più di 15 lettere, numeri, trattini e trattini bassi nel tuo nome utente.",
       "noteUID": "L'UID viene assegnato alla prima configurazione e non può essere modificato. Puoi aggiornare il tuo nome utente in qualsiasi momento. Fare clic sull'area avatar per cambiare avatar.",
       "auditLabel": "Controllo",
+      "importOfficial": "Importa dalla mappa ufficiale",
       "save": "Salva modifiche",
       "saving": "Risparmio...",
       "logout": "Disconnessione"
@@ -286,7 +290,10 @@
   "scale": {
     "pip": {
       "activeTitle": "Picture-in-picture attivo",
-      "returnHint": "Fai clic sul logo per tornare a questa scheda"
+      "returnHint": "Fai clic sul logo per tornare a questa scheda",
+      "enterMode": "Entra in modalità PiP",
+      "exitMode": "Esci dalla modalità PiP",
+      "unsupported": "PiP non è supportato"
     }
   },
   "locator": {
@@ -309,6 +316,8 @@
       "unlink": "Scollega",
       "bindWithCountdown": "Collega e attiva sync ({sec})",
       "bind": "Collega e attiva sync",
+      "bindOnlyWithCountdown": "Collega account ({sec})",
+      "bindOnly": "Collega account",
       "locateAuth": "Autorizza",
       "locateAuthBody": "Attivare la sincronizzazione posizione consente l'accesso alla tua posizione in gioco. Vuoi abilitarla?",
       "authAndSync": "Autorizza e avvia sync"
@@ -350,6 +359,29 @@
       "roleRequired": "Seleziona un ruolo.",
       "unlinkFailed": "Scollegamento fallito.",
       "authorizationFailed": "Autorizzazione fallita."
+    }
+  },
+  "sync": {
+    "now": "Sincronizza con OEM Cloud",
+    "already": "Sincronizzato con il cloud",
+    "done": "Sincronizzato - {times} fa",
+    "syncing": "Sincronizzazione di {count} punti",
+    "failed": "Sincronizzazione non riuscita ({reason})",
+    "offline": "Offline",
+    "dataConflict": "Conflitto di dati",
+    "unknown": "Errore sconosciuto",
+    "conflict": {
+      "title": "Conflitto di dati",
+      "local": "Locale",
+      "remote": "Remoto",
+      "official": "Ufficiale",
+      "oemDb": "OEM DB",
+      "updatedAt": "Ultima modifica",
+      "total": "Punti segnati",
+      "region": "Regione",
+      "keepA": "Mantieni dati {label}",
+      "keepB": "Usa dati {label}",
+      "merge": "Unisci entrambi i dati ({count})"
     }
   },
   "links": {

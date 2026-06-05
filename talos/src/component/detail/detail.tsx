@@ -344,7 +344,7 @@ export const Detail = ({ inline = false }: { inline?: boolean }) => {
                                 </div>
                             </div>
                         </div>
-                        <Uploader point={currentPoint} pointName={pointName} />
+                        <Uploader point={currentPoint} pointName={pointName} active={detailPhase === 'open'} />
                         {/* Note — shown when an archive full-text file is available */}
                         {hasFullText && (
                             <div className={styles.detailNotes}>

@@ -1,3 +1,5 @@
+import { isDisposableEmail } from './disposableEmail';
+
 export type AuthMode = 'login' | 'register' | 'passwordReset';
 
 export type AuthField = 'email' | 'password' | 'verificationCode' | 'repeatPassword';
@@ -8,6 +10,7 @@ export type AuthHintCode =
   | 102
   | 103
   | 104
+  | 105
   | 111
   | 112
   | 113
@@ -53,6 +56,7 @@ export interface AuthFieldRule {
   invalidCode?: AuthHintCode;
   normalize?: (value: string) => string;
   isValid?: (value: string) => boolean;
+  validate?: (value: string) => AuthHintCode | null;
 }
 
 export const OTP_COOLDOWN_SECONDS = 100;
@@ -96,6 +100,12 @@ const AUTH_HINT_META: Record<AuthHintCode, AuthHintMeta> = {
     type: 'auth',
     field: 'email',
     backendCodes: ['USER_NOT_FOUND', 'EMAIL_NOT_FOUND', 'ACCOUNT_NOT_FOUND'],
+  },
+  105: {
+    prefix: 'ERR',
+    type: 'err',
+    field: 'email',
+    backendCodes: ['DISPOSABLE_EMAIL_NOT_ALLOWED'],
   },
   111: { prefix: 'REQ', type: 'req', field: 'password' },
   112: { prefix: 'ERR', type: 'err', field: 'password' },
@@ -164,6 +174,7 @@ const STATUS_TO_HINT_MAP: Record<number, AuthHintCode> = (() => {
 export const FRONTEND_HINT_CODES = {
   EMAIL_REQUIRED: 101 as const,
   EMAIL_INVALID: 102 as const,
+  EMAIL_DISPOSABLE: 105 as const,
   PASSWORD_REQUIRED: 111 as const,
   PASSWORD_INVALID: 112 as const,
   PASSWORD_MISMATCH: 113 as const,
@@ -185,24 +196,41 @@ export const getVerificationDigits = (value: string): string => value.replace(/\
 
 export const isEmailValid = (value: string): boolean => EMAIL_PATTERN.test(value.trim());
 
+export const isRegistrationEmailValid = (value: string): boolean =>
+  isEmailValid(value) && !isDisposableEmail(value);
+
 export const isPasswordValid = (value: string): boolean => PASSWORD_PATTERN.test(value);
 
 export const isVerificationCodeValid = (value: string): boolean => getVerificationDigits(value).length === 6;
 
 export const canEditPassword = (mode: AuthMode, values: AuthValues): boolean =>
-  mode !== 'register' || isEmailValid(values.email);
+  mode !== 'register' || isRegistrationEmailValid(values.email);
 
 export const canEditVerificationCode = (mode: AuthMode, values: AuthValues): boolean =>
-  mode === 'register' && isEmailValid(values.email) && isPasswordValid(values.password);
+  mode === 'register' && isRegistrationEmailValid(values.email) && isPasswordValid(values.password);
 
 export const canShowSendVerificationButton = (mode: AuthMode, values: AuthValues): boolean =>
-  mode === 'register' && isEmailValid(values.email);
+  mode === 'register' && isRegistrationEmailValid(values.email);
 
 const EMAIL_FIELD_RULE: AuthFieldRule = {
   requiredCode: FRONTEND_HINT_CODES.EMAIL_REQUIRED,
   invalidCode: FRONTEND_HINT_CODES.EMAIL_INVALID,
   normalize: (value) => value.trim(),
   isValid: isEmailValid,
+};
+
+const REGISTER_EMAIL_FIELD_RULE: AuthFieldRule = {
+  requiredCode: FRONTEND_HINT_CODES.EMAIL_REQUIRED,
+  normalize: (value) => value.trim(),
+  validate: (value) => {
+    if (!isEmailValid(value)) {
+      return FRONTEND_HINT_CODES.EMAIL_INVALID;
+    }
+    if (isDisposableEmail(value)) {
+      return FRONTEND_HINT_CODES.EMAIL_DISPOSABLE;
+    }
+    return null;
+  },
 };
 
 const PASSWORD_LOGIN_RULE: AuthFieldRule = {
@@ -232,7 +260,7 @@ export const resolveFieldRule = (mode: AuthMode, field: AuthField): AuthFieldRul
   }
 
   if (field === 'email') {
-    return EMAIL_FIELD_RULE;
+    return mode === 'register' ? REGISTER_EMAIL_FIELD_RULE : EMAIL_FIELD_RULE;
   }
 
   if (field === 'password') {
@@ -263,6 +291,10 @@ export const validateFieldByRule = (
     && !rule.isValid(normalizedValue)
   ) {
     return rule.invalidCode;
+  }
+
+  if (rule.validate) {
+    return rule.validate(normalizedValue);
   }
 
   return null;
@@ -325,12 +357,18 @@ export const validateSubmit = (
   return errors;
 };
 
-export const validateSendVerificationCode = (values: AuthValues): AuthHintCode | null => {
+export const validateSendVerificationCode = (
+  values: AuthValues,
+  mode: AuthMode = 'register',
+): AuthHintCode | null => {
   if (!values.email.trim()) {
     return FRONTEND_HINT_CODES.EMAIL_REQUIRED;
   }
   if (!isEmailValid(values.email)) {
     return FRONTEND_HINT_CODES.EMAIL_INVALID;
+  }
+  if (mode === 'register' && isDisposableEmail(values.email)) {
+    return FRONTEND_HINT_CODES.EMAIL_DISPOSABLE;
   }
   return null;
 };

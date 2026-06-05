@@ -8,8 +8,8 @@
         "site": {
           "old_dorms": "Alte Schlafsäle",
           "originium_power_plant": "Originium-Kraftwerk",
-          "power_plant_comm_station": "Kraftwerk – Kommunikationsstation",
-          "bridge_approach_camp": "Brückenzugangscamp",
+          "power_plant_comm_station": "Kraftwerk – Kommunikations-station",
+          "bridge_approach_camp": "Brücken-zugangscamp",
           "united_parking_lot": "GBT-Parkplatz",
           "planned_construction_area": "Geplante Baustelle",
           "plateau_trunkway": "Plateau-Hauptstraße",
@@ -125,7 +125,7 @@
           "chenshan_way": "Chenshan-Weg",
           "bureau_of_swordmancers": "Schwertkämpfer-Behörde",
           "residential_area": "Wohnbezirk",
-          "monitoring_center": "Überwachungszentrum",
+          "monitoring_center": "Überwachungs-zentrum",
           "marker_stone_flats": "Grenzstein-Ebenen",
           "xiranflow_channel": "Xiranfluss-Kanal",
           "fangxing_avenue": "Fangxing-Straße",
@@ -203,6 +203,21 @@
           "lake_islet": "Kleine See-Insel",
           "urban_development_hall": "Stadtentwicklungs-Halle",
           "serenity_garden": "Garten der Klarheit"
+        }
+      },
+      "SV": {
+        "name": "Tal des Schwertverlieses",
+        "short": "TS",
+        "site": {
+          "leeward_trail": "Leewärtspfad",
+          "west_gorge_path": "Westschluchtpfad",
+          "south_gorge_rampart": "Südschluchtwall",
+          "east_gorge_ruins": "Ostschluchtruine",
+          "shadow_tunnel": "Schattentunnel",
+          "north_gorge_crag": "Nordschluchtwand",
+          "deep_gorge_vault": "Tiefschluchtkammer",
+          "old_blade_precipice": "Altklingensteilhang",
+          "gorge_overhang": "Schluchtüberhang"
         }
       }
     }

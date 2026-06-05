@@ -45,7 +45,20 @@ export const useLocatorStore = create<LocatorState>((set) => ({
 }));
 
 export const LOCATOR_RETURN_CURRENT_EVENT = 'locator:return-current';
+export const ENDFIELD_BINDING_REQUEST_EVENT = 'endfield-binding:request';
+
+export type EndfieldBindingRequestDetail = {
+    enableLocator?: boolean;
+    onBound?: () => void | Promise<void>;
+};
 
 export const requestLocatorReturnCurrent = (): void => {
     window.dispatchEvent(new CustomEvent(LOCATOR_RETURN_CURRENT_EVENT));
+};
+
+export const requestEndfieldBinding = (detail: EndfieldBindingRequestDetail = {}): void => {
+    window.dispatchEvent(new CustomEvent<EndfieldBindingRequestDetail>(
+        ENDFIELD_BINDING_REQUEST_EVENT,
+        { detail },
+    ));
 };

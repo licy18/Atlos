@@ -120,7 +120,7 @@ async function loadSubregionRegionMap() {
 
 function normalizeMarker(marker, fallbackSubregionId) {
   if (Array.isArray(marker)) {
-    const [id, z, x, , type] = marker
+    const [id, z, x, , , type] = marker
     return {
       markerId: String(id ?? ''),
       typeId: String(type ?? ''),

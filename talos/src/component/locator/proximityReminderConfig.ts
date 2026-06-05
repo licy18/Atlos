@@ -38,6 +38,8 @@ export const LOCATOR_REMINDER_STRATEGIES = {
             'collection.protocol_dl',
             'collection.protocol_dl_ii',
             'collection.gear_template',
+            'exploration.pressure_plate',
+            'exploration.wooden_box',
             ...COMMON_MOB_RULES,
         ],
     },
@@ -45,9 +47,12 @@ export const LOCATOR_REMINDER_STRATEGIES = {
         include: [
             'collection.*',
             'archives.*',
-            'exploration.*',
+            'exploration.*'
         ],
-        exclude: [],
+        exclude: [
+            'exploration.pressure_plate',
+            'exploration.wooden_box',
+        ],
     },
     manual: {
         include: [

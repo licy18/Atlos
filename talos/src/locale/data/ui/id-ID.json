@@ -32,7 +32,7 @@
       "main": "Utama",
       "sub": "Sub"
     },
-    "noInfo": "Belum ada informasi. Klik untuk mengunggah tangkapan layar titik.",
+    "noInfo": "Tidak ada gambar. Gunakan {paste} / {click} untuk mengunggah.",
     "communityRule1": "Sebelum mengunggah, pastikan Anda telah membaca dan mengikuti",
     "communityRule2": "Panduan Komunitas",
     "uploading": "Mengunggah...",
@@ -51,7 +51,7 @@
       "unrecall": "Batalkan penghapusan"
     },
     "errors": {
-      "unsupportedType": "Hanya gambar JPEG/PNG/WebP/AVIF yang didukung.",
+      "unsupportedType": "Hanya gambar JPEG/PNG/WebP/AVIF/HEIC yang didukung.",
       "fileTooLarge": "File gambar terlalu besar.",
       "imageDecodeFailed": "Browser tidak dapat membuka gambar ini.",
       "imageProcessingUnavailable": "Pemrosesan gambar lokal tidak tersedia.",
@@ -59,12 +59,13 @@
       "uploadInvalidResponse": "Layanan unggahan mengembalikan respons yang tidak valid.",
       "uploadNetwork": "Terjadi kesalahan jaringan saat mengunggah.",
       "uploadAborted": "Unggahan dibatalkan.",
+      "rateLimited": "Batas unggah tercapai, coba lagi nanti.",
       "uploadFailed": "Unggahan gagal. Silakan coba lagi nanti.",
       "backendUnknown": "Layanan unggahan mengembalikan kesalahan."
     }
   },
   "footer": {
-    "icp": "沪ICP备2025119702号-1"
+    "icp": "Designed by cirisus, HK"
   },
   "sidebar": {
     "alt": {
@@ -223,6 +224,7 @@
       "verification": "Verifikasi:",
       "forgotPW": "Lupa password?",
       "pwdRegex": "8–20 karakter; setidaknya satu huruf kapital",
+      "emailRegex": "Email sekali pakai tidak diperbolehkan",
       "send": "Kirim",
       "sendResetLink": "Reset",
       "resend": "Kirim ulang({count})",
@@ -247,6 +249,7 @@
         "102": "Email tidak valid",
         "103": "Email sudah digunakan",
         "104": "Email tidak terdaftar",
+        "105": "Email Not Supported",
         "111": "Password wajib",
         "112": "Password tidak valid",
         "113": "Password tidak cocok",
@@ -278,6 +281,7 @@
       "noteNickname": "Username maksimal 15 karakter (huruf, angka, tanda hubung, garis bawah).",
       "noteUID": "UID ditetapkan saat pendaftaran dan tidak dapat diubah. Username dapat diperbarui kapan saja. Klik avatar untuk mengganti gambar.",
       "auditLabel": "Audit",
+      "importOfficial": "Impor dari Peta Resmi",
       "save": "Simpan",
       "saving": "Menyimpan...",
       "logout": "Keluar"
@@ -286,7 +290,10 @@
   "scale": {
     "pip": {
       "activeTitle": "Mode Gambar-dalam-gambar aktif",
-      "returnHint": "Klik logo untuk kembali ke tab ini"
+      "returnHint": "Klik logo untuk kembali ke tab ini",
+      "enterMode": "Masuk mode PiP",
+      "exitMode": "Keluar dari mode PiP",
+      "unsupported": "PiP tidak didukung"
     }
   },
   "locator": {
@@ -309,6 +316,8 @@
       "unlink": "Lepas tautan",
       "bindWithCountdown": "Tautkan & aktifkan sinkronisasi ({sec})",
       "bind": "Tautkan & aktifkan sinkronisasi",
+      "bindOnlyWithCountdown": "Tautkan akun ({sec})",
+      "bindOnly": "Tautkan akun",
       "locateAuth": "Otorisasi",
       "locateAuthBody": "Mengaktifkan sinkronisasi lokasi akan memberi akses ke posisi in-game Anda. Aktifkan?",
       "authAndSync": "Otorisasi & mulai sync"
@@ -350,6 +359,29 @@
       "roleRequired": "Pilih peran.",
       "unlinkFailed": "Gagal melepas tautan.",
       "authorizationFailed": "Otorisasi gagal."
+    }
+  },
+  "sync": {
+    "now": "Sinkronkan ke OEM Cloud",
+    "already": "Sesuai dengan Cloud",
+    "done": "Tersinkronisasi - {times} yang lalu",
+    "syncing": "Menyinkronkan {count} Titik",
+    "failed": "Gagal menyinkronkan ({reason})",
+    "offline": "Offline",
+    "dataConflict": "Konflik Data",
+    "unknown": "Kesalahan tidak diketahui",
+    "conflict": {
+      "title": "Konflik Data",
+      "local": "Lokal",
+      "remote": "Remote",
+      "official": "Resmi",
+      "oemDb": "OEM DB",
+      "updatedAt": "Terakhir diubah",
+      "total": "Titik Ditandai",
+      "region": "Wilayah",
+      "keepA": "Simpan Data {label}",
+      "keepB": "Gunakan Data {label}",
+      "merge": "Gabungkan Kedua Data ({count})"
     }
   },
   "links": {

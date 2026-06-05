@@ -1,4 +1,4 @@
-import { getAuthBase } from '@/component/login/authFlow';
+import { getAuthBase, getAuthHeaders } from '@/component/login/authFlow';
 import { MARKER_TYPE_DICT, type IMarkerData } from '@/data/marker';
 import { buildPointShareToken } from '@/utils/urlState';
 
@@ -19,11 +19,7 @@ export type UGCSubmissionStatus =
 export type UGCImage = {
     id: string;
     markerId: string;
-    poiHash: string;
-    poiType: string;
-    snapshotId: string;
     url: string;
-    filePath?: string;
     content: string | null;
     author?: {
         nickname: string;
@@ -47,6 +43,11 @@ export type UGCUploadSubmission = {
 };
 
 export type UGCSubmissionImage = UGCImage & {
+    poiHash: string;
+    poiType: string;
+    snapshotId: string;
+    filePath: string;
+    flagCount?: number;
     status: UGCSubmissionStatus;
 };
 
@@ -73,12 +74,21 @@ type PendingSubmissionRequest = {
 };
 
 const UGC_API_BASE = `${getAuthBase()}/uploads/v1`;
-const IMAGE_CACHE_TTL_MS = 60_000;
-const SUBMISSION_CACHE_TTL_MS = 30_000;
+const IMAGE_CACHE_TTL_MS = 10_000;
+const SUBMISSION_CACHE_TTL_MS = 0;
 const MAX_UPLOAD_BYTES = 15 * 1024 * 1024;
 const CLIENT_WEBP_MAX_BYTES = 4 * 1024 * 1024;
 const CLIENT_WEBP_MAX_EDGE = 2160;
 const CLIENT_WEBP_QUALITY = 0.8;
+const SUPPORTED_UPLOAD_MIME_TYPES = new Set([
+    'image/jpeg',
+    'image/png',
+    'image/webp',
+    'image/avif',
+    'image/heic',
+    'image/heif',
+]);
+const HEIC_EXT_RE = /\.(heic|heif)$/i;
 const UGC_UPLOADABLE_CATEGORIES = new Set<UGCUploadableCategory>([
     'collection',
     'archives',
@@ -247,6 +257,7 @@ async function updateUGCImageAction(imageId: string, action: string): Promise<UG
     const response = await fetch(`${UGC_API_BASE}/images/${encodeURIComponent(imageId)}/${action}`, {
         method: 'POST',
         credentials: 'include',
+        headers: getAuthHeaders(),
     });
 
     if (!response.ok) {
@@ -300,7 +311,7 @@ function isUGCUploadableCategory(value: unknown): value is UGCUploadableCategory
 
 function validateUploadImage(file: File): void {
     const normalizedType = file.type.toLowerCase();
-    if (!['image/jpeg', 'image/png', 'image/webp', 'image/avif'].includes(normalizedType)) {
+    if (!SUPPORTED_UPLOAD_MIME_TYPES.has(normalizedType) && !HEIC_EXT_RE.test(file.name)) {
         throw new UGCClientError('Unsupported image type.', 'unsupportedType');
     }
 
@@ -313,6 +324,11 @@ async function prepareClientUploadImage(
     file: File,
     onProgress?: (progress: number) => void,
 ): Promise<File> {
+    if (file.type.toLowerCase() === 'image/heic' || file.type.toLowerCase() === 'image/heif' || HEIC_EXT_RE.test(file.name)) {
+        onProgress?.(0.35);
+        return file;
+    }
+
     if (file.size >= CLIENT_WEBP_MAX_BYTES) {
         onProgress?.(0.08);
         return file;
@@ -437,6 +453,7 @@ async function flushUGCImageBatch(requests: PendingImageRequest[]): Promise<void
             `${UGC_API_BASE}/images?markerIds=${encodeURIComponent(markerIds.join(','))}&limit=6&scope=${scope}`,
             {
                 credentials: 'include',
+                headers: getAuthHeaders(),
             },
         );
 
@@ -494,6 +511,7 @@ async function flushUGCSubmissionBatch(requests: PendingSubmissionRequest[]): Pr
             `${UGC_API_BASE}/images/mine?markerIds=${encodeURIComponent(markerIds.join(','))}&limit=6&scope=${scope}`,
             {
                 credentials: 'include',
+                headers: getAuthHeaders(),
             },
         );
 
@@ -537,14 +555,13 @@ function normalizeUGCImage(image: UGCImage): UGCImage {
         return image;
     }
 
-    const filePath = image.filePath ?? extractObjectPathFromUrl(image.url);
+    const filePath = extractObjectPathFromUrl(image.url);
     if (!filePath) {
         return image;
     }
 
     return {
         ...image,
-        filePath,
         url: `${UGC_API_BASE}/public-file/${encodeObjectPath(filePath)}`,
     };
 }
@@ -594,12 +611,25 @@ async function readUGCError(response: Response): Promise<UGCClientError> {
                 message?: string;
             };
         };
-        const code = payload.code || payload.error?.code || `HTTP_${response.status}`;
+        const rawCode = payload.code || payload.error?.code || `HTTP_${response.status}`;
+        const code = normalizeUGCErrorCode(rawCode, response.status);
         const message = payload.message || payload.error?.message || code;
         return new UGCClientError(message, code, response.status);
     } catch {
-        return new UGCClientError(`HTTP ${response.status}`, `HTTP_${response.status}`, response.status);
+        return new UGCClientError(
+            `HTTP ${response.status}`,
+            normalizeUGCErrorCode(`HTTP_${response.status}`, response.status),
+            response.status,
+        );
     }
+}
+
+function normalizeUGCErrorCode(code: string, status?: number): string {
+    if (status === 429 || code === 'RATE_LIMITED') return 'rateLimited';
+    if (code === 'MIME_NOT_ALLOWED') return 'unsupportedType';
+    if (code === 'UPLOAD_SIZE_INVALID') return 'fileTooLarge';
+    if (code === 'IMAGE_PROCESSING_FAILED') return 'imageDecodeFailed';
+    return code;
 }
 
 function uploadFormData<T>(

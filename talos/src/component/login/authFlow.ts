@@ -40,6 +40,8 @@ export const getAuthBase = (): string => {
 
 const authBase = getAuthBase();
 
+export const getAuthHeaders = (): Record<string, string> => ({});
+
 export const authClient = createAuthClient({
   baseURL: `${authBase}/auth/v1`,
   fetchOptions: {
@@ -175,27 +177,6 @@ const pickSessionUser = (payload: unknown): SessionUser | null => {
   };
 };
 
-const pickSdkSessionFallback = (payload: unknown): Partial<SessionUser> => {
-  if (!payload || typeof payload !== 'object') return {};
-
-  const root = payload as Record<string, unknown>;
-  const data =
-    root.data && typeof root.data === 'object'
-      ? (root.data as Record<string, unknown>)
-      : root;
-
-  const sdkUser =
-    data.user && typeof data.user === 'object'
-      ? (data.user as Record<string, unknown>)
-      : null;
-  const registeredAt = normalizeTimestampMs(sdkUser?.createdAt);
-
-  return {
-    registeredAt,
-    email: typeof sdkUser?.email === 'string' ? sdkUser.email : undefined,
-  };
-};
-
 const pickApiErrorMessage = (payload: unknown, fallback: string): string => {
   if (payload && typeof payload === 'object') {
     const data = payload as {
@@ -282,42 +263,57 @@ async function postAuthJson<TResponse>(
 }
 
 export const fetchSessionUser = async (): Promise<SessionUser | null> => {
-  const [sessionResult, sdkSession] = await Promise.all([
-    authClient.$fetch('/session', {
-      method: 'GET',
-      headers: { accept: 'application/json' },
-    }),
-    authClient.getSession(),
-  ]);
+  const response = await fetch(`${authBase}/auth/v1/session`, {
+    method: 'GET',
+    credentials: 'include',
+    headers: {
+      accept: 'application/json',
+      ...getAuthHeaders(),
+    },
+  });
 
-  const { data, error } = sessionResult;
+  let payload: unknown = null;
+  try {
+    payload = await response.json();
+  } catch {
+    payload = null;
+  }
 
-  if (error) {
-    if ((error as { status?: number }).status === 401) {
+  if (!response.ok) {
+    if (response.status === 401) {
       return null;
     }
-    throw new Error(
+    throw new AuthFlowError(
       pickApiErrorMessage(
-        error,
-        `Session request failed (${(error as { status?: number }).status ?? 'unknown'})`
-      )
+        payload,
+        `Session request failed (${response.status ?? 'unknown'})`
+      ),
+      {
+        status: response.status,
+        code: pickApiErrorCode(payload),
+      },
     );
   }
 
-  const user = pickSessionUser(data);
+  const user = pickSessionUser(payload);
   if (!user) {
     throw new Error('Session payload does not contain user info.');
   }
 
-  const sdkFallback = sdkSession.data
-    ? pickSdkSessionFallback(sdkSession.data)
-    : {};
+  return user;
+};
 
-  return {
-    ...user,
-    registeredAt: user.registeredAt ?? sdkFallback.registeredAt,
-    email: user.email ?? sdkFallback.email,
-  };
+export const exchangeAuthCode = async (code: string): Promise<SessionUser> => {
+  const payload = await postAuthJson<unknown>('/session/exchange', {
+    code: code.trim(),
+  });
+
+  const user = pickSessionUser(payload);
+  if (!user) {
+    throw new Error('Session exchange payload does not contain user info.');
+  }
+
+  return user;
 };
 
 export const startDiscordAuth = async (
@@ -552,12 +548,27 @@ export const updateProfileNickname = async (
 };
 
 export const logoutUser = async (): Promise<void> => {
-  const response = await authClient.signOut();
-  if (response.error) {
+  const response = await fetch(`${authBase}/auth/v1/sign-out`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      accept: 'application/json',
+      'content-type': 'application/json',
+    },
+    body: '{}',
+  });
+
+  if (!response.ok) {
+    let payload: unknown = null;
+    try {
+      payload = await response.json();
+    } catch {
+      payload = null;
+    }
     throw new Error(
       pickApiErrorMessage(
-        response.error,
-        `Logout failed (${response.error.status ?? 'unknown'})`
+        payload,
+        `Logout failed (${response.status ?? 'unknown'})`
       )
     );
   }

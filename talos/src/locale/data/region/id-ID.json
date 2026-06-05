@@ -204,6 +204,21 @@
           "urban_development_hall": "Balai Pengembangan Kota",
           "serenity_garden": "Taman Hening"
         }
+      },
+      "SV": {
+        "name": "Lembah Benteng Pedang",
+        "short": "LB",
+        "site": {
+          "leeward_trail": "Jalur Lindung Angin",
+          "west_gorge_path": "Jalan Ngarai Barat",
+          "south_gorge_rampart": "Benteng Ngarai Selatan",
+          "east_gorge_ruins": "Reruntuhan Ngarai Timur",
+          "shadow_tunnel": "Terowongan Bayangan",
+          "north_gorge_crag": "Tebing Ngarai Utara",
+          "deep_gorge_vault": "Brankas Ngarai Dalam",
+          "old_blade_precipice": "Tebing Pedang Tua",
+          "gorge_overhang": "Tebing Gantung Ngarai"
+        }
       }
     }
   },

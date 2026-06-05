@@ -405,6 +405,14 @@
             "sub": "exploration"
         }
     },
+    "wooden_box": {
+        "key": "wooden_box",
+        "name": "Wooden Box",
+        "category": {
+            "main": "poi",
+            "sub": "exploration"
+        }
+    },
     "temporary_energy_alluvium": {
         "key": "temporary_energy_alluvium",
         "name": "Temporary Energy Alluvium",
@@ -1807,6 +1815,28 @@
         "faction": "Wildlife",
         "drop": "Echoing Dust"
     },
+    "rockhowler": {
+        "key": "rockhowler",
+        "name": "Rockhowler",
+        "category": {
+            "main": "enemy",
+            "sub": "mob"
+        },
+        "tier": "Common",
+        "faction": "Wildlife",
+        "drop": "Century Rind"
+    },
+    "armored_manglerbeast": {
+        "key": "armored_manglerbeast",
+        "name": "Armored Manglerbeast",
+        "category": {
+            "main": "enemy",
+            "sub": "mob"
+        },
+        "tier": "Elite",
+        "faction": "Wildlife",
+        "drop": "Caudal Goldscale"
+    },
     "nar_col_lv003_1": {
         "key": "nar_col_lv003_1",
         "category": {
@@ -1869,6 +1899,15 @@
         },
         "ctgr": "digital",
         "icon": "pic"
+    },
+    "nar_collection_map02_13006_1": {
+        "key": "nar_collection_map02_13006_1",
+        "category": {
+            "main": "files",
+            "sub": "archives"
+        },
+        "ctgr": "collection",
+        "icon": "yujian"
     },
     "nar_collection_map02_95_1": {
         "key": "nar_collection_map02_95_1",
@@ -2299,6 +2338,15 @@
     },
     "nar_media_map02_12144_1": {
         "key": "nar_media_map02_12144_1",
+        "category": {
+            "main": "files",
+            "sub": "archives"
+        },
+        "ctgr": "media",
+        "icon": "record"
+    },
+    "nar_media_map02_13005_1": {
+        "key": "nar_media_map02_13005_1",
         "category": {
             "main": "files",
             "sub": "archives"
@@ -3234,6 +3282,36 @@
         },
         "ctgr": "paper",
         "icon": "note"
+    },
+    "nar_paper_map02_13001_1": {
+        "key": "nar_paper_map02_13001_1",
+        "category": {
+            "main": "files",
+            "sub": "archives"
+        },
+        "ctgr": "paper",
+        "icon": "note",
+        "rsch": "research_006prts"
+    },
+    "nar_paper_map02_13001_2": {
+        "key": "nar_paper_map02_13001_2",
+        "category": {
+            "main": "files",
+            "sub": "archives"
+        },
+        "ctgr": "paper",
+        "icon": "note",
+        "rsch": "research_006prts"
+    },
+    "nar_paper_map02_13001_3": {
+        "key": "nar_paper_map02_13001_3",
+        "category": {
+            "main": "files",
+            "sub": "archives"
+        },
+        "ctgr": "paper",
+        "icon": "note",
+        "rsch": "research_006prts"
     },
     "nar_paper_map02_13_1": {
         "key": "nar_paper_map02_13_1",

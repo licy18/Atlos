@@ -189,8 +189,8 @@
           "type_c_auxiliary_pillar_area_3": "Pilier auxiliaire de type C - Zone 3",
           "test_area_peripheries": "Périphérie de la zone de test",
           "meridian_grid_area": "Zone de la grille méridienne",
-          "integrated_rd_area": "Zone de R&D intégré",
-          "water_treatment_sector": "Secteur de traitement de l'eau"
+          "integrated_rd_area": "Zone de R&D intégrée",
+          "water_treatment_sector": "Secteur du traitement de l'eau"
         }
       },
       "MS": {
@@ -203,6 +203,21 @@
           "lake_islet": "Îlot du lac",
           "urban_development_hall": "Salle de développement urbain",
           "serenity_garden": "Jardin de la sérénité"
+        }
+      },
+      "SV": {
+        "name": "Val du caveau des lames",
+        "short": "VC",
+        "site": {
+          "leeward_trail": "Sentier sous le vent",
+          "west_gorge_path": "Chemin de la gorge occidentale",
+          "south_gorge_rampart": "Rempart de la gorge méridionale",
+          "east_gorge_ruins": "Ruines de la gorge orientale",
+          "shadow_tunnel": "Tunnel des ombres",
+          "north_gorge_crag": "Rocher escarpé de la gorge septentrionale",
+          "deep_gorge_vault": "Caveau des profondeurs de la gorge",
+          "old_blade_precipice": "À-pic de la vieille lame",
+          "gorge_overhang": "Surplomb de la gorge"
         }
       }
     }
