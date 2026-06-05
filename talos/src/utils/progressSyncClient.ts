@@ -1,4 +1,4 @@
-import { getAuthBase, getAuthHeaders } from '@/component/login/authFlow';
+import { getAuthBase } from '@/component/login/authFlow';
 import type { CloudProgress } from '@/store/progressSync';
 import type { ProgressManifestPayload } from '@/utils/progressBitmap';
 
@@ -65,7 +65,6 @@ async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
         headers: {
             accept: 'application/json',
             ...(hasBody ? { 'content-type': 'application/json' } : {}),
-            ...getAuthHeaders(),
             ...(init?.headers ?? {}),
         },
     });

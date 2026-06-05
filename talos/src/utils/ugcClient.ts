@@ -1,4 +1,4 @@
-import { getAuthBase, getAuthHeaders, getAuthToken } from '@/component/login/authFlow';
+import { getAuthBase, getAuthHeaders } from '@/component/login/authFlow';
 import { MARKER_TYPE_DICT, type IMarkerData } from '@/data/marker';
 import { buildPointShareToken } from '@/utils/urlState';
 
@@ -641,10 +641,6 @@ function uploadFormData<T>(
         const xhr = new XMLHttpRequest();
         xhr.open('POST', url);
         xhr.withCredentials = true;
-        const token = getAuthToken();
-        if (token) {
-            xhr.setRequestHeader('Authorization', `Bearer ${token}`);
-        }
 
         xhr.upload.onprogress = (event) => {
             if (!event.lengthComputable || !onProgress) return;

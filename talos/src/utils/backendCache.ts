@@ -27,6 +27,9 @@ type CacheHit<T> = {
     value: T;
 };
 
+let sessionMemory: SessionUser | null = null;
+let sessionMemoryHit = false;
+
 const isFresh = (ts: number): boolean => (Date.now() - ts) <= CACHE_TTL_MS;
 
 const readCache = (): BackendCache => {
@@ -59,22 +62,12 @@ const writeCache = (cache: BackendCache): void => {
 };
 
 export const getCachedSession = (): CacheHit<SessionUser | null> => {
-    const cache = readCache();
-    if (!cache.session || !isFresh(cache.session.ts)) {
-        return { hit: false, value: null };
-    }
-    return { hit: true, value: cache.session.value };
+    return sessionMemoryHit ? { hit: true, value: sessionMemory } : { hit: false, value: null };
 };
 
 export const setCachedSession = (value: SessionUser | null): void => {
-    const cache = readCache();
-    writeCache({
-        ...cache,
-        session: {
-            ts: Date.now(),
-            value,
-        },
-    });
+    sessionMemory = value;
+    sessionMemoryHit = true;
 };
 
 export const getCachedBinding = (uid?: string | null): CacheHit<EFBindingSummary | null> => {

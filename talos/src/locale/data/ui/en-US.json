@@ -224,7 +224,7 @@
       "verification": "Verification:",
       "forgotPW": "Forgot password?",
       "pwdRegex": "8–20 characters; at least one uppercase",
-      "emailRegex": "No se permiten correos electrónicos desechables",
+      "emailRegex": "Disposable email addresses are not allowed",
       "send": "Send",
       "sendResetLink": "Reset",
       "resend": "Resend({count})",

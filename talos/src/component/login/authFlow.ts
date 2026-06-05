@@ -16,7 +16,6 @@ export class AuthFlowError extends Error {
 
 const LOCAL_AUTH_PORT = '8787';
 const PROD_AUTH_BASE = 'https://api.opendfieldmap.org';
-const AUTH_TOKEN_KEY = 'talos:authToken';
 
 const getLocalAuthBase = (): string => {
   if (typeof window === 'undefined') {
@@ -41,34 +40,7 @@ export const getAuthBase = (): string => {
 
 const authBase = getAuthBase();
 
-export const getAuthToken = (): string | null => {
-  if (typeof window === 'undefined' || !('localStorage' in window)) {
-    return null;
-  }
-
-  const token = window.localStorage.getItem(AUTH_TOKEN_KEY)?.trim();
-  return token || null;
-};
-
-export const setAuthToken = (token: string | null): void => {
-  if (typeof window === 'undefined' || !('localStorage' in window)) {
-    return;
-  }
-
-  if (!token) {
-    window.localStorage.removeItem(AUTH_TOKEN_KEY);
-    return;
-  }
-
-  window.localStorage.setItem(AUTH_TOKEN_KEY, token);
-};
-
-export const clearAuthToken = (): void => setAuthToken(null);
-
-export const getAuthHeaders = (): Record<string, string> => {
-  const token = getAuthToken();
-  return token ? { Authorization: `Bearer ${token}` } : {};
-};
+export const getAuthHeaders = (): Record<string, string> => ({});
 
 export const authClient = createAuthClient({
   baseURL: `${authBase}/auth/v1`,
@@ -205,26 +177,6 @@ const pickSessionUser = (payload: unknown): SessionUser | null => {
   };
 };
 
-const pickSessionToken = (payload: unknown): string | null => {
-  if (!payload || typeof payload !== 'object') return null;
-  const root = payload as Record<string, unknown>;
-
-  const direct = root.token;
-  if (typeof direct === 'string' && direct.trim()) {
-    return direct.trim();
-  }
-
-  const data = root.data;
-  if (data && typeof data === 'object') {
-    const nested = (data as Record<string, unknown>).token;
-    if (typeof nested === 'string' && nested.trim()) {
-      return nested.trim();
-    }
-  }
-
-  return null;
-};
-
 const pickApiErrorMessage = (payload: unknown, fallback: string): string => {
   if (payload && typeof payload === 'object') {
     const data = payload as {
@@ -283,7 +235,6 @@ async function postAuthJson<TResponse>(
       accept: 'application/json',
       'content-type': 'application/json',
       'x-oem-locale': locale,
-      ...getAuthHeaders(),
     },
     body: JSON.stringify(requestBody),
   });
@@ -308,11 +259,6 @@ async function postAuthJson<TResponse>(
     );
   }
 
-  const token = pickSessionToken(payload);
-  if (token) {
-    setAuthToken(token);
-  }
-
   return payload as TResponse;
 }
 
@@ -335,7 +281,6 @@ export const fetchSessionUser = async (): Promise<SessionUser | null> => {
 
   if (!response.ok) {
     if (response.status === 401) {
-      clearAuthToken();
       return null;
     }
     throw new AuthFlowError(
@@ -362,11 +307,6 @@ export const exchangeAuthCode = async (code: string): Promise<SessionUser> => {
   const payload = await postAuthJson<unknown>('/session/exchange', {
     code: code.trim(),
   });
-
-  const token = pickSessionToken(payload);
-  if (token) {
-    setAuthToken(token);
-  }
 
   const user = pickSessionUser(payload);
   if (!user) {
@@ -553,7 +493,6 @@ const patchProfile = async (payloadBody: Record<string, unknown>): Promise<Sessi
     headers: {
       'content-type': 'application/json',
       accept: 'application/json',
-      ...getAuthHeaders(),
     },
     body: JSON.stringify(payloadBody),
   });
@@ -615,12 +554,9 @@ export const logoutUser = async (): Promise<void> => {
     headers: {
       accept: 'application/json',
       'content-type': 'application/json',
-      ...getAuthHeaders(),
     },
     body: '{}',
   });
-
-  clearAuthToken();
 
   if (!response.ok) {
     let payload: unknown = null;
