@@ -192,6 +192,8 @@
             "glaring_rakerbeast": "Quái Cào Sáng Chói",
             "skydrummer": "Người Gõ Trống Trời",
             "ethillu": "Æthillu",
+            "rockhowler": "Rockhowler",
+            "armored_manglerbeast": "Gấu Nanh Dài Thiết Giáp",
             "nar_col_lv003_1": "Thư Từ Thung Lũng IV",
             "nar_col_lv003_15": "Ghi Chú: Lời Khuyên",
             "nar_col_lv003_19": "Ghi Chú: Tìm Được Từ Đâu Đó",
@@ -509,7 +511,9 @@
             "quillbeast_liver": "Gan Quái Lông Nhọn",
             "rakerbeast_longfur": "Lông Dài Quái Cào",
             "howlerbeast_braid": "Bím Tóc Quái Gầm Rú",
-            "echoing_dust": "Bụi Vang Vọng"
+            "echoing_dust": "Bụi Vang Vọng",
+            "century_rind": "Trần Bì Trăm Năm",
+            "caudal_goldscale": "Vảy Đuôi Hoàng Kim"
         },
         "FileCtgr": {
             "paper": "Bản Thảo",

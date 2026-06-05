@@ -192,6 +192,8 @@
             "glaring_rakerbeast": "Glaring Rakerbeast",
             "skydrummer": "Skydrummer",
             "ethillu": "Æthillu",
+            "rockhowler": "Rockhowler",
+            "armored_manglerbeast": "Armored Manglerbeast",
             "nar_col_lv003_1": "Letter from Valley IV",
             "nar_col_lv003_15": "Memo: Piece of Advice",
             "nar_col_lv003_19": "Notes: Found From Somewhere",
@@ -509,7 +511,9 @@
             "quillbeast_liver": "Quillbeast Liver",
             "rakerbeast_longfur": "Rakerbeast Longfur",
             "howlerbeast_braid": "Howlerbeast Braid",
-            "echoing_dust": "Echoing Dust"
+            "echoing_dust": "Echoing Dust",
+            "century_rind": "Century Rind",
+            "caudal_goldscale": "Caudal Goldscale"
         },
         "FileCtgr": {
             "paper": "Manuscripts",

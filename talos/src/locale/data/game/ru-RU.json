@@ -192,6 +192,8 @@
             "glaring_rakerbeast": "Сверкающий хитрый зверь",
             "skydrummer": "Небесный барабанщик",
             "ethillu": "Эфирлюзия",
+            "rockhowler": "Каменный ревун",
+            "armored_manglerbeast": "Бронированный саблезубый зверь",
             "nar_col_lv003_1": "Письмо из Долины IV",
             "nar_col_lv003_15": "Записка: совет",
             "nar_col_lv003_19": "Заметки: находка откуда-то",
@@ -509,7 +511,9 @@
             "quillbeast_liver": "Печень колючего зверя",
             "rakerbeast_longfur": "Шерсть хитрого зверя",
             "howlerbeast_braid": "Косичка воющего зверя",
-            "echoing_dust": "Пыль памяти"
+            "echoing_dust": "Пыль памяти",
+            "century_rind": "Вековая кожура",
+            "caudal_goldscale": "Золотая хвостовая чешуя"
         },
         "FileCtgr": {
             "paper": "Рукописи",

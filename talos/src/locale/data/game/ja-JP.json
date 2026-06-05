@@ -192,6 +192,8 @@
             "glaring_rakerbeast": "鋭目彪獣",
             "skydrummer": "天鼓",
             "ethillu": "イーサルー",
+            "rockhowler": "山吼獣",
+            "armored_manglerbeast": "鎧裂獣",
             "nar_col_lv003_1": "四号谷地の外に送られた手紙",
             "nar_col_lv003_15": "説得の言葉が書かれているメモ",
             "nar_col_lv003_19": "掘り出されたメモ",
@@ -509,7 +511,9 @@
             "quillbeast_liver": "球刺獣の肝臓",
             "rakerbeast_longfur": "彪獣の長毛",
             "howlerbeast_braid": "咆獣のたてがみ",
-            "echoing_dust": "回響の塵埃"
+            "echoing_dust": "回響の塵埃",
+            "century_rind": "百年陳皮",
+            "caudal_goldscale": "尾先の金鱗"
         },
         "FileCtgr": {
             "paper": "紙の資料",

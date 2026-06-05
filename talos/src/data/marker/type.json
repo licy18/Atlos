@@ -1815,6 +1815,28 @@
         "faction": "Wildlife",
         "drop": "Echoing Dust"
     },
+    "rockhowler": {
+        "key": "rockhowler",
+        "name": "Rockhowler",
+        "category": {
+            "main": "enemy",
+            "sub": "mob"
+        },
+        "tier": "Common",
+        "faction": "Wildlife",
+        "drop": "Century Rind"
+    },
+    "armored_manglerbeast": {
+        "key": "armored_manglerbeast",
+        "name": "Armored Manglerbeast",
+        "category": {
+            "main": "enemy",
+            "sub": "mob"
+        },
+        "tier": "Elite",
+        "faction": "Wildlife",
+        "drop": "Caudal Goldscale"
+    },
     "nar_col_lv003_1": {
         "key": "nar_col_lv003_1",
         "category": {
@@ -1885,7 +1907,7 @@
             "sub": "archives"
         },
         "ctgr": "collection",
-        "icon": "prts_sm2l6m1_yujian"
+        "icon": "yujian"
     },
     "nar_collection_map02_95_1": {
         "key": "nar_collection_map02_95_1",

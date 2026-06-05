@@ -192,6 +192,8 @@
             "glaring_rakerbeast": "Rakerbeast Mencolok",
             "skydrummer": "Skydrummer",
             "ethillu": "Æthillu",
+            "rockhowler": "Rockhowler",
+            "armored_manglerbeast": "Manglerbeast Berarmor",
             "nar_col_lv003_1": "Surat dari Lembah IV",
             "nar_col_lv003_15": "Memo: Sedikit Saran",
             "nar_col_lv003_19": "Catatan: Ditemukan Entah dari Mana",
@@ -509,7 +511,9 @@
             "quillbeast_liver": "Hati Quillbeast",
             "rakerbeast_longfur": "Bulu Panjang Rakerbeast",
             "howlerbeast_braid": "Jalinan Bulu Howlerbeast",
-            "echoing_dust": "Debu Bergema"
+            "echoing_dust": "Debu Bergema",
+            "century_rind": "Kulit Buah Seabad",
+            "caudal_goldscale": "Sisik Emas Kaudal"
         },
         "FileCtgr": {
             "paper": "Naskah",

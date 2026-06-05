@@ -192,6 +192,8 @@
             "glaring_rakerbeast": "Funkelnde Wüstlingsbestie",
             "skydrummer": "Himmelstrommler",
             "ethillu": "Æthillu",
+            "rockhowler": "Felsenheuler",
+            "armored_manglerbeast": "Gepanzerte Fetzbestie",
             "nar_col_lv003_1": "Brief aus Tal IV",
             "nar_col_lv003_15": "Memo: Ein Ratschlag",
             "nar_col_lv003_19": "Notizen: Irgendwo gefunden",
@@ -509,7 +511,9 @@
             "quillbeast_liver": "Federbiestleber",
             "rakerbeast_longfur": "Langfell der Wüstlingsbestie",
             "howlerbeast_braid": "Heulerbestiengeflecht",
-            "echoing_dust": "Echo-Staub"
+            "echoing_dust": "Echo-Staub",
+            "century_rind": "Jahrhundertschale",
+            "caudal_goldscale": "Goldene Schwanzschuppe"
         },
         "FileCtgr": {
             "paper": "Manuskripte",

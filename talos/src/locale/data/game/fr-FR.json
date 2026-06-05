@@ -192,6 +192,8 @@
             "glaring_rakerbeast": "Ratisseur éblouissant",
             "skydrummer": "Frappeciel",
             "ethillu": "Æthillu",
+            "rockhowler": "Hurleroc",
+            "armored_manglerbeast": "Ours à dents de sabre cuirassé",
             "nar_col_lv003_1": "Lettre de la Vallée-IV",
             "nar_col_lv003_15": "Note : petit conseil",
             "nar_col_lv003_19": "Notes trouvées quelque part",
@@ -509,7 +511,9 @@
             "quillbeast_liver": "Foie de bêtaplume",
             "rakerbeast_longfur": "Poil long de ratisseur",
             "howlerbeast_braid": "Tresse de hurleur",
-            "echoing_dust": "Poussière résonnante"
+            "echoing_dust": "Poussière résonnante",
+            "century_rind": "Écorce centenaire",
+            "caudal_goldscale": "Écaille d'or caudale"
         },
         "FileCtgr": {
             "paper": "Manuscrits",

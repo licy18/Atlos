@@ -661,6 +661,16 @@
                 "tier": "Common",
                 "faction": "Wildlife",
                 "drop": "Echoing Dust"
+            },
+            "Rockhowler": {
+                "tier": "Common",
+                "faction": "Wildlife",
+                "drop": "Century Rind"
+            },
+            "Armored Manglerbeast": {
+                "tier": "Elite",
+                "faction": "Wildlife",
+                "drop": "Caudal Goldscale"
             }
         }
     }

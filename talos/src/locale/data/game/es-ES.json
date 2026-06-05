@@ -192,6 +192,8 @@
             "glaring_rakerbeast": "Bestia rastrera deslumbrante",
             "skydrummer": "Tamborilero celestial",
             "ethillu": "Éthillu",
+            "rockhowler": "Aullador de roca",
+            "armored_manglerbeast": "Bestia mutiladora acorazada",
             "nar_col_lv003_1": "Carta desde el Valle IV",
             "nar_col_lv003_15": "Memorándum: Consejo",
             "nar_col_lv003_19": "Notas: Encontrado en algún lugar",
@@ -509,7 +511,9 @@
             "quillbeast_liver": "Hígado de Bestia pluma",
             "rakerbeast_longfur": "Pelaje largo de Bestia Rastrera",
             "howlerbeast_braid": "Trenza de Bestia aulladora",
-            "echoing_dust": "Polvo resonante"
+            "echoing_dust": "Polvo resonante",
+            "century_rind": "Corteza centenaria",
+            "caudal_goldscale": "Escama dorada caudal"
         },
         "FileCtgr": {
             "paper": "Manuscritos",

@@ -192,6 +192,8 @@
             "glaring_rakerbeast": "怒目彪獸",
             "skydrummer": "天鼓",
             "ethillu": "表象",
+            "rockhowler": "山犼獸",
+            "armored_manglerbeast": "披甲裂獸",
             "nar_col_lv003_1": "寄向四號谷地外的信",
             "nar_col_lv003_15": "勸說的留言",
             "nar_col_lv003_19": "被翻找出來的筆記",
@@ -509,7 +511,9 @@
             "quillbeast_liver": "球刺獸的肝臟",
             "rakerbeast_longfur": "彪獸的長絨",
             "howlerbeast_braid": "咆獸的辮束",
-            "echoing_dust": "迴響塵埃"
+            "echoing_dust": "迴響塵埃",
+            "century_rind": "百年陳皮",
+            "caudal_goldscale": "尾尖金甲"
         },
         "FileCtgr": {
             "paper": "紙本紀錄",

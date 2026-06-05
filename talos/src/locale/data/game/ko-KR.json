@@ -192,6 +192,8 @@
             "glaring_rakerbeast": "분노의 레이커비스트",
             "skydrummer": "천고",
             "ethillu": "잔영",
+            "rockhowler": "록하울러",
+            "armored_manglerbeast": "무장 맹글러",
             "nar_col_lv003_1": "4번 협곡 밖으로 보내는 편지",
             "nar_col_lv003_15": "권고하는 메시지",
             "nar_col_lv003_19": "뒤적이다 나온 노트",
@@ -509,7 +511,9 @@
             "quillbeast_liver": "프릭비스트의 내장",
             "rakerbeast_longfur": "레이커비스트의 긴 털",
             "howlerbeast_braid": "하울러비스트의 털 묶음",
-            "echoing_dust": "메아리의 먼지"
+            "echoing_dust": "메아리의 먼지",
+            "century_rind": "백년 숙성 진피",
+            "caudal_goldscale": "꼬리 금갑"
         },
         "FileCtgr": {
             "paper": "문서 기록",

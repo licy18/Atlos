@@ -192,6 +192,8 @@
             "glaring_rakerbeast": "Rastrobestia abbagliante",
             "skydrummer": "Batticielo",
             "ethillu": "Æthillu",
+            "rockhowler": "Ulularocce",
+            "armored_manglerbeast": "Orso dai denti a sciabola corazzato",
             "nar_col_lv003_1": "Lettera da Valle IV",
             "nar_col_lv003_15": "Nota: Consiglio",
             "nar_col_lv003_19": "Appunti: Trovata da qualche parte",
@@ -509,7 +511,9 @@
             "quillbeast_liver": "Fegato di bestiaspina",
             "rakerbeast_longfur": "Lungomanto di rastrobestia",
             "howlerbeast_braid": "Treccia di bestia urlatrice",
-            "echoing_dust": "Polvere echeggiante"
+            "echoing_dust": "Polvere echeggiante",
+            "century_rind": "Scorza secolare",
+            "caudal_goldscale": "Scaglia caudale dorata"
         },
         "FileCtgr": {
             "paper": "Manoscritti",
