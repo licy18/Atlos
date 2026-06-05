@@ -29,6 +29,10 @@
                 "icon": "pic",
                 "ctgr": "digital"
             },
+            "nar_collection_map02_13006_1": {
+                "icon": "prts_sm2l6m1_yujian",
+                "ctgr": "collection"
+            },
             "nar_collection_map02_95_1": {
                 "icon": "amulet",
                 "ctgr": "collection"
@@ -222,6 +226,10 @@
                 "ctgr": "media"
             },
             "nar_media_map02_12144_1": {
+                "icon": "record",
+                "ctgr": "media"
+            },
+            "nar_media_map02_13005_1": {
                 "icon": "record",
                 "ctgr": "media"
             },
@@ -643,6 +651,21 @@
             "nar_paper_map02_12_1": {
                 "icon": "note",
                 "ctgr": "paper"
+            },
+            "nar_paper_map02_13001_1": {
+                "icon": "note",
+                "ctgr": "paper",
+                "rsch": "research_006prts"
+            },
+            "nar_paper_map02_13001_2": {
+                "icon": "note",
+                "ctgr": "paper",
+                "rsch": "research_006prts"
+            },
+            "nar_paper_map02_13001_3": {
+                "icon": "note",
+                "ctgr": "paper",
+                "rsch": "research_006prts"
             },
             "nar_paper_map02_13_1": {
                 "icon": "letter",
